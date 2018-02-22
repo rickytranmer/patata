@@ -9,7 +9,7 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 
 // - Routes
 app.get('/api/test', (req, res) => {
-  res.send({ test: 'success' });
+  res.send({ test: 'api success' });
 });
 
 app.listen(port, ()=> {

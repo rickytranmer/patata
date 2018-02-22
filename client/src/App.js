@@ -5,7 +5,8 @@ import './App.css';
 class App extends Component {
   state = {
     response: '',
-    timer: 0
+    timer: 7195,
+    timerString: ''
   };
 
   componentDidMount() {
@@ -25,15 +26,28 @@ class App extends Component {
     return body;
   };
 
+  convertTimerString(timer) {
+    let newString = '';
+    let minutes, seconds, hours;
+    timer >= 3600 ? hours = Math.floor(timer / 3600) : hours = 0;
+    timer >= 60 ? minutes = Math.floor(timer / 60) % 60 : minutes = 0;
+    seconds = timer % 60;
+    if(seconds<10) { seconds = '0' + seconds }
+    if(minutes<10) { minutes = '0' + minutes }
+    if(hours && hours<10) { hours = '0' + hours }
+    hours ? newString = `${hours}h ${minutes}m ${seconds}s` : newString = `${minutes}m ${seconds}s`;
+    this.setState({timerString: newString});
+  }
+
   startTimer() {
     if(!this.timeInterval) {
       this.timeInterval = setInterval(()=> {
         this.setState({ timer:  this.state.timer + 1 });
-        console.log(this.state.timer);
+        this.convertTimerString(this.state.timer);
       }, 1000);
     } else {
       clearInterval(this.timeInterval);
-      this.timeInterval = '';
+      this.timeInterval = null;
     }
   }
 
@@ -49,7 +63,7 @@ class App extends Component {
         <button onClick={this.startTimer.bind(this)}>
           Click Me
         </button>
-        <p>{this.state.timer}</p>
+        <h1>{this.state.timerString}</h1>
       </div>
     );
   }
