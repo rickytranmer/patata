@@ -7,15 +7,18 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client": "cd client/ && npm start"
+    "client": "cd client/ && npm start",
+    "build": "cd client/ && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-sdk": "^2.201.0",
+    "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
-    "helmet": "^3.11.0"
+    "helmet": "^3.11.0",
+    "router": "^1.3.2"
   }
 }

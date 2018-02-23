@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import TaskForm from './components/TaskForm';
 
 class App extends Component {
   state = {
     response: '',
-    timer: 5,
+    timer: 3,
     timerString: ''
   };
 
@@ -76,7 +77,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Patata - WIP</h1>
         </header>
         <p className="App-intro">{this.state.response}</p>
 
@@ -88,12 +89,11 @@ class App extends Component {
           <h1>{this.state.timerString}</h1>
         }
 
-        {this.state.timerString==='DONE' &&
           <div>
             <button>Short Break</button>
             <button>Long Break</button>
+            <TaskForm />
           </div>
-        }
       </div>
     );
   }
