@@ -5,14 +5,15 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
+    "start": "node server.js",
+    "server": "nodemon server.js",
     "client": "cd client/ && npm start"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.200.0",
+    "aws-sdk": "^2.201.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.2",
     "helmet": "^3.11.0"

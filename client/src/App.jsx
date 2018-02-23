@@ -5,11 +5,12 @@ import './App.css';
 class App extends Component {
   state = {
     response: '',
-    timer: 7195,
+    timer: 5,
     timerString: ''
   };
 
   componentDidMount() {
+    this.convertTimerString(this.state.timer);
     this.testApi()
       .then((res)=> this.setState({ response: res.test }))
       .catch((err)=> console.log(err));
@@ -19,7 +20,7 @@ class App extends Component {
     clearInterval(this.timeInterval);
   }
 
-  testApi = async ()=> {
+  async testApi() {
     const response = await fetch('/api/test');
     const body = await response.json();
     if (response.status !== 200) { throw Error(body.message) }
@@ -32,25 +33,44 @@ class App extends Component {
     timer >= 3600 ? hours = Math.floor(timer / 3600) : hours = 0;
     timer >= 60 ? minutes = Math.floor(timer / 60) % 60 : minutes = 0;
     seconds = timer % 60;
-    if(seconds<10) { seconds = '0' + seconds }
-    if(minutes<10) { minutes = '0' + minutes }
-    if(hours && hours<10) { hours = '0' + hours }
+    if(seconds < 10) { seconds = '0' + seconds }
+    if(minutes < 10) { minutes = '0' + minutes }
+    if(hours && hours < 10) { hours = '0' + hours }
     hours ? newString = `${hours}h ${minutes}m ${seconds}s` : newString = `${minutes}m ${seconds}s`;
-    this.setState({timerString: newString});
+    this.setState({ timerString: newString });
+    document.querySelector('title').innerHTML = this.state.timerString;
+    if(this.state.timer===0) { this.endTimer() }
+  }
+
+  endTimer() {
+    clearInterval(this.timeInterval);
+    this.timeInterval = null;
+    if(this.state.timer===0) { 
+      this.setState({ 
+        timer: 1500,
+        timerString: 'DONE'
+      });
+    }
+    /*TODO 
+      display timer end
+      prompt break selection (short, long, skip, notes)
+      start a pause timer when stopped with time left?  
+      track interruptions?
+    */
   }
 
   startTimer() {
     if(!this.timeInterval) {
       this.timeInterval = setInterval(()=> {
-        this.setState({ timer:  this.state.timer + 1 });
+        this.setState({ timer:  this.state.timer - 1 });
         this.convertTimerString(this.state.timer);
       }, 1000);
     } else {
-      clearInterval(this.timeInterval);
-      this.timeInterval = null;
+      this.endTimer();
     }
   }
 
+  // Separate app components, display based on mode or timerString?
   render() {
     return (
       <div className="App">
@@ -63,7 +83,17 @@ class App extends Component {
         <button onClick={this.startTimer.bind(this)}>
           Click Me
         </button>
-        <h1>{this.state.timerString}</h1>
+
+        {this.state.timerString!=='DONE' &&
+          <h1>{this.state.timerString}</h1>
+        }
+
+        {this.state.timerString==='DONE' &&
+          <div>
+            <button>Short Break</button>
+            <button>Long Break</button>
+          </div>
+        }
       </div>
     );
   }

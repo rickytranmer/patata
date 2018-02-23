@@ -22,6 +22,12 @@
   font-size: large;
 }
 
+button {
+  font-size: 1.5rem;
+  margin: 2vh 2vw;
+  background-color: lightgray;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
