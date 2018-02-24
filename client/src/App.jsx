@@ -37,7 +37,7 @@ class App extends Component {
     if(seconds < 10) { seconds = '0' + seconds }
     if(minutes < 10) { minutes = '0' + minutes }
     if(hours && hours < 10) { hours = '0' + hours }
-    hours ? newString = `${hours}h ${minutes}m ${seconds}s` : newString = `${minutes}m ${seconds}s`;
+    hours? newString = `${hours}h ${minutes}m ${seconds}s` : newString = `${minutes}m ${seconds}s`;
     this.setState({ timerString: newString });
     document.querySelector('title').innerHTML = this.state.timerString;
     if(this.state.timer===0) { this.endTimer() }
@@ -62,11 +62,13 @@ class App extends Component {
 
   startTimer() {
     if(!this.timeInterval) {
+      document.getElementById('start-button').innerHTML = 'Stop';
       this.timeInterval = setInterval(()=> {
         this.setState({ timer:  this.state.timer - 1 });
         this.convertTimerString(this.state.timer);
       }, 1000);
     } else {
+      document.getElementById('start-button').innerHTML = 'Start';
       this.endTimer();
     }
   }
@@ -76,24 +78,36 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <img src={ logo } className="App-logo" alt="logo" />
           <h1 className="App-title">Patata - WIP</h1>
         </header>
-        <p className="App-intro">{this.state.response}</p>
+        <p className="App-intro">{ this.state.response }</p>
 
-        <button onClick={this.startTimer.bind(this)}>
-          Click Me
-        </button>
+        {/* Timer button */}
+        { this.state.timerString!=='DONE' &&
+         <div>
+          <button id="start-button" onClick={this.startTimer.bind(this)}>
+            Start
+          </button>
 
-        {this.state.timerString!=='DONE' &&
-          <h1>{this.state.timerString}</h1>
+          <h1 id="timer-string">{ this.state.timerString }</h1>
+         </div>
         }
 
-          <div>
-            <button>Short Break</button>
-            <button>Long Break</button>
-            <TaskForm />
-          </div>
+        {/* Break buttons */}
+        { this.state.timerString==='DONE' &&
+         <div>
+          <button>Short Break</button>
+          <button>Long Break</button>
+         </div>
+        }
+
+        {/* New Task form */}
+        {
+         <div>
+          <TaskForm />
+         </div>
+        }
       </div>
     );
   }
