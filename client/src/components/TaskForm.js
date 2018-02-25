@@ -4,7 +4,24 @@ import './TaskForm.css';
 class TaskForm extends Component {
 	onFormSubmit(event) {
 		event.preventDefault();
-		console.log(event);
+		let newTask = {
+			title: event.target.taskTitle.value,
+			description: event.target.taskDescription.value,
+			date: new Date()
+		};
+		console.log(newTask);
+
+		// POST route to server
+		fetch('http://localhost:5000/api/task', {
+		  method: 'POST',
+		  headers: {
+		  	'Content-Type': 'application/json'
+			},
+			mode: 'CORS',
+		  body: JSON.stringify(newTask)
+		})
+      .then((res)=> console.log('POST went', res.statusText))
+      .catch((err)=> console.error(err));
 	}
 
 	render() {

@@ -11,12 +11,12 @@ const dynamodb = new AWS.DynamoDB();
 let params = {
     TableName : "Tasks",
     KeySchema: [       
-        { AttributeName: "username", KeyType: "HASH"},
-        { AttributeName: "taskID", KeyType: "RANGE" }
+        { AttributeName: "taskID", KeyType: "HASH"},
+        { AttributeName: "username", KeyType: "RANGE" }
     ],
     AttributeDefinitions: [       
-        { AttributeName: "username", AttributeType: "S" },
-        { AttributeName: "taskID", AttributeType: "N" }
+        { AttributeName: "taskID", AttributeType: "S" },
+        { AttributeName: "username", AttributeType: "N" }
     ],
     ProvisionedThroughput: {       
         ReadCapacityUnits: 5, 
@@ -45,12 +45,10 @@ dynamodb.createTable(params, function(err, data) {
 params = {
     TableName : "Users",
     KeySchema: [       
-        { AttributeName: "username", KeyType: "HASH"},
-        { AttributeName: "firstName", KeyType: "RANGE" }
+        { AttributeName: "username", KeyType: "HASH"}
     ],
     AttributeDefinitions: [       
-        { AttributeName: "username", AttributeType: "S" },
-        { AttributeName: "firstName", AttributeType: "N" }
+        { AttributeName: "username", AttributeType: "S" }
     ],
     ProvisionedThroughput: {       
         ReadCapacityUnits: 5, 

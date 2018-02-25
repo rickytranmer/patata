@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import TaskForm from './components/TaskForm';
+import BreakMenu from './components/BreakMenu';
 
 class App extends Component {
   state = {
@@ -11,10 +12,11 @@ class App extends Component {
   };
 
   componentDidMount() {
+    document.getElementById('start-button').style.backgroundColor = 'green';
     this.convertTimerString(this.state.timer);
     this.testApi()
-      .then((res)=> this.setState({ response: res.test }))
-      .catch((err)=> console.log(err));
+      .then((res)=> console.log( res.test ))
+      .catch((err)=> console.error(err));
   }
 
   componentWillUnmount() {
@@ -63,12 +65,14 @@ class App extends Component {
   startTimer() {
     if(!this.timeInterval) {
       document.getElementById('start-button').innerHTML = 'Stop';
+      document.getElementById('start-button').style.backgroundColor = 'red';
       this.timeInterval = setInterval(()=> {
         this.setState({ timer:  this.state.timer - 1 });
         this.convertTimerString(this.state.timer);
       }, 1000);
     } else {
       document.getElementById('start-button').innerHTML = 'Start';
+      document.getElementById('start-button').style.backgroundColor = 'green';
       this.endTimer();
     }
   }
@@ -81,7 +85,6 @@ class App extends Component {
           <img src={ logo } className="App-logo" alt="logo" />
           <h1 className="App-title">Patata - WIP</h1>
         </header>
-        <p className="App-intro">{ this.state.response }</p>
 
         {/* Timer button */}
         { this.state.timerString!=='DONE' &&
@@ -96,10 +99,7 @@ class App extends Component {
 
         {/* Break buttons */}
         { this.state.timerString==='DONE' &&
-         <div>
-          <button>Short Break</button>
-          <button>Long Break</button>
-         </div>
+         <BreakMenu />
         }
 
         {/* New Task form */}

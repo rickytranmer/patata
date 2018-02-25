@@ -13,6 +13,11 @@ input, textarea {
   width: 95%;
   height: 2rem;
   padding: 0 5px;
+  text-align: center;
+}
+form button {
+	 background-color: rgb(100, 65, 40);
+	 margin-top: 10px;
 }
 textarea {
 	height: 6rem;
