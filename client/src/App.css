@@ -5,15 +5,22 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 50px;
+  margin: 10px;
 }
 .App-header {
   background-color: #222;
-  height: 100px;
-  padding: 20px;
+  width: 100vw;
+  height: 75px;
   color: white;
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-bottom: 100px;
 }
 .App-title {
   font-size: 1.5em;
+  margin: 20px;
 }
 
 button {
@@ -32,6 +39,7 @@ button {
 h1#timer-string {
   margin: 0 auto;
   font-size: 5rem;
+  padding-top: 75px;
 }
 
 #start-button {

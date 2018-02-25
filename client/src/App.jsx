@@ -1,22 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom';
+
+import potato from './potato.svg';
 import './App.css';
 import TaskForm from './components/TaskForm';
 import BreakMenu from './components/BreakMenu';
+import Timer from './containers/Timer';
 
 class App extends Component {
-  state = {
-    response: '',
-    timer: 3,
-    timerString: ''
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      response: '',
+      timer: 3,
+      timerDefault: 1500,
+      timerString: ''
+    };
+    this.startTimer = this.startTimer.bind(this);
+  }
 
   componentDidMount() {
     document.getElementById('start-button').style.backgroundColor = 'green';
     this.convertTimerString(this.state.timer);
-    this.testApi()
-      .then((res)=> console.log( res.test ))
-      .catch((err)=> console.error(err));
+    // this.testApi()
+    //   .then((res)=> console.log( res.test ))
+    //   .catch((err)=> console.error(err));
   }
 
   componentWillUnmount() {
@@ -40,19 +52,20 @@ class App extends Component {
     if(minutes < 10) { minutes = '0' + minutes }
     if(hours && hours < 10) { hours = '0' + hours }
     hours? newString = `${hours}h ${minutes}m ${seconds}s` : newString = `${minutes}m ${seconds}s`;
-    this.setState({ timerString: newString });
-    document.querySelector('title').innerHTML = this.state.timerString;
-    if(this.state.timer===0) { this.endTimer() }
+    document.querySelector('title').innerHTML = newString;
+    this.updateTimerString(newString);
+    if(this.state.timer<=0) { this.endTimer() }
   }
 
   endTimer() {
+    document.querySelector('title').innerHTML = 'Patata';
+    document.getElementById('start-button').innerHTML = 'Start';
+    document.getElementById('start-button').style.backgroundColor = 'green';
     clearInterval(this.timeInterval);
     this.timeInterval = null;
     if(this.state.timer===0) { 
-      this.setState({ 
-        timer: 1500,
-        timerString: 'DONE'
-      });
+      this.updateTimer(this.state.timerDefault);
+      this.updateTimerString(this.state.timerString);
     }
     /*TODO 
       display timer end
@@ -62,40 +75,57 @@ class App extends Component {
     */
   }
 
+  updateTimer(timer) {
+    this.setState({ timer });
+  }
+  updateTimerString(timerString) {
+    this.setState({ timerString });
+  }
+
   startTimer() {
     if(!this.timeInterval) {
       document.getElementById('start-button').innerHTML = 'Stop';
       document.getElementById('start-button').style.backgroundColor = 'red';
       this.timeInterval = setInterval(()=> {
-        this.setState({ timer:  this.state.timer - 1 });
+        this.updateTimer(this.state.timer - 1);
         this.convertTimerString(this.state.timer);
       }, 1000);
     } else {
-      document.getElementById('start-button').innerHTML = 'Start';
-      document.getElementById('start-button').style.backgroundColor = 'green';
       this.endTimer();
     }
   }
 
   // Separate app components, display based on mode or timerString?
+  // Make nav bar using Router
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={ logo } className="App-logo" alt="logo" />
+          <img src={ potato } className="App-logo" alt="logo" />
           <h1 className="App-title">Patata - WIP</h1>
+          <img src={ potato } className="App-logo" alt="logo" />
+          {/* Router nav bar
+            Timer (replace with current timer duration)
+              -select task
+              -new task
+              -timer display
+            Agenda
+              -add task
+              -edit task
+              -remove task
+            Task List
+              -new task
+              -edit task
+              -delete task
+
+              Routes not in nav bar
+            New Task
+            View Task (edit & delete)
+          */}
         </header>
 
         {/* Timer button */}
-        { this.state.timerString!=='DONE' &&
-         <div>
-          <button id="start-button" onClick={this.startTimer.bind(this)}>
-            Start
-          </button>
-
-          <h1 id="timer-string">{ this.state.timerString }</h1>
-         </div>
-        }
+        <Timer startTimer={this.startTimer} {...this.state} />
 
         {/* Break buttons */}
         { this.state.timerString==='DONE' &&

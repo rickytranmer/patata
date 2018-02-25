@@ -20,8 +20,8 @@ class TaskForm extends Component {
 			mode: 'CORS',
 		  body: JSON.stringify(newTask)
 		})
-      .then((res)=> console.log('POST went', res.statusText))
-      .catch((err)=> console.error(err));
+     .then((res)=> console.log('POST status:', res.statusText))
+     .catch((err)=> console.error(err));
 	}
 
 	render() {
