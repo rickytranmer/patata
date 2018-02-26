@@ -68,16 +68,13 @@ function getTasks(req, res, next) {
 			console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
 		} else {
 			console.log("Query succeeded.");
-			data.Items.forEach(function(item) {
-				console.log(" -", item.title + ": " + item.description);
-			});
 			res.send(data.Items);
 		}
 	});
 }
 
 function shortenDate(thisDate) {
-	// Move milliseconds to front of date var, shortens var and spreads out traffic on dynamodb
+	// Move milliseconds to the front of date property, shorter and spreads out traffic on dynamodb
 	let newDate = thisDate[20];
 	for(let i = 21; i < 24; i++) {
 		newDate += thisDate[i];

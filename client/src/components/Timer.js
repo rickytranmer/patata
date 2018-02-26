@@ -4,9 +4,9 @@ import BreakMenu from './BreakMenu'
 class Timer extends Component {
 	constructor(props) {
 		super(props);
-		this.state = {
-			timerString: ''
-		};
+		// this.state = {
+		// 	timerString: ''
+		// };
 		this.startTimer = this.startTimer.bind(this);
 	}
 
@@ -22,11 +22,10 @@ class Timer extends Component {
 		return (
 		 <div>
 			<div className="Timer">
-			 <h1 id="timer-string">{ this.props.timerString }</h1>
-
-			 <button id="start-button" onClick={this.startTimer}>
-			   Start
-			 </button>
+				<h1 id="timer-string">{ this.props.timerString }</h1>
+				<button id="start-button" onClick={this.startTimer}>
+			  	Start
+				</button>
 			</div>
 
 			{/*

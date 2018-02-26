@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
 import Tasks from './containers/Tasks';
-import Timer from './components/Timer';
+import Timers from './containers/Timers';
 import Header from './components/Header';
 import Home from './components/Home';
 import Agenda from './components/Agenda';
@@ -102,7 +102,7 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/timer' render={ (props)=> <Timer startTimer={this.startTimer} {...this.state} /> } />
+          <Route path='/timer' render={ (props)=> <Timers startTimer={this.startTimer} {...this.state} /> } />
           <Route path='/task' component={Tasks} />
           <Route path='/agenda' component={Agenda} />
         </Switch>
