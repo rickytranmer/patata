@@ -6,7 +6,10 @@ class TaskForm extends Component {
 		event.preventDefault();
 		let newTask = {
 			title: event.target.taskTitle.value,
-			description: event.target.taskDescription.value,
+			description: event.target.taskDescription.value || null,
+			timerDefault: event.target.timerLength.value,
+			timerEstimate: event.target.timerEstimate.value || '1',
+			timerCount: '0',
 			date: new Date()
 		};
 		console.log(newTask);
@@ -20,7 +23,7 @@ class TaskForm extends Component {
 			mode: 'CORS',
 		  body: JSON.stringify(newTask)
 		})
-     .then((res)=> console.log('POST status:', res.statusText))
+     .then((res)=> window.location.replace("/task"))
      .catch((err)=> console.error(err));
 	}
 
@@ -32,8 +35,15 @@ class TaskForm extends Component {
 					<label htmlFor="task-title">-Title-</label>
 					<input type="text" id="task-title" name="taskTitle" maxLength="50" required />
 
+					<div className="estimates">
+						<label htmlFor="timer-length">&nbsp;-Timer Length (minutes)-
+						<input type="number" id="timer-length" name="timerLength" maxLength="10" defaultValue="25" required /></label>
+						<label htmlFor="timer-estimate">&nbsp;-Estimated Timer Count-
+						<input type="number" id="timer-estimate" name="timerEstimate" maxLength="10" placeholder="2 (2 x 25min = 50min)" /></label>
+					</div>
+
 					<label htmlFor="task-description">-Description-</label>
-					<textarea id="task-description" name="taskDescription" maxLength="256" />
+					<textarea id="task-description" name="taskDescription" maxLength="256" placeholder="Optional description." />
 
 					<button type="submit">Submit</button>
 				</form>

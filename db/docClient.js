@@ -5,4 +5,7 @@ AWS.config.update({
   endpoint: "http://localhost:8000",
   credentials
 });
-const dynamodb = new AWS.DynamoDB();
+
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+module.exports = docClient;

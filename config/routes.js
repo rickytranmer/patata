@@ -1,18 +1,14 @@
 const router = require('express').Router();
-
-// router.get('/', (req, res)=>{
-// 	res.sendFile('index.html', {"root":"./client/build/"});
-// });
+const tasksController = require('../controllers/tasks');
 
 router.get('/api/test', (req, res)=> {
   res.send({ test: 'api success' });
 });
 
 router.route('/api/task')
-	// .get()
-	.post((req, res, next)=> {
-		console.log(req.body);
-		res.send();
-	});
+	.get(tasksController.getTask)
+	.post(tasksController.postTask);
+
+router.get('/api/tasks', tasksController.getTasks);
 
 module.exports = router;

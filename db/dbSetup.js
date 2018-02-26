@@ -11,12 +11,12 @@ const dynamodb = new AWS.DynamoDB();
 let params = {
     TableName : "Tasks",
     KeySchema: [       
-        { AttributeName: "taskID", KeyType: "HASH"},
-        { AttributeName: "username", KeyType: "RANGE" }
+        { AttributeName: "username", KeyType: "HASH"},
+        { AttributeName: "date", KeyType: "RANGE" }
     ],
     AttributeDefinitions: [       
-        { AttributeName: "taskID", AttributeType: "S" },
-        { AttributeName: "username", AttributeType: "N" }
+        { AttributeName: "username", AttributeType: "S" },
+        { AttributeName: "date", AttributeType: "S" }
     ],
     ProvisionedThroughput: {       
         ReadCapacityUnits: 5, 
@@ -38,7 +38,7 @@ dynamodb.createTable(params, function(err, data) {
         console.log("Created table:", JSON.stringify(data, null, 2));
     }
 });
-// }
+// }});
 
 
 // Users - Users Table
@@ -70,7 +70,7 @@ dynamodb.createTable(params, function(err, data) {
         console.log("Created table:", JSON.stringify(data, null, 2));
     }
 });
-// }
+// }});
 
 // Agenda - Day's Tasks Table
 params = {
@@ -103,5 +103,4 @@ dynamodb.createTable(params, function(err, data) {
         console.log("Created table:", JSON.stringify(data, null, 2));
     }
 });
-// }
-
+// }});

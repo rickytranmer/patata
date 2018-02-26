@@ -26,8 +26,8 @@ class Header extends Component {
 			  */}
 			<nav>	
 			  <NavLink to='/timer' activeClassName='selected-nav' id='timer-nav'>Timer</NavLink>
-			  <NavLink to='/task' activeClassName='selected-nav'>Tasks</NavLink>
 			  <NavLink to='/agenda' activeClassName='selected-nav'>Agenda</NavLink>
+			  <NavLink to='/task' activeClassName='selected-nav'>Tasks</NavLink>
 			</nav>
 
 			<header className="App-header">

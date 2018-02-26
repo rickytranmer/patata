@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import './App.css';
-import TaskForm from './components/TaskForm';
-import BreakMenu from './components/BreakMenu';
+import Tasks from './containers/Tasks';
 import Timer from './components/Timer';
 import Header from './components/Header';
 import Home from './components/Home';
@@ -32,12 +31,12 @@ class App extends Component {
     clearInterval(this.timeInterval);
   }
 
-  async testApi() {
-    const response = await fetch('/api/test');
-    const body = await response.json();
-    if (response.status !== 200) { throw Error(body.message) }
-    return body;
-  };
+  // async testApi() {
+  //   const response = await fetch('/api/test');
+  //   const body = await response.json();
+  //   if (response.status !== 200) { throw Error(body.message) }
+  //   return body;
+  // };
 
   convertTimerString(timer) {
     let newString = '';
@@ -56,8 +55,11 @@ class App extends Component {
 
   endTimer() {
     document.querySelector('title').innerHTML = 'Patata';
-    document.getElementById('start-button').innerHTML = 'Start';
-    document.getElementById('start-button').style.backgroundColor = 'green';
+    let startButton = document.getElementById('start-button')||null;
+    if(startButton) {
+      startButton.innerHTML = 'Start';
+      startButton.style.backgroundColor = 'green';
+    }
     clearInterval(this.timeInterval);
     this.timeInterval = null;
     if(this.state.timer===0) { 
@@ -101,7 +103,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/timer' render={ (props)=> <Timer startTimer={this.startTimer} {...this.state} /> } />
-          <Route path='/task' component={TaskForm} />
+          <Route path='/task' component={Tasks} />
           <Route path='/agenda' component={Agenda} />
         </Switch>
       </div>
