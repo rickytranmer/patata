@@ -1,15 +1,13 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-import potato from './potato.svg';
 import './App.css';
 import TaskForm from './components/TaskForm';
 import BreakMenu from './components/BreakMenu';
-import Timer from './containers/Timer';
+import Timer from './components/Timer';
+import Header from './components/Header';
+import Home from './components/Home';
+import Agenda from './components/Agenda';
 
 class App extends Component {
   constructor(props) {
@@ -24,10 +22,9 @@ class App extends Component {
   }
 
   componentDidMount() {
-    document.getElementById('start-button').style.backgroundColor = 'green';
     this.convertTimerString(this.state.timer);
     // this.testApi()
-    //   .then((res)=> console.log( res.test ))
+    //   .then((res)=> console.log(res.test))
     //   .catch((err)=> console.error(err));
   }
 
@@ -100,44 +97,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={ potato } className="App-logo" alt="logo" />
-          <h1 className="App-title">Patata - WIP</h1>
-          <img src={ potato } className="App-logo" alt="logo" />
-          {/* Router nav bar
-            Timer (replace with current timer duration)
-              -select task
-              -new task
-              -timer display
-            Agenda
-              -add task
-              -edit task
-              -remove task
-            Task List
-              -new task
-              -edit task
-              -delete task
-
-              Routes not in nav bar
-            New Task
-            View Task (edit & delete)
-          */}
-        </header>
-
-        {/* Timer button */}
-        <Timer startTimer={this.startTimer} {...this.state} />
-
-        {/* Break buttons */}
-        { this.state.timerString==='DONE' &&
-         <BreakMenu />
-        }
-
-        {/* New Task form */}
-        {
-         <div>
-          <TaskForm />
-         </div>
-        }
+        <Header />
+        <Switch>
+          <Route exact path='/' component={Home} />
+          <Route path='/timer' render={ (props)=> <Timer startTimer={this.startTimer} {...this.state} /> } />
+          <Route path='/task' component={TaskForm} />
+          <Route path='/agenda' component={Agenda} />
+        </Switch>
       </div>
     );
   }

@@ -4,23 +4,23 @@
 }
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
-  height: 50px;
-  margin: 10px;
-}
-.App-header {
-  background-color: #222;
-  width: 100vw;
-  height: 75px;
-  color: white;
-  position: fixed;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-bottom: 100px;
+  height: 40px;
+  margin: 5px 10px;
+  position: relative;
+  z-index: -1;
 }
 .App-title {
-  font-size: 1.5em;
-  margin: 20px;
+  font-size: 1.25em;
+  margin: 0 25px;
+  letter-spacing: 1rem;
+  font-style: italic;
+}
+.Home, .Timer, .TaskForm, .Agenda {
+  padding-top: 50px;
+}
+.selected-nav {
+  font-weight: bold;
+  text-decoration: underline;
 }
 
 button {
@@ -30,6 +30,8 @@ button {
   background-color: blue;
   border: 1px solid white;
   border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
   display: block;
   margin: 0 auto;
   width: 300px;
@@ -39,7 +41,32 @@ button {
 h1#timer-string {
   margin: 0 auto;
   font-size: 5rem;
-  padding-top: 75px;
+}
+h3 {
+  margin: 10px;
+}
+header, nav {
+  background-color: #222;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 100px;
+  position: fixed;
+  justify-content: space-between;
+}
+header a, nav a {
+  color: white;
+  text-decoration: none;
+}
+header {
+  top: 0;
+  left: 0;
+  height: 25px;
+}
+nav {
+  justify-content: space-evenly;
+  top: 25px;
+  font-size: 1.5rem;
 }
 
 #start-button {

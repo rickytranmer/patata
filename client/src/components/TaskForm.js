@@ -26,7 +26,7 @@ class TaskForm extends Component {
 
 	render() {
 		return (
-			<div>
+			<div className="TaskForm">
 				<h3>New Task</h3>
 				<form className="task-form" onSubmit={(event)=> this.onFormSubmit(event)}>
 					<label htmlFor="task-title">-Title-</label>
