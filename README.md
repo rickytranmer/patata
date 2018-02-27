@@ -15,7 +15,8 @@
 - [Pomodoro Timer Lite](https://play.google.com/store/apps/details?id=com.tatkovlab.pomodorolite)
 
 ## Goals
-- Convert to Progressive Web App
+- Convert to [Progressive Web App](https://developers.google.com/web/fundamentals/app-install-banners/)
+- Develop Chrome Extension as alternative to gh-pages
 - Display Timer statistics on Agenda page
 - Passport sign-up and log-in (or via Google)
 - Update/delete tasks from task list
