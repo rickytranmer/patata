@@ -12,8 +12,8 @@ class Tasks extends Component {
 				<NavLink to='/task/new' activeClassName='selected-tasks-nav'><button>New Task</button></NavLink>
 			</div>
 
-			<Route exact path='/task/' component={TasksList} />
-			<Route path='/task/new' component={TaskForm} />
+			<Route exact path='/patata/task/' component={TasksList} />
+			<Route path='/patata/task/new' component={TaskForm} />
 		 </div>
 		)
 	}

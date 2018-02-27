@@ -5,7 +5,6 @@ import TasksList from '../components/TasksList';
 class Timers extends Component {
 	constructor(props) {
 		super(props);
-		console.log(props)
 		this.state = {};
 		props.mode ? this.state.mode = this.props.mode : this.state.mode = 'Select';
 	}

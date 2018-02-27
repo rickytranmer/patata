@@ -152,9 +152,10 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/timer' render={ (props)=> <Timers updateSelectedTask={this.updateSelectedTask} timeInterval={this.timeInterval} startTimer={this.startTimer} updateMode={this.updateMode} {...this.state} /> } />
-          <Route path='/task' component={Tasks} />
-          <Route path='/agenda' component={Agenda} />
+          <Route exact path='/patata' component={Home} />
+          <Route path='/patata/timer' render={ (props)=> <Timers updateSelectedTask={this.updateSelectedTask} timeInterval={this.timeInterval} startTimer={this.startTimer} updateMode={this.updateMode} {...this.state} /> } />
+          <Route path='/patata/task' component={Tasks} />
+          <Route path='/patata/agenda' component={Agenda} />
         </Switch>
       </div>
     );

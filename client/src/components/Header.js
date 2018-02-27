@@ -25,14 +25,14 @@ class Header extends Component {
 			    View Task (edit & delete)
 			  */}
 			<nav>	
-			  <NavLink to='/timer' activeClassName='selected-nav' id='timer-nav'>Timer</NavLink>
-			  <NavLink to='/agenda' activeClassName='selected-nav'>Agenda</NavLink>
-			  <NavLink to='/task' activeClassName='selected-nav'>Tasks</NavLink>
+			  <NavLink to='/patata/timer' activeClassName='selected-nav' id='timer-nav'>Timer</NavLink>
+			  <NavLink to='/patata/agenda' activeClassName='selected-nav'>Agenda</NavLink>
+			  <NavLink to='/patata/task' activeClassName='selected-nav'>Tasks</NavLink>
 			</nav>
 
 			<header className="App-header">
 			  <img src={ potato } className="App-logo" alt="logo" />
-			  <Link to='/' className="App-title">Patata</Link>
+			  <Link to='patata' className="App-title">Patata</Link>
 			  <img src={ potato } className="App-logo" alt="logo" />
 			</header>
 		 </div>

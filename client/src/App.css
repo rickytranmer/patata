@@ -25,6 +25,12 @@
   color: white;
   text-decoration: underline;
 }
+.Timers li {
+  border: none;
+}
+.Timers li button {
+  padding: 5px;
+}
 
 button {
   font-size: 1.5rem;
@@ -92,10 +98,13 @@ ul {
   width: 500px;
 }
 li {
+  padding: 0 2px;
   font-size: 1.25rem;
+  border: 1px dotted white;
 }
 li ul li {
   font-size: 1.1rem;
+  border: none;
 }
 li:hover {
   text-shadow: 5px solid black;
@@ -152,7 +161,7 @@ li:hover {
   .App-logo {
     margin: 5px 10px;
   }
-  #task-list {
-    display: inline;
+  .Timers li {
+    margin: 10px;
   }
 }

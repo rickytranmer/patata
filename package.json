@@ -8,7 +8,8 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "cd client/ && npm start",
-    "build": "cd client/ && npm run build"
+    "build": "cd client/ && npm run build",
+    "deploy": "cd client/ && yarn run deploy"
   },
   "keywords": [],
   "author": "",
