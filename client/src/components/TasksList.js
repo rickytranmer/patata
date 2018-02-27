@@ -12,7 +12,7 @@ class TasksList extends Component {
 
 	componentDidMount() {
 	  this.getAllTasks()
-	    .then((res)=> { this.setState({ tasks: res.reverse() }) })
+	    .then((res)=> { this.setState({ tasks: res }) })
 	    .catch((err)=> console.error(err));
 	  this.props.mode ? this.setState({mode: this.props.mode}) : this.setState({mode: 'List'});
 	  this.props.selectedTask ? this.setState({selectedTask: this.props.selectedTask}) : this.setState({selectedTask: ''});

@@ -25,23 +25,22 @@ class App extends Component {
 
   componentDidMount() {
     this.convertTimerString(this.state.timer);
-    // this.testApi()
-    //   .then((res)=> console.log(res.test))
-    //   .catch((err)=> console.error(err));
-
   }
-
   componentWillUnmount() {
     clearInterval(this.timeInterval);
   }
 
-  // async testApi() {
-  //   const response = await fetch('/api/test');
-  //   const body = await response.json();
-  //   if (response.status !== 200) { throw Error(body.message) }
-  //   return body;
-  // };
+  updateTimer(timer) {
+    this.setState({ timer });
+  }
+  updateTimerString(timerString) {
+    this.setState({ timerString });
+  }
+  updateMode(mode) {
+    this.setState({ mode });
+  }
 
+  // Convert timer to '##m ##s' format - if timer = 0, end it
   convertTimerString(timer) {
     let newString = '';
     let minutes, seconds, hours;
@@ -56,44 +55,51 @@ class App extends Component {
     this.updateTimerString(newString);
     if(this.state.timer<=0) { this.endTimer() }
   }
+  
+  startTimer = ()=> {
+    if(!this.timeInterval) {
+      let counter = 0;
+      this.updateStartButton('stop');
+      this.timeInterval = setInterval(()=> {
+        if(counter!==9) {
+          counter++;
+        } else if(counter===9) {
+          this.updateTimer(this.state.timer - 1);
+          this.convertTimerString(this.state.timer);
+          counter = 0;
+        }
+        this.updateStartButton('stop');
+      }, 100);
+    } else {
+      this.endTimer();
+    }
+  }
 
   endTimer = ()=> {
     document.querySelector('title').innerHTML = 'Patata';
     clearInterval(this.timeInterval);
     this.timeInterval = null;
+    // Determine if stopped because of end or click
     if(this.state.timer<=0) { 
       this.updateTimer(this.state.timerDefault);
       this.updateTimerString(this.state.timerString);
       this.onPlay();
     }
+    // Incrememnt selectedTask timercount
     if(this.state.selectedTask) {
       document.getElementById(this.state.selectedTask).dataset.timercount++;
       console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
     }
     this.updateStartButton('start');
-    /*TODO 
-      display timer end
-      prompt break selection (short, long, skip, notes)
-      start a pause timer when stopped with time left?  
-      track interruptions?
-    */
   }
 
-  updateTimer(timer) {
-    this.setState({ timer });
-  }
-  updateTimerString(timerString) {
-    this.setState({ timerString });
-  }
-  updateMode(mode) {
-    this.setState({ mode });
-  }
-
+  // Set selectedTask to appply timer, can be called with empty parameter to clear selectedTask
   updateSelectedTask = (selectedTask)=> {
     this.setState({ selectedTask });
     let differentTask = document.getElementById('different-task')||null;
     if(differentTask) { differentTask.style.display = 'inline' }
 
+    // Cycle through displayed list items, determine if matches selectedTask
     let taskListItems = document.querySelectorAll('li');
     console.log(taskListItems)
     for(let i = 0; i < taskListItems.length; i++) {
@@ -121,6 +127,7 @@ class App extends Component {
     document.getElementById('task-mode').innerHTML = 'Task Selected';
   }
 
+  // Change button to 'start' or 'stop'
   updateStartButton(str) {
     let startButton = document.getElementById('start-button')||null;
     if((str === 'stop') && (startButton)) {
@@ -133,31 +140,10 @@ class App extends Component {
     }
   }
 
-  startTimer = ()=> {
-    if(!this.timeInterval) {
-      let counter = 0;
-      this.updateStartButton('stop');
-      this.timeInterval = setInterval(()=> {
-        if(counter!==9) {
-          counter++;
-        } else if(counter===9) {
-          this.updateTimer(this.state.timer - 1);
-          this.convertTimerString(this.state.timer);
-          counter = 0;
-        }
-        this.updateStartButton('stop');
-      }, 100);
-    } else {
-      this.endTimer();
-    }
-  }
-
   onPlay = ()=> {
     this.alarmSound.play();
   }
 
-  // Separate app components, display based on mode or timerString?
-  // Make nav bar using Router
   render() {
     return (
       <div className="App">
