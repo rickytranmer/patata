@@ -20,3 +20,4 @@
 - Display Timer statistics on Agenda page
 - Passport sign-up and log-in (or via Google)
 - Update/delete tasks from task list
+- Implement testing (Mocha / Chai / JSDOM)

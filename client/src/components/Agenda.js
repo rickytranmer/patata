@@ -4,7 +4,8 @@ class Agenda extends Component {
 	render() {
 		return(
 		 <div className="Agenda">
-			<h3>Agenda Text</h3>
+			<h3>Agenda Section</h3><hr/><br/>
+			<p>Coming soon!</p>
 		 </div>
 		)
 	}

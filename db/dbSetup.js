@@ -21,7 +21,7 @@ let params = {
         { AttributeName: "date", AttributeType: "S" }
     ],
     ProvisionedThroughput: {       
-        ReadCapacityUnits: 5, 
+        ReadCapacityUnits: 10, 
         WriteCapacityUnits: 5
     }
 };
@@ -72,7 +72,7 @@ params = {
         { AttributeName: "date", AttributeType: "N" }
     ],
     ProvisionedThroughput: {       
-        ReadCapacityUnits: 5, 
+        ReadCapacityUnits: 10, 
         WriteCapacityUnits: 5
     }
 };
