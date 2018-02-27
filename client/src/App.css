@@ -131,6 +131,7 @@ li:hover {
   letter-spacing: .2rem;
   width: 150px;
   transition: none;
+  margin-bottom: 15px;
 }
 #select-task {
   font-size: 1.2rem;

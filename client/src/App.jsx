@@ -111,6 +111,7 @@ class App extends Component {
         document.getElementById(selectedTask + 'b').style.display = 'none';
         // Update timer
         this.updateTimer(taskListItems[i].dataset.timerdefault);
+        this.updateTimerString(taskListItems[i].dataset.timerdefault);
         this.setState({timerDefault: taskListItems[i].dataset.timerdefault})
       }
     }

@@ -11,7 +11,7 @@ class Timer extends Component {
 			  	Start
 				</button>
 			</div>
-
+			<hr />
 			{/*
 				Timer Display
 				Select Task
