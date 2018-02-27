@@ -13,7 +13,7 @@ class App extends Component {
     super(props);
     this.state = {
       response: '',
-      timer: 1500,
+      timer: 2,
       timerDefault: 1500,
       timerString: '',
       mode: '',
@@ -64,6 +64,10 @@ class App extends Component {
       this.updateTimer(this.state.timerDefault);
       this.updateTimerString(this.state.timerString);
     }
+    if(this.state.selectedTask) {
+      document.getElementById(this.state.selectedTask).dataset.timercount++;
+      console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
+    }
     /*TODO 
       display timer end
       prompt break selection (short, long, skip, notes)
@@ -84,21 +88,30 @@ class App extends Component {
 
   updateSelectedTask = (selectedTask)=> {
     this.setState({ selectedTask });
-
     let differentTask = document.getElementById('different-task')||null;
     if(differentTask) { differentTask.style.display = 'inline' }
 
     let taskListItems = document.querySelectorAll('li');
-    if(!selectedTask) {
-      for(let i = 0; i < taskListItems.length; i++) {
-        taskListItems[i].style.display = 'inherit';
-      }
-    } else {
-      for(let i = 0; i < taskListItems.length; i++) {
-        if(taskListItems[i].id!==selectedTask) { taskListItems[i].style.display = 'none' }
+    console.log(taskListItems)
+    for(let i = 0; i < taskListItems.length; i++) {
+      if(selectedTask===null) {
+        window.location.replace("/timer");
+      } else if(taskListItems[i].id!==selectedTask) { 
+        taskListItems[i].style.display = 'none';
+      } else {
+        let selectedTaskDetails = document.createElement('ul');
+        // Recreate selected task, using same display as task list
+        selectedTaskDetails.innerHTML = `<b>${taskListItems[i].title}</b>`;
+        if(taskListItems[i].dataset.description) { selectedTaskDetails.innerHTML += `<div><li>&nbsp;<i>Description:</i></li><li>&nbsp;-${taskListItems[i].dataset.description}</li></div>` }
+        selectedTaskDetails.innerHTML += `<li>&nbsp;<i>Time:</i></li>`;
+        selectedTaskDetails.innerHTML += `<li>&nbsp;&nbsp;-Estimate: ${taskListItems[i].dataset.timerestimate} x ${taskListItems[i].dataset.timerdefault} = ${taskListItems[i].dataset.timerestimate*taskListItems[i].dataset.timerdefault}min</li>`;
+        selectedTaskDetails.innerHTML += `<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;${taskListItems[i].dataset.timercount} x ${taskListItems[i].dataset.timerdefault} = ${taskListItems[i].dataset.timercount*taskListItems[i].dataset.timerdefault}min</li>`;
+        taskListItems[i].appendChild(selectedTaskDetails);
+        document.getElementById(selectedTask + 'b').style.display = 'none';
       }
     }
-    
+    this.updateMode('Selected');
+    document.getElementById('task-mode').innerHTML = 'Task Selected';
   }
 
   updateStartButton(str) {

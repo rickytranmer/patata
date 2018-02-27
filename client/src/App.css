@@ -52,6 +52,7 @@ h1#timer-string {
 }
 h3 {
   margin: 5px;
+  letter-spacing: .1rem;
 }
 header, nav {
   background-color: #222;
@@ -145,10 +146,13 @@ li:hover {
 
 @media only screen and (max-width : 850px) {
   ul {
-    margin: 10px 0 25px 0;
-    width: 100%;
+    margin: 10px 5px 25px 5px;
+    width: 98%;
   }
   .App-logo {
     margin: 5px 10px;
+  }
+  #task-list {
+    display: inline;
   }
 }
