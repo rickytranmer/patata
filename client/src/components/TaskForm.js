@@ -24,7 +24,9 @@ class TaskForm extends Component {
 		  body: JSON.stringify(newTask)
 		})
      .catch((err)=> console.error(err))
-     .then((res)=> window.location.replace("/patata/task/list"));
+     .then((res)=> {
+     		if(!err) { window.location.replace("/patata/task/list") }
+   		});
 	}
 
 	render() {
