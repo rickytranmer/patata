@@ -23,6 +23,9 @@ class App extends Component {
     this.alarmSound = new Audio(alarmFile);
   }
 
+  componentWillMount() {
+    if(this.timeInterval) { this.updateStartButton('start') }
+  }
   componentDidMount() {
     this.convertTimerString(this.state.timer);
   }
@@ -58,18 +61,18 @@ class App extends Component {
   
   startTimer = ()=> {
     if(!this.timeInterval) {
-      let counter = 0;
+      // let counter = 0;
       this.updateStartButton('stop');
       this.timeInterval = setInterval(()=> {
-        if(counter!==9) {
-          counter++;
-        } else if(counter===9) {
+        // if(counter!==9) {
+          // counter++;
+        // } else if(counter===9) {
           this.updateTimer(this.state.timer - 1);
           this.convertTimerString(this.state.timer);
-          counter = 0;
-        }
+          // counter = 0;
+        // }
         this.updateStartButton('stop');
-      }, 100);
+      }, 1000);
     } else {
       this.endTimer();
     }
