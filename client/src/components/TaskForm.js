@@ -15,7 +15,7 @@ class TaskForm extends Component {
 		console.log(newTask);
 
 		// POST route to server
-		fetch('http://localhost:5000/api/task', {
+		fetch('https://patata-api.herokuapp.com/api/task', {
 		  method: 'POST',
 		  headers: {
 		  	'Content-Type': 'application/json'
@@ -24,9 +24,7 @@ class TaskForm extends Component {
 		  body: JSON.stringify(newTask)
 		})
      .catch((err)=> console.error(err))
-     .then((res)=> {
-     		if(!err) { window.location.replace("/patata/task/list") }
-   		});
+     .then((res)=> window.location.replace("/patata/task/list"));
 	}
 
 	render() {

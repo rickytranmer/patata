@@ -9,7 +9,7 @@
     "server": "nodemon server.js",
     "client": "cd client/ && npm start",
     "build": "cd client/ && npm run build",
-    "deploy": "cd client/ && yarn run deploy"
+    "deploy": "cd client/ && npm run deploy"
   },
   "keywords": [],
   "author": "",
