@@ -8,7 +8,7 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40px;
-  margin: 5px 10px;
+  margin: 5px 25px;
   position: relative;
   z-index: -1;
 }
@@ -87,10 +87,14 @@ ul {
   text-align: left;
   list-style: none;
   padding-left: 0;
-  margin: 10px 10vw 20px 10vw;
+  margin: 10px auto 20px auto;
+  width: 500px;
 }
 li {
   font-size: 1.25rem;
+}
+li ul li {
+  font-size: 1.1rem;
 }
 li:hover {
   text-shadow: 5px solid black;
@@ -112,10 +116,26 @@ li:hover {
 }
 
 #start-button {
+  background-color: #0EBC10;
+  font-weight: bold;
+  letter-spacing: .2rem;
   width: 150px;
+  transition: none;
 }
 #select-task {
   font-size: 1.2rem;
+}
+#different-task {
+  display: none;
+}
+#task-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+#task-list li {
+  margin: 10px 0;
 }
 
 @keyframes App-logo-spin {
@@ -125,6 +145,10 @@ li:hover {
 
 @media only screen and (max-width : 850px) {
   ul {
-    margin: 10px 5px 25px 5px;
+    margin: 10px 0 25px 0;
+    width: 100%;
+  }
+  .App-logo {
+    margin: 5px 10px;
   }
 }

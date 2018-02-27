@@ -13,11 +13,12 @@ class App extends Component {
     super(props);
     this.state = {
       response: '',
-      timer: 3,
+      timer: 1500,
       timerDefault: 1500,
-      timerString: ''
+      timerString: '',
+      mode: '',
+      selectedTask: ''
     };
-    this.startTimer = this.startTimer.bind(this);
   }
 
   componentDidMount() {
@@ -25,6 +26,7 @@ class App extends Component {
     // this.testApi()
     //   .then((res)=> console.log(res.test))
     //   .catch((err)=> console.error(err));
+
   }
 
   componentWillUnmount() {
@@ -55,11 +57,7 @@ class App extends Component {
 
   endTimer() {
     document.querySelector('title').innerHTML = 'Patata';
-    let startButton = document.getElementById('start-button')||null;
-    if(startButton) {
-      startButton.innerHTML = 'Start';
-      startButton.style.backgroundColor = 'green';
-    }
+    this.updateStartButton('start');
     clearInterval(this.timeInterval);
     this.timeInterval = null;
     if(this.state.timer===0) { 
@@ -80,15 +78,54 @@ class App extends Component {
   updateTimerString(timerString) {
     this.setState({ timerString });
   }
+  updateMode(mode) {
+    this.setState({ mode });
+  }
 
-  startTimer() {
+  updateSelectedTask = (selectedTask)=> {
+    this.setState({ selectedTask });
+
+    let differentTask = document.getElementById('different-task')||null;
+    if(differentTask) { differentTask.style.display = 'inline' }
+
+    let taskListItems = document.querySelectorAll('li');
+    if(!selectedTask) {
+      for(let i = 0; i < taskListItems.length; i++) {
+        taskListItems[i].style.display = 'inherit';
+      }
+    } else {
+      for(let i = 0; i < taskListItems.length; i++) {
+        if(taskListItems[i].id!==selectedTask) { taskListItems[i].style.display = 'none' }
+      }
+    }
+    
+  }
+
+  updateStartButton(str) {
+    let startButton = document.getElementById('start-button')||null;
+    if((str === 'stop') && (startButton)) {
+      startButton.innerHTML = 'Stop';
+      startButton.style.backgroundColor = '#FF4136';
+    } else if((str === 'start') && (startButton)) {
+      startButton.innerHTML = 'Start';
+      startButton.style.backgroundColor = '#0EBC10';
+    }
+  }
+
+  startTimer = ()=> {
     if(!this.timeInterval) {
-      document.getElementById('start-button').innerHTML = 'Stop';
-      document.getElementById('start-button').style.backgroundColor = 'red';
+      let counter = 0;
+      this.updateStartButton('stop');
       this.timeInterval = setInterval(()=> {
-        this.updateTimer(this.state.timer - 1);
-        this.convertTimerString(this.state.timer);
-      }, 1000);
+        if(counter!==9) {
+          counter++;
+        } else if(counter===9) {
+          this.updateTimer(this.state.timer - 1);
+          this.convertTimerString(this.state.timer);
+          counter = 0;
+        }
+        this.updateStartButton('stop');
+      }, 100);
     } else {
       this.endTimer();
     }
@@ -102,7 +139,7 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/' component={Home} />
-          <Route path='/timer' render={ (props)=> <Timers startTimer={this.startTimer} {...this.state} /> } />
+          <Route path='/timer' render={ (props)=> <Timers updateSelectedTask={this.updateSelectedTask} timeInterval={this.timeInterval} startTimer={this.startTimer} updateMode={this.updateMode} {...this.state} /> } />
           <Route path='/task' component={Tasks} />
           <Route path='/agenda' component={Agenda} />
         </Switch>

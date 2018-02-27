@@ -1,36 +1,21 @@
 import React, {Component} from 'react';
 import Timer from '../components/Timer';
+import TasksList from '../components/TasksList';
 
 class Timers extends Component {
-	constructor() {
-		super();
-
-		this.state = {
-			mode: '',
-			task: ''
-		};
-
-		this.timerMode = this.timerMode.bind(this);
-	}
-
-	timerMode() {
-		this.setState({mode: 'timer'});
-		this.setState({task: 'timer test timer test timer test timer test timer test timer test '});
+	constructor(props) {
+		super(props);
+		console.log(props)
+		this.state = {};
+		props.mode ? this.state.mode = this.props.mode : this.state.mode = 'Select';
 	}
 
 	render() {
 		return(
 		 <div className="Timers">
-		 	{ !this.state.task &&
-		 		<button id="select-task" onClick={this.timerMode}>Select</button>
-		 	}
-		 	{/* OR */}
-		 	{ this.state.task &&
-		 		<button id="select-task" onClick={this.timerMode}>{this.state.task}</button>
-		 	}
-
-		 	{ this.state.mode === "timer" &&
-		 		<Timer startTimer={this.startTimer} {...this.props}/>
+		 	<Timer {...this.props} />
+			{ !this.state.selectedTask &&
+				<TasksList {...this.props} {...this.state} />
 			}
 		 </div>
 		)

@@ -23,8 +23,8 @@ class TaskForm extends Component {
 			mode: 'CORS',
 		  body: JSON.stringify(newTask)
 		})
-     .then((res)=> window.location.replace("/task"))
-     .catch((err)=> console.error(err));
+     .catch((err)=> console.error(err))
+     .then((res)=> window.location.replace("/task"));
 	}
 
 	render() {
@@ -33,7 +33,7 @@ class TaskForm extends Component {
 				<h3>New Task</h3>
 				<form className="task-form" onSubmit={(event)=> this.onFormSubmit(event)}>
 					<label htmlFor="task-title">-Title-</label>
-					<input type="text" id="task-title" name="taskTitle" maxLength="50" required />
+					<input type="text" id="task-title" name="taskTitle" maxLength="144" required />
 
 					<div className="estimates">
 						<label htmlFor="timer-length">&nbsp;-Timer Length (minutes)-

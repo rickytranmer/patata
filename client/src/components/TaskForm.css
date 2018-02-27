@@ -14,6 +14,7 @@ input, textarea {
   height: 2rem;
   padding: 0 5px;
   text-align: center;
+  background-color: rgb(245, 245, 245);
 }
 form button {
 	margin-top: 10px;

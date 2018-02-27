@@ -2,28 +2,12 @@ import React, {Component} from 'react';
 import BreakMenu from './BreakMenu'
 
 class Timer extends Component {
-	constructor(props) {
-		super(props);
-		// this.state = {
-		// 	timerString: ''
-		// };
-		this.startTimer = this.startTimer.bind(this);
-	}
-
-	componentDidMount() {
-	  document.getElementById('start-button').style.backgroundColor = 'green';
-	}
-
-	startTimer() {
-		this.props.startTimer();
-	}
-
 	render() {
 		return (
 		 <div>
 			<div className="Timer">
 				<h1 id="timer-string">{ this.props.timerString }</h1>
-				<button id="start-button" onClick={this.startTimer}>
+				<button id="start-button" onClick={this.props.startTimer}>
 			  	Start
 				</button>
 			</div>
