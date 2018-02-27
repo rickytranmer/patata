@@ -68,6 +68,7 @@ class App extends Component {
       document.getElementById(this.state.selectedTask).dataset.timercount++;
       console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
     }
+    this.updateStartButton('start');
     /*TODO 
       display timer end
       prompt break selection (short, long, skip, notes)
@@ -95,7 +96,7 @@ class App extends Component {
     console.log(taskListItems)
     for(let i = 0; i < taskListItems.length; i++) {
       if(selectedTask===null) {
-        window.location.replace("/timer");
+        window.location.replace("/patata/timer");
       } else if(taskListItems[i].id!==selectedTask) { 
         taskListItems[i].style.display = 'none';
       } else {

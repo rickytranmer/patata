@@ -27,7 +27,7 @@ class Header extends Component {
 			<nav>	
 			  <NavLink to='/patata/timer' activeClassName='selected-nav' id='timer-nav'>Timer</NavLink>
 			  <NavLink to='/patata/agenda' activeClassName='selected-nav'>Agenda</NavLink>
-			  <NavLink to='/patata/task' activeClassName='selected-nav'>Tasks</NavLink>
+			  <NavLink to='/patata/task/list' activeClassName='selected-nav'>Tasks</NavLink>
 			</nav>
 
 			<header className="App-header">
