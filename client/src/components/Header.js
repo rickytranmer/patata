@@ -32,7 +32,7 @@ class Header extends Component {
 
 			<header className="App-header">
 			  <img src={ potato } className="App-logo" alt="logo" />
-			  <Link to='patata' className="App-title">Patata</Link>
+			  <Link to='/patata' className="App-title">Patata</Link>
 			  <img src={ potato } className="App-logo" alt="logo" />
 			</header>
 		 </div>

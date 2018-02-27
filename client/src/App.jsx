@@ -155,7 +155,6 @@ class App extends Component {
       <div className="App">
         <Header />
         <Switch>
-          <Route exact path='/' component={Home} />
           <Route exact path='/patata' component={Home} />
           <Route path='/patata/timer' render={ (props)=> <Timers updateSelectedTask={this.updateSelectedTask} timeInterval={this.timeInterval} startTimer={this.startTimer} updateMode={this.updateMode} {...this.state} /> } />
           <Route path='/patata/task' component={Tasks} />
