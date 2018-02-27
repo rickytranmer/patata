@@ -7,6 +7,7 @@ import Timers from './containers/Timers';
 import Header from './components/Header';
 import Home from './components/Home';
 import Agenda from './components/Agenda';
+import alarmFile from './alarm-sound.wav';
 
 class App extends Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class App extends Component {
       mode: '',
       selectedTask: ''
     };
+    this.alarmSound = new Audio(alarmFile);
   }
 
   componentDidMount() {
@@ -55,14 +57,14 @@ class App extends Component {
     if(this.state.timer<=0) { this.endTimer() }
   }
 
-  endTimer() {
+  endTimer = ()=> {
     document.querySelector('title').innerHTML = 'Patata';
-    this.updateStartButton('start');
     clearInterval(this.timeInterval);
     this.timeInterval = null;
-    if(this.state.timer===0) { 
+    if(this.state.timer<=0) { 
       this.updateTimer(this.state.timerDefault);
       this.updateTimerString(this.state.timerString);
+      this.onPlay();
     }
     if(this.state.selectedTask) {
       document.getElementById(this.state.selectedTask).dataset.timercount++;
@@ -125,6 +127,7 @@ class App extends Component {
       startButton.innerHTML = 'Stop';
       startButton.style.backgroundColor = '#FF4136';
     } else if((str === 'start') && (startButton)) {
+      console.log('start');
       startButton.innerHTML = 'Start';
       startButton.style.backgroundColor = '#0EBC10';
     }
@@ -147,6 +150,10 @@ class App extends Component {
     } else {
       this.endTimer();
     }
+  }
+
+  onPlay = ()=> {
+    this.alarmSound.play();
   }
 
   // Separate app components, display based on mode or timerString?
