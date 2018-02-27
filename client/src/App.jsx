@@ -13,7 +13,7 @@ class App extends Component {
     super(props);
     this.state = {
       response: '',
-      timer: 2,
+      timer: 1500,
       timerDefault: 1500,
       timerString: '',
       mode: '',
@@ -109,6 +109,9 @@ class App extends Component {
         selectedTaskDetails.innerHTML += `<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;${taskListItems[i].dataset.timercount} x ${taskListItems[i].dataset.timerdefault} = ${taskListItems[i].dataset.timercount*taskListItems[i].dataset.timerdefault}min</li>`;
         taskListItems[i].appendChild(selectedTaskDetails);
         document.getElementById(selectedTask + 'b').style.display = 'none';
+        // Update timer
+        this.updateTimer(taskListItems[i].dataset.timerdefault);
+        this.setState({timerDefault: taskListItems[i].dataset.timerdefault})
       }
     }
     this.updateMode('Selected');
