@@ -27,6 +27,9 @@ class App extends Component {
     if(this.timeInterval) { this.updateStartButton('start') }
   }
   componentDidMount() {
+    this.testApi()
+      .then((res)=> console.log(`3.1 ${res.test}`))
+      .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timer);
   }
   componentWillUnmount() {
@@ -42,6 +45,14 @@ class App extends Component {
   updateMode(mode) {
     this.setState({ mode });
   }
+
+  // Wake up Heroku
+  async testApi() {
+    const response = await fetch('https://patata-api.herokuapp.com/api/test');
+    const body = await response.json();
+    if (response.status !== 200) { throw Error(body.message) }
+    return body;
+  };
 
   // Convert timer to '##m ##s' format - if timer = 0, end it
   convertTimerString(timer) {

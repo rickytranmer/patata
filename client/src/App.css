@@ -42,12 +42,6 @@ button {
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
-  /*
-  display: block;
-  margin: 0 auto;
-  width: 300px;
-  height: 2rem;
-  padding: 0 5px;*/
 }
 button:hover, button:active {
   background-color: rgb(90, 65, 55);
