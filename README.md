@@ -5,7 +5,7 @@
 
 ## Tech Used
 - Front-End: React
-- Back-End: Heroku
+- Back-End: Node.js, deployed on Heroku
 - Database: DynamoDB
 - [Trello](https://trello.com/b/n5llAuib/patata)
 
