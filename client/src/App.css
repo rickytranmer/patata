@@ -145,12 +145,13 @@ li:hover {
   font-size: 1.2rem;
 }
 #different-task {
+  margin-top: 25px;
   height: 3rem;
   width: 300px;
   background-color: #777777;
 }
 #different-task:hover {
-  background-color: #979797;
+  background-color: #878787;
 }
 #task-list {
   display: flex;

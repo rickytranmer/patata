@@ -37,12 +37,14 @@ class TasksList extends Component {
   };
 
   updateSelectedTask(selectedTask) {
-  	if(!this.state.tasks) {
-  		this.getAllTasks()
-  		  .then((res)=> { this.setState({ tasks: res }) })
-  		  .catch((err)=> console.error(err));
-  	}
+  	let tempTask = this.state.selectedTask;
+  	this.setState({ selectedTask });
+  	selectedTask ? this.setState({ mode: 'Selected' }) : this.setState({ mode: 'Select' });
   	this.props.updateSelectedTask(selectedTask);
+  	// Task not there?  Reload page.
+  	// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
+  	if(document.getElementById(tempTask)) { window.location.replace("/patata/timer");
+ }
   }
 
 	render() {
@@ -99,6 +101,7 @@ class TasksList extends Component {
 								</ul>							 
 							 </li>
 							}
+							
 						 </div>
 						)
 					})

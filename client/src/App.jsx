@@ -96,7 +96,6 @@ class App extends Component {
         if((document.getElementById('start-button')) && (document.getElementById('start-button').innerHTML !== 'Stop')) { this.updateStartButton('stop') }
       }, 250);
     } else {
-      document.querySelector('.TasksList').style.display = '';
       this.endTimer();
     }
   }
@@ -153,7 +152,6 @@ class App extends Component {
     } else {
       if(differentTask) { differentTask.style.display = 'inline' }
       // Cycle through displayed list items, determine if matches selectedTask
-      
       for(let i = 0; i < taskListItems.length; i++) {
         if(taskListItems[i].id!==selectedTask) { 
           taskListItems[i].style.display = 'none';

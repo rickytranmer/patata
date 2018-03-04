@@ -13,18 +13,8 @@ class Timer extends Component {
 					</button>
 				}
 			</div>
+			
 			<hr />
-			{/*
-				Timer Display
-				Select Task
-				New Task
-				External Timer
-
-				timerMode:
-					Timer
-					Ended
-					Stopped
-			*/}
 
 			{this.props.timerString==='00m 00s' &&
 				<BreakMenu />
