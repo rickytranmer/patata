@@ -33,7 +33,7 @@ class TasksList extends Component {
 	render() {
 		return(
 		 <div className="TasksList">
-			<h3 id="task-mode">Task {this.state.mode}</h3>
+			<h3 id="task-mode">Task {this.props.mode}</h3>
 			<ul id="task-list">
 				{this.state.tasks &&
 					this.state.tasks.map((task)=> {
@@ -65,8 +65,8 @@ class TasksList extends Component {
 							}
 
 							{/* SELECTED TASK */}
-							{ this.state.selectedTask && this.state.selectedTask===task.date &&
-							 <li id={task.date}>
+							{ this.props.selectedTask && this.props.selectedTask===task.date &&
+							 <li id={task.date} data-timerestimate={task.timerEstimate} data-timerdefault={task.timerDefault} data-timercount={task.timerCount} >
 								<ul>
 								  <b>{task.title}</b>
 								 	{ task.description && // Task Description

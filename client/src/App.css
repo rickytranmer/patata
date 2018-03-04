@@ -46,6 +46,10 @@ button {
 button:hover, button:active {
   background-color: rgb(90, 65, 55);
 }
+button:disabled {
+  background-color: #AAAAAA;
+  opacity: .5;
+}
 h1#timer-string {
   margin: 5px auto;
   font-size: 5rem;

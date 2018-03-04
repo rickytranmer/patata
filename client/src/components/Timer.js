@@ -7,9 +7,11 @@ class Timer extends Component {
 		 <div>
 			<div className="Timer">
 				<h1 id="timer-string">{ this.props.timerString }</h1>
-				<button id="start-button" onClick={this.props.startTimer}>
-			  	Start
-				</button>
+				{ this.props.timerString !== '00m 00s' &&
+					<button id="start-button" onClick={this.props.startTimer}>
+				  	Start
+					</button>
+				}
 			</div>
 			<hr />
 			{/*

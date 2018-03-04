@@ -51,6 +51,7 @@ function getTask(req, res, next) {
 }
 
 function getTasks(req, res, next) {
+	console.log(req.params.username);
 	let username = "RickySoFine";
 	var params = {
 		TableName : "Tasks",

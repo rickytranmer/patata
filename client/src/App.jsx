@@ -14,13 +14,17 @@ class App extends Component {
     super(props);
     this.state = {
       response: '',
-      timer: 1500,
+      timer: [{
+        start: 0,
+        stop: 0
+      }],
       timerDefault: 1500,
       timerString: '',
       mode: '',
       selectedTask: ''
     };
     this.alarmSound = new Audio(alarmFile);
+    // this.timeInterval;
   }
 
   componentWillMount() {
@@ -30,7 +34,7 @@ class App extends Component {
     this.testApi()
       .then((res)=> console.log(`3.1 ${res.test}`))
       .catch((err)=> console.error(err));
-    this.convertTimerString(this.state.timer);
+    this.convertTimerString(this.state.timerDefault);
   }
   componentWillUnmount() {
     clearInterval(this.timeInterval);
@@ -45,6 +49,17 @@ class App extends Component {
   updateMode(mode) {
     this.setState({ mode });
   }
+  updateTimerTest(timer) {
+    if(typeof timer === 'number') {
+      if((this.state.timer[0]) && (this.state.timer[0].start)) {
+        this.setState({ timer: [...this.state.timer, {start: timer, stop: 0}] });
+      } else {
+        this.setState({ timer: [{start: timer, stop: 0}] });
+      }
+    } else {
+      this.setState({ timer })
+    }
+  }
 
   // Wake up Heroku
   async testApi() {
@@ -57,7 +72,7 @@ class App extends Component {
   // Convert timer to '##m ##s' format - if timer = 0, end it
   convertTimerString(timer) {
     let newString = '';
-    let minutes, seconds, hours;
+    let seconds, minutes, hours;
     timer >= 3600 ? hours = Math.floor(timer / 3600) : hours = 0;
     timer >= 60 ? minutes = Math.floor(timer / 60) % 60 : minutes = 0;
     seconds = timer % 60;
@@ -66,50 +81,71 @@ class App extends Component {
     if(hours && hours < 10) { hours = '0' + hours }
     hours? newString = `${hours}h ${minutes}m ${seconds}s` : newString = `${minutes}m ${seconds}s`;
     document.querySelector('title').innerHTML = newString;
+    if((this.state.timer[0]) && (this.state.timer[0].start) && (this.timerDifference() >= this.state.timerDefault)) { this.endTimer(); }
     this.updateTimerString(newString);
-    if(this.state.timer<=0) { this.endTimer() }
   }
   
   startTimer = ()=> {
     if(!this.timeInterval) {
-      // let counter = 0;
       this.updateStartButton('stop');
+      this.updateTimerTest(new Date().getTime());
       this.timeInterval = setInterval(()=> {
-        // if(counter!==9) {
-          // counter++;
-        // } else if(counter===9) {
-          this.updateTimer(this.state.timer - 1);
-          this.convertTimerString(this.state.timer);
-          // counter = 0;
-        // }
-        this.updateStartButton('stop');
-      }, 1000);
+        this.convertTimerString(this.state.timerDefault - this.timerDifference());
+        if((document.getElementById('start-button')) && (document.getElementById('start-button').innerHTML !== 'Stop')) { this.updateStartButton('stop') }
+      }, 250);
     } else {
+      document.querySelector('.TasksList').style.display = '';
       this.endTimer();
     }
   }
+
 
   endTimer = ()=> {
     document.querySelector('title').innerHTML = 'Patata';
     clearInterval(this.timeInterval);
     this.timeInterval = null;
+    let timer = JSON.parse(JSON.stringify(this.state.timer));
+    console.log(timer);
+    timer[timer.length-1].stop = new Date().getTime();
+    this.updateTimerTest(timer);
     // Determine if stopped because of end or click
-    if(this.state.timer<=0) { 
-      this.updateTimer(this.state.timerDefault);
+    if(this.timerDifference() >= this.state.timerDefault) { 
+      this.updateStartButton('end');
       this.updateTimerString(this.state.timerString);
       this.onPlay();
+      // Incrememnt selectedTask timercount
+      if(this.state.selectedTask) {
+        document.getElementById(this.state.selectedTask).dataset.timercount++;
+        console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
+      }
     }
-    // Incrememnt selectedTask timercount
-    if(this.state.selectedTask) {
-      document.getElementById(this.state.selectedTask).dataset.timercount++;
-      console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
-    }
+    
     this.updateStartButton('start');
+  }
+
+  timerDifference() {
+    let sumTimer = 0;
+    if(this.timeInterval) {
+      for(let i = 0; i < this.state.timer.length; i++) {
+        if(!this.state.timer[i].stop) {
+          sumTimer += (new Date().getTime() - this.state.timer[i].start)
+        } else {
+          sumTimer += (this.state.timer[i].stop - this.state.timer[i].start)
+        }
+      }
+      return Math.floor(sumTimer/1000);
+    } else {
+      return 0;
+    }
   }
 
   // Set selectedTask to appply timer, can be called with empty parameter to clear selectedTask
   updateSelectedTask = (selectedTask)=> {
     this.setState({ selectedTask });
+    if(selectedTask === null) {
+      window.location.replace("/patata/timer");
+      this.updateMode('Select');
+    }
     let differentTask = document.getElementById('different-task')||null;
     if(differentTask) { differentTask.style.display = 'inline' }
 
@@ -117,24 +153,13 @@ class App extends Component {
     let taskListItems = document.querySelectorAll('li');
     console.log(taskListItems)
     for(let i = 0; i < taskListItems.length; i++) {
-      if(selectedTask===null) {
-        window.location.replace("/patata/timer");
-      } else if(taskListItems[i].id!==selectedTask) { 
+      if(selectedTask && taskListItems[i].id!==selectedTask) { 
         taskListItems[i].style.display = 'none';
       } else {
-        let selectedTaskDetails = document.createElement('ul');
-        // Recreate selected task, using same display as task list
-        selectedTaskDetails.innerHTML = `<b>${taskListItems[i].title}</b>`;
-        if(taskListItems[i].dataset.description) { selectedTaskDetails.innerHTML += `<div><li>&nbsp;<i>Description:</i></li><li>&nbsp;-${taskListItems[i].dataset.description}</li></div>` }
-        selectedTaskDetails.innerHTML += `<li>&nbsp;<i>Time:</i></li>`;
-        selectedTaskDetails.innerHTML += `<li>&nbsp;&nbsp;-Estimate: ${taskListItems[i].dataset.timerestimate} x ${taskListItems[i].dataset.timerdefault} = ${taskListItems[i].dataset.timerestimate*taskListItems[i].dataset.timerdefault}min</li>`;
-        selectedTaskDetails.innerHTML += `<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;${taskListItems[i].dataset.timercount} x ${taskListItems[i].dataset.timerdefault} = ${taskListItems[i].dataset.timercount*taskListItems[i].dataset.timerdefault}min</li>`;
-        taskListItems[i].appendChild(selectedTaskDetails);
         document.getElementById(selectedTask + 'b').style.display = 'none';
         // Update timer
-        this.updateTimer(taskListItems[i].dataset.timerdefault*60);
-        this.convertTimerString(taskListItems[i].dataset.timerdefault*60);
-        this.setState({timerDefault: taskListItems[i].dataset.timerdefault})
+        this.convertTimerString((taskListItems[i].dataset.timerdefault*60) - this.timerDifference());
+        this.setState({timerDefault: taskListItems[i].dataset.timerdefault*60})
       }
     }
     this.updateMode('Selected');
@@ -142,13 +167,15 @@ class App extends Component {
   }
 
   // Change button to 'start' or 'stop'
-  updateStartButton(str) {
+  updateStartButton = (str)=> {
     let startButton = document.getElementById('start-button')||null;
     if((str === 'stop') && (startButton)) {
       startButton.innerHTML = 'Stop';
       startButton.style.backgroundColor = '#FF4136';
+      if(!this.state.selectedTask) {
+        // document.querySelector('.TasksList').style.display = 'none';
+      }
     } else if((str === 'start') && (startButton)) {
-      console.log('start');
       startButton.innerHTML = 'Start';
       startButton.style.backgroundColor = '#0EBC10';
     }
@@ -156,6 +183,7 @@ class App extends Component {
 
   onPlay = ()=> {
     this.alarmSound.play();
+    console.log('alarm ended');
   }
 
   render() {

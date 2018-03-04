@@ -10,5 +10,6 @@ router.route('/api/task')
 	.post(tasksController.postTask);
 
 router.get('/api/tasks', tasksController.getTasks);
+router.get('/api/tasks/:username', tasksController.getTasks);
 
 module.exports = router;
