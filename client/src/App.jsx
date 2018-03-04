@@ -144,16 +144,16 @@ class App extends Component {
   // Set selectedTask to appply timer, can be called with empty parameter to clear selectedTask
   updateSelectedTask = (selectedTask)=> {
     this.setState({ selectedTask });
-    
     let differentTask = document.getElementById('different-task')||null;
-    if(differentTask) { differentTask.style.display = 'inline' }
-
-    // Cycle through displayed list items, determine if matches selectedTask
     let taskListItems = document.querySelectorAll('li');
     console.log(taskListItems);
     if(selectedTask === null) {
+      if(differentTask) { differentTask.style.display = 'none' }
       this.updateMode('Select');
     } else {
+      if(differentTask) { differentTask.style.display = 'inline' }
+      // Cycle through displayed list items, determine if matches selectedTask
+      
       for(let i = 0; i < taskListItems.length; i++) {
         if(taskListItems[i].id!==selectedTask) { 
           taskListItems[i].style.display = 'none';
@@ -172,10 +172,10 @@ class App extends Component {
     let startButton = document.getElementById('start-button')||null;
     if((startButton) && (str === 'stop')) {
       startButton.innerHTML = 'Stop';
-      startButton.style.backgroundColor = '#FF4136';
+      startButton.classList.add('stop');
     } else if((startButton) && (str === 'start')) {
       startButton.innerHTML = 'Start';
-      startButton.style.backgroundColor = '#0EBC10';
+      startButton.classList.remove('stop');
     }
   }
 

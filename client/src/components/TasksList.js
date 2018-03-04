@@ -36,6 +36,15 @@ class TasksList extends Component {
     return body;
   };
 
+  updateSelectedTask(selectedTask) {
+  	if(!this.state.tasks) {
+  		this.getAllTasks()
+  		  .then((res)=> { this.setState({ tasks: res }) })
+  		  .catch((err)=> console.error(err));
+  	}
+  	this.props.updateSelectedTask(selectedTask);
+  }
+
 	render() {
 		return(
 		 <div className="TasksList">
@@ -95,7 +104,9 @@ class TasksList extends Component {
 					})
 				}
 			</ul>
-			<button id="different-task" onClick={()=> this.props.updateSelectedTask(null)}>Select Different Task</button>
+			{ this.props.selectedTask &&
+				<button id="different-task" onClick={()=> this.updateSelectedTask(null)}>Select Different Task</button>
+			}
 		 </div>
 		)
 	}

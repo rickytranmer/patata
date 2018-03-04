@@ -44,7 +44,7 @@ button {
   -moz-border-radius: 5px;
 }
 button:hover, button:active {
-  background-color: rgb(90, 65, 55);
+  background-color: rgb(100, 75, 65);
 }
 button:disabled {
   background-color: #AAAAAA;
@@ -124,18 +124,33 @@ li:hover {
 }
 
 #start-button {
-  background-color: #0EBC10;
+  background-color: rgb(14, 188, 16);
   font-weight: bold;
   letter-spacing: .2rem;
   width: 150px;
   transition: none;
   margin-bottom: 15px;
+  transition: .333s ease background-color;
+}
+#start-button:hover {
+  background-color: rgba(14, 188, 16, .8);
+}
+#start-button.stop {
+  background-color: rgb(255, 65, 54);
+}
+#start-button.stop:hover {
+  background-color: rgba(255, 65, 54, .8);
 }
 #select-task {
   font-size: 1.2rem;
 }
 #different-task {
-  display: none;
+  height: 3rem;
+  width: 300px;
+  background-color: #777777;
+}
+#different-task:hover {
+  background-color: #979797;
 }
 #task-list {
   display: flex;
