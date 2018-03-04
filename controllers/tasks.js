@@ -51,8 +51,7 @@ function getTask(req, res, next) {
 }
 
 function getTasks(req, res, next) {
-	console.log(req.params.username);
-	let username = "RickySoFine";
+	let username = req.params.username || 'RickySoFine';
 	var params = {
 		TableName : "Tasks",
 		KeyConditionExpression: "#username = :username",

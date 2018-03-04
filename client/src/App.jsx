@@ -48,6 +48,8 @@ class App extends Component {
   }
   updateMode(mode) {
     this.setState({ mode });
+    let taskMode = document.getElementById('task-mode');
+    if(taskMode) { taskMode.innerHTML = `Task ${mode}` }
   }
   updateTimerTest(timer) {
     if(typeof timer === 'number') {
@@ -142,40 +144,36 @@ class App extends Component {
   // Set selectedTask to appply timer, can be called with empty parameter to clear selectedTask
   updateSelectedTask = (selectedTask)=> {
     this.setState({ selectedTask });
-    if(selectedTask === null) {
-      window.location.replace("/patata/timer");
-      this.updateMode('Select');
-    }
+    
     let differentTask = document.getElementById('different-task')||null;
     if(differentTask) { differentTask.style.display = 'inline' }
 
     // Cycle through displayed list items, determine if matches selectedTask
     let taskListItems = document.querySelectorAll('li');
-    console.log(taskListItems)
-    for(let i = 0; i < taskListItems.length; i++) {
-      if(selectedTask && taskListItems[i].id!==selectedTask) { 
-        taskListItems[i].style.display = 'none';
-      } else {
-        document.getElementById(selectedTask + 'b').style.display = 'none';
-        // Update timer
-        this.convertTimerString((taskListItems[i].dataset.timerdefault*60) - this.timerDifference());
-        this.setState({timerDefault: taskListItems[i].dataset.timerdefault*60})
+    console.log(taskListItems);
+    if(selectedTask === null) {
+      this.updateMode('Select');
+    } else {
+      for(let i = 0; i < taskListItems.length; i++) {
+        if(taskListItems[i].id!==selectedTask) { 
+          taskListItems[i].style.display = 'none';
+        } else {
+          // Update timer display and default
+          this.convertTimerString((taskListItems[i].dataset.timerdefault*60) - this.timerDifference());
+          this.setState({timerDefault: taskListItems[i].dataset.timerdefault*60})
+        }
       }
+      this.updateMode('Selected');
     }
-    this.updateMode('Selected');
-    document.getElementById('task-mode').innerHTML = 'Task Selected';
   }
 
   // Change button to 'start' or 'stop'
   updateStartButton = (str)=> {
     let startButton = document.getElementById('start-button')||null;
-    if((str === 'stop') && (startButton)) {
+    if((startButton) && (str === 'stop')) {
       startButton.innerHTML = 'Stop';
       startButton.style.backgroundColor = '#FF4136';
-      if(!this.state.selectedTask) {
-        // document.querySelector('.TasksList').style.display = 'none';
-      }
-    } else if((str === 'start') && (startButton)) {
+    } else if((startButton) && (str === 'start')) {
       startButton.innerHTML = 'Start';
       startButton.style.backgroundColor = '#0EBC10';
     }

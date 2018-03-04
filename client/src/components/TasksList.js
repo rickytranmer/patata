@@ -15,7 +15,13 @@ class TasksList extends Component {
 	    .then((res)=> { this.setState({ tasks: res }) })
 	    .catch((err)=> console.error(err));
 	  this.props.mode ? this.setState({mode: this.props.mode}) : this.setState({mode: 'List'});
-	  this.props.selectedTask ? this.setState({selectedTask: this.props.selectedTask}) : this.setState({selectedTask: ''});
+	  if(this.props.selectedTask) {
+	  	this.setState({selectedTask: this.props.selectedTask});
+	  	let differentTask = document.getElementById('different-task')||null;
+	  	if(differentTask) { differentTask.style.display = 'inline' }
+	  } else {
+	  	this.setState({selectedTask: ''});
+	  }
 	}
 
 	componentDidUpdate() {
@@ -33,9 +39,12 @@ class TasksList extends Component {
 	render() {
 		return(
 		 <div className="TasksList">
-			<h3 id="task-mode">Task {this.props.mode}</h3>
+			{ this.props.mode &&
+				<h3 id="task-mode">Task {this.props.mode}</h3>
+			}
+			
 			<ul id="task-list">
-				{this.state.tasks &&
+				{ this.state.tasks &&
 					this.state.tasks.map((task)=> {
 						return(
 						 <div key={task.date}>	
@@ -58,7 +67,7 @@ class TasksList extends Component {
 							}
 
 							{/* SELECT MODE */}
-							{ this.state.mode==="Select" && !this.state.selectedTask &&
+							{ this.props.mode==="Select" && !this.props.selectedTask &&
 							 <li id={task.date} title={task.title} data-timerestimate={task.timerEstimate} data-timerdefault={task.timerDefault} data-timercount={task.timerCount} data-description={task.description}>
 								<button id={task.date+'b'} className="task-buttons" onClick={()=> this.props.updateSelectedTask(task.date)}><b>{task.title}</b></button>
 							 </li>
