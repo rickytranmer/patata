@@ -32,7 +32,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`3.1 ${res.test}`))
+      .then((res)=> console.log(`3.4 ${res.test}`))
       .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timerDefault);
   }

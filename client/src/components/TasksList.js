@@ -41,7 +41,7 @@ class TasksList extends Component {
   	this.setState({ selectedTask });
   	selectedTask ? this.setState({ mode: 'Selected' }) : this.setState({ mode: 'Select' });
   	this.props.updateSelectedTask(selectedTask);
-  	// Task not there?  Reload page.
+  	// Just the one task still there?  Temporary solution reloads page.
   	// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
   	if(document.getElementById(tempTask)) { window.location.replace("/patata/timer");
  }
