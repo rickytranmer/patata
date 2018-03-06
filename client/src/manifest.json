@@ -3,9 +3,9 @@
   "name": "Patata - Tasks & Timers",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "potato.png",
       "sizes": "144x144",
-      "type": "image/x-icon"
+      "type": "image/png"
     }
   ],
   "start_url": "./index.html",
