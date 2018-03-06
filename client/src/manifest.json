@@ -1,0 +1,15 @@
+{
+  "short_name": "Patata",
+  "name": "Patata - Tasks & Timers",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "144x144",
+      "type": "image/x-icon"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "theme_color": "#FFFFFF",
+  "background_color": "#000000"
+}

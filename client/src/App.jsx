@@ -24,7 +24,6 @@ class App extends Component {
       selectedTask: ''
     };
     this.alarmSound = new Audio(alarmFile);
-    // this.timeInterval;
   }
 
   componentWillMount() {
@@ -188,6 +187,7 @@ class App extends Component {
         <Header />
         <Switch>
           <Route exact path='/patata' component={Home} />
+          <Route exact path='/patata/index.html' component={Home} />
           <Route path='/patata/timer' render={ (props)=> <Timers updateSelectedTask={this.updateSelectedTask} timeInterval={this.timeInterval} startTimer={this.startTimer} updateMode={this.updateMode} {...this.state} /> } />
           <Route path='/patata/task' component={Tasks} />
           <Route path='/patata/agenda' component={Agenda} />
