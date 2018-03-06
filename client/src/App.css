@@ -15,15 +15,16 @@
 .App-title {
   font-size: 1.25em;
   margin: 0 25px;
-  letter-spacing: 1rem;
+  letter-spacing: .75rem;
   font-style: italic;
+  color: #DDDDDD;
+  font-weight: bold;
+}
+.App-title:hover {
+  text-shadow: 1px 0 #CCCCCC;
 }
 .Home, .Timers, .Tasks, .Agenda {
   padding-top: 55px;
-}
-.selected-nav {
-  color: white;
-  text-decoration: underline;
 }
 .Timers li {
   border: none;
@@ -32,6 +33,9 @@
   padding: 5px;
 }
 
+button:hover {
+  cursor: pointer;
+}
 button {
   font-size: 1.5rem;
   margin: 5px;
@@ -50,6 +54,15 @@ button:disabled {
   background-color: #AAAAAA;
   opacity: .5;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  margin: 0 auto;
+}
+form button {
+  margin-top: 25px;
+}
 h1#timer-string {
   margin: 5px auto;
   font-size: 5rem;
@@ -57,6 +70,10 @@ h1#timer-string {
 h3 {
   margin: 5px;
   letter-spacing: .1rem;
+}
+h4 {
+  margin: 20px;
+  font-size: 1.1rem;
 }
 header, nav {
   background-color: #222;
@@ -80,6 +97,24 @@ header {
   height: 25px;
   justify-content: space-between;
 }
+input, textarea {
+  font-size: 1.2rem;
+  border: 1px solid black;
+  border-radius: 5px;
+  display: block;
+  margin: 0 auto;
+  width: 95%;
+  height: 2.5rem;
+  padding: 0 5px;
+  text-align: center;
+  background-color: rgb(245, 245, 245);
+}
+label {
+  font-size: 1.2rem;
+  text-align: left;
+  margin-top: 5px;
+  padding: 2px 5px;
+}
 nav {
   justify-content: space-evenly;
   top: 25px;
@@ -93,7 +128,7 @@ ul {
   list-style: none;
   padding-left: 0;
   margin: 10px auto 20px auto;
-  width: 500px;
+  width: 400px;
 }
 li {
   padding: 0 2px;
@@ -107,20 +142,66 @@ li ul li {
 li:hover {
   text-shadow: 5px solid black;
 }
+textarea {
+  height: 8rem;
+}
 
+.selected-nav {
+  color: white;
+  text-decoration: underline;
+}
 .tasks-nav {
   justify-content: space-evenly;
-  margin: 0 25px;
+  margin:  0;
   display: flex;
   text-decoration: none;
 }
 .tasks-nav button {
   border-radius: 20px;
   padding: 5px 15px;
+  font-size: 1rem;
+  margin: 10px 10px;
+}
+.selected-tasks-nav button {
+  background-color: black;
+  border: none;
+  font-size: 1.25rem;
+  letter-spacing: .1rem;
+  margin: 25px 50px 5px 50px;
+  text-decoration: underline;
+}
+.account-nav {
+  justify-content: center;
+  margin: 0;
+  display: flex;
+  text-decoration: none;
+}
+.account-nav button {
+  border-radius: 20px;
+  padding: 5px 15px;
+  font-size: 1.25rem;
+  margin: 10px 20px;
+}
+.selected-account-nav button {
+  background-color: black;
+  border: none;
+  font-size: 1.5rem;
+  letter-spacing: .1rem;
+  margin: 25px 50px 10px 50px;
+  text-decoration: underline;
+}
+.estimates {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 5px;
+}
+.estimates input {
+  min-width: 20vw;
+  margin: 5px 0;
   font-size: 1.2rem;
 }
-.selected-tasks-nav, .selected-tasks-nav button {
-  visibility: hidden;
+.estimates label {
+  font-size: 1rem;
 }
 
 #start-button {
@@ -162,6 +243,10 @@ li:hover {
 #task-list li {
   margin: 10px 0;
 }
+#task-list li.listed-task {
+  width: 95vw;
+}
+
 
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
@@ -169,14 +254,31 @@ li:hover {
 }
 
 @media only screen and (max-width : 850px) {
-  ul {
-    margin: 10px 5px 25px 5px;
-    width: 98%;
-  }
   .App-logo {
     margin: 5px 10px;
   }
   .Timers li {
     margin: 10px;
+  }
+
+  h1#timer-string {
+    font-size: 4rem;
+  }
+  html {
+    font-size: .95rem;
+  }
+  ul {
+    margin: 10px 5px 25px 5px;
+    width: 98%;
+  }
+}
+
+@media only screen and (min-device-width: 1080px) {
+  form {
+    width: 50vw;
+  }
+
+  #task-list li.listed-task {
+    width: 100%;
   }
 }

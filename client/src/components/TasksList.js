@@ -61,7 +61,7 @@ class TasksList extends Component {
 						 <div key={task.date}>	
 							{/* LIST MODE */}
 							{ this.state.mode==="List" &&
-							 <li id={task.date}>
+							 <li id={task.date} className="listed-task">
 								<ul>
 								 	<b>{task.title}</b>
 									{ task.description && // Task Description

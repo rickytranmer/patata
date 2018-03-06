@@ -186,8 +186,9 @@ class App extends Component {
       <div className="App">
         <Header />
         <Switch>
-          <Route exact path='/patata' component={Home} />
-          <Route exact path='/patata/index.html' component={Home} />
+          {['/', '/patata', '/patata/index.html', '/patata/login', '/patata/signup'].map((path)=> 
+            <Route key={path} exact path={path} component={Home} />
+          )}
           <Route path='/patata/timer' render={ (props)=> <Timers updateSelectedTask={this.updateSelectedTask} timeInterval={this.timeInterval} startTimer={this.startTimer} updateMode={this.updateMode} {...this.state} /> } />
           <Route path='/patata/task' component={Tasks} />
           <Route path='/patata/agenda' component={Agenda} />
