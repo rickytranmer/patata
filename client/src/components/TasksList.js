@@ -14,13 +14,13 @@ class TasksList extends Component {
 	  this.getAllTasks()
 	    .then((res)=> { this.setState({ tasks: res }) })
 	    .catch((err)=> console.error(err));
-	  this.props.mode ? this.setState({mode: this.props.mode}) : this.setState({mode: 'List'});
+	  this.props.mode ? this.setState({ mode: this.props.mode }) : this.setState({ mode: 'List' });
 	  if(this.props.selectedTask) {
-	  	this.setState({selectedTask: this.props.selectedTask});
+	  	this.setState({ selectedTask: this.props.selectedTask });
 	  	let differentTask = document.getElementById('different-task')||null;
 	  	if(differentTask) { differentTask.style.display = 'inline' }
 	  } else {
-	  	this.setState({selectedTask: ''});
+	  	this.setState({ selectedTask: '' });
 	  }
 	}
 

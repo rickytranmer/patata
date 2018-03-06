@@ -4,8 +4,8 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Tasks from './containers/Tasks';
 import Timers from './containers/Timers';
+import Home from './containers/Home';
 import Header from './components/Header';
-import Home from './components/Home';
 import Agenda from './components/Agenda';
 import alarmFile from './alarm-sound.wav';
 

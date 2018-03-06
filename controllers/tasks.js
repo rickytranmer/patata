@@ -35,7 +35,7 @@ function getTask(req, res, next) {
 		TableName: "Tasks",
 		Key:{
 			"username": username,
-			"date": '2018-02-26T13:21:45.857Z'
+			"date": '752Z2018-02-27T18:54:08'
 		}
 	};
 
