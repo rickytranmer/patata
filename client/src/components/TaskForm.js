@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './TaskForm.css';
 
 class TaskForm extends Component {
 	onFormSubmit(event) {

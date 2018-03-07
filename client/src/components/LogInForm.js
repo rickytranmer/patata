@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import './TaskForm.css';
 
 class SignUpForm extends Component {
 	onFormSubmit(e) {

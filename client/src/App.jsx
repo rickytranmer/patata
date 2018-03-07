@@ -31,7 +31,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`3.4 ${res.test}`))
+      .then((res)=> console.log(`3.7 ${res.test}`))
       .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timerDefault);
   }
@@ -87,7 +87,9 @@ class App extends Component {
   }
   
   startTimer = ()=> {
+    let differentTask = document.getElementById('different-task')||null;
     if(!this.timeInterval) {
+      if(differentTask) { differentTask.style.display = 'none' }
       this.updateStartButton('stop');
       this.updateTimerTest(new Date().getTime());
       this.timeInterval = setInterval(()=> {
@@ -95,6 +97,7 @@ class App extends Component {
         if((document.getElementById('start-button')) && (document.getElementById('start-button').innerHTML !== 'Stop')) { this.updateStartButton('stop') }
       }, 250);
     } else {
+      if(differentTask) { differentTask.style.display = 'inline' }
       this.endTimer();
     }
   }
@@ -106,10 +109,8 @@ class App extends Component {
     this.timeInterval = null;
     let timer = JSON.parse(JSON.stringify(this.state.timer));
     console.log(timer);
-    timer[timer.length-1].stop = new Date().getTime();
-    this.updateTimerTest(timer);
     // Determine if stopped because of end or click
-    if(this.timerDifference() >= this.state.timerDefault) { 
+    if(!this.timerDifference()) { 
       this.updateStartButton('end');
       this.updateTimerString(this.state.timerString);
       this.onPlay();
@@ -118,9 +119,11 @@ class App extends Component {
         document.getElementById(this.state.selectedTask).dataset.timercount++;
         console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
       }
+    } else {
+      timer[timer.length-1].stop = new Date().getTime();
+      this.updateTimerTest(timer);
+      this.updateStartButton('start');
     }
-    
-    this.updateStartButton('start');
   }
 
   timerDifference() {
@@ -144,20 +147,20 @@ class App extends Component {
     this.setState({ selectedTask });
     let differentTask = document.getElementById('different-task')||null;
     let taskListItems = document.querySelectorAll('li');
-    console.log(taskListItems);
     if(selectedTask === null) {
       if(differentTask) { differentTask.style.display = 'none' }
       this.updateMode('Select');
     } else {
+      console.log(taskListItems);
       if(differentTask) { differentTask.style.display = 'inline' }
       // Cycle through displayed list items, determine if matches selectedTask
       for(let i = 0; i < taskListItems.length; i++) {
         if(taskListItems[i].id!==selectedTask) { 
           taskListItems[i].style.display = 'none';
-        } else {
+        } else if(this.state.timerString !== '00m 00s') {
           // Update timer display and default
-          this.convertTimerString((taskListItems[i].dataset.timerdefault*60) - this.timerDifference());
-          this.setState({timerDefault: taskListItems[i].dataset.timerdefault*60})
+          this.convertTimerString((taskListItems[i].dataset.timerdefault * 60) - this.timerDifference());
+          this.setState({timerDefault: taskListItems[i].dataset.timerdefault * 60})
         }
       }
       this.updateMode('Selected');
@@ -189,7 +192,12 @@ class App extends Component {
           {['/', '/patata', '/patata/index.html', '/patata/login', '/patata/signup'].map((path)=> 
             <Route key={path} exact path={path} component={Home} />
           )}
-          <Route path='/patata/timer' render={ (props)=> <Timers updateSelectedTask={this.updateSelectedTask} timeInterval={this.timeInterval} startTimer={this.startTimer} updateMode={this.updateMode} {...this.state} /> } />
+          <Route path='/patata/timer' render={ 
+            (props)=> <Timers updateSelectedTask={this.updateSelectedTask} 
+                              timeInterval={this.timeInterval} 
+                              startTimer={this.startTimer} 
+                              updateMode={this.updateMode} 
+                              {...this.state} /> } />
           <Route path='/patata/task' component={Tasks} />
           <Route path='/patata/agenda' component={Agenda} />
         </Switch>

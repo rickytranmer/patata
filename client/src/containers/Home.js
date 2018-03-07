@@ -17,7 +17,7 @@ class Home extends Component {
 
 			<Route exact path='/patata/login' component={LogInForm} />
 			<Route exact path='/patata/signup' component={SignUpForm} />
-			{console.log(this.props.location)}
+			{/*console.log(this.props.location)*/}
 		 </div>
 		)
 	}

@@ -17,7 +17,7 @@ class Timer extends Component {
 			<hr />
 
 			{this.props.timerString==='00m 00s' &&
-				<BreakMenu />
+				<BreakMenu {...this.props} />
 			}
 		 </div>
 		)
