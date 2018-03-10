@@ -4,16 +4,21 @@ class TasksList extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tasks: '',
+			tasks: [],
 			selectedTask: '',
 			mode: ''
 		}
 	}
 
 	componentDidMount() {
-		this.updateTasks(JSON.parse(localStorage.getItem('tasks')), false);
+		let localTasks = JSON.parse(localStorage.getItem("tasks"));
+		console.log(localTasks);
+		this.updateTasks(localTasks, false);
 	  this.getAllTasks()
-	    .then((res)=> { this.updateTasks({ tasks: res }, true) })
+	    .then((res)=> { 
+	    	console.log(res);
+	    	this.updateTasks({ tasks: res }, true) 
+	    })
 	    .catch((err)=> console.error(err));
 	  this.props.mode ? this.setState({ mode: this.props.mode }) : this.setState({ mode: 'List' });
 	  if(this.props.selectedTask) {
@@ -31,16 +36,22 @@ class TasksList extends Component {
 	}
 
 	async getAllTasks() {
-    // const response = await fetch('https://patata-api.herokuapp.com/api/tasks/RickySoFine');
-    const response = await fetch('localhost:3000/api/tasks/RickySoFine');
+    const response = await fetch('https://patata-api.herokuapp.com/api/tasks/RickySoFine');
     const body = await response.json();
     if (response.status !== 200) { throw Error(body.message) }
     return body;
   };
 
   updateTasks(tasks, updateLocal) {
-  	if(updateLocal) { localStorage.setItem(JSON.stringify('tasks', tasks.tasks)) }
-  	this.setState({ tasks });
+  	if(tasks) {
+  		console.log(tasks);
+	  	if(updateLocal) { localStorage.setItem("tasks", JSON.stringify(tasks)) }
+	  	this.setState(tasks);
+  	} else {
+  		console.log('no tasks found');
+  	}
+  	let localTasks = JSON.parse(localStorage.getItem("tasks"));
+  	console.log(localTasks);
   }
 
   updateSelectedTask(selectedTask) {
