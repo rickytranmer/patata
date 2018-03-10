@@ -2,6 +2,7 @@ const docClient = require('../db/docClient');
 
 function postTask(req, res, next) {
 	let table = "Tasks";
+	//TODO - change to logged in user, authenticate
 	let username = "RickySoFine";
 	let params = {
 		TableName: table,
@@ -15,7 +16,7 @@ function postTask(req, res, next) {
 			"timerCount":  req.body.timerCount
 		}
 	};
-	params.Item.date = shortenDate(params.Item.date);
+	params.Item.date = shortenDate(params.Item.date); //see bottom
 
 	console.log("Adding a new item...", params);
 	docClient.put(params, function(err, data) {
@@ -35,7 +36,7 @@ function getTask(req, res, next) {
 		TableName: "Tasks",
 		Key:{
 			"username": username,
-			"date": '752Z2018-02-27T18:54:08'
+			"date": req.params.id || '752Z2018-02-27T18:54:08'
 		}
 	};
 
@@ -47,6 +48,33 @@ function getTask(req, res, next) {
 			console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
 			res.send(data);
 		}
+	});
+}
+
+function putTask(req, res, next) {
+	//TODO - change to current user, authenticate
+	let username = 'RickySoFine';
+
+	var params = {
+	    TableName: "Tasks",
+	    Key:{
+	        "username": username,
+	        "date": req.params.id
+	    },
+	    UpdateExpression: "set timerCount = timerCount + :val",
+	    ExpressionAttributeValues:{
+	        ":val":1
+	    },
+	    ReturnValues:"UPDATED_NEW"
+	};
+
+	console.log("Updating the task...");
+	docClient.update(params, function(err, data) {
+	    if (err) {
+	        console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
+	    } else {
+	        console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+	    }
 	});
 }
 
@@ -74,7 +102,7 @@ function getTasks(req, res, next) {
 }
 
 function shortenDate(thisDate) {
-	// Move milliseconds to the front of date property, shorter and spreads out traffic on dynamodb
+	// Move milliseconds to the front of date property, makes var shorter and spreads out traffic on DynamoDB
 	let newDate = thisDate[20];
 	for(let i = 21; i < 24; i++) {
 		newDate += thisDate[i];
@@ -88,5 +116,6 @@ function shortenDate(thisDate) {
 module.exports = {
 	postTask,
 	getTask,
+	putTask,
 	getTasks
 };

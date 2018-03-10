@@ -9,6 +9,10 @@ router.route('/api/task')
 	.get(tasksController.getTask)
 	.post(tasksController.postTask);
 
+router.route('/api/task/:id')
+	.get(tasksController.getTask)
+	.put(tasksController.putTask);
+
 router.get('/api/tasks', tasksController.getTasks);
 router.get('/api/tasks/:username', tasksController.getTasks);
 

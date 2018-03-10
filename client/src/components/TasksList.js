@@ -11,14 +11,9 @@ class TasksList extends Component {
 	}
 
 	componentDidMount() {
-		let localTasks = JSON.parse(localStorage.getItem("tasks"));
-		console.log(localTasks);
-		this.updateTasks(localTasks, false);
+		this.updateTasks(JSON.parse(localStorage.getItem("tasks")), false);
 	  this.getAllTasks()
-	    .then((res)=> { 
-	    	console.log(res);
-	    	this.updateTasks({ tasks: res }, true) 
-	    })
+	    .then((res)=> { this.updateTasks({ tasks: res }, true) })
 	    .catch((err)=> console.error(err));
 	  this.props.mode ? this.setState({ mode: this.props.mode }) : this.setState({ mode: 'List' });
 	  if(this.props.selectedTask) {
@@ -44,14 +39,11 @@ class TasksList extends Component {
 
   updateTasks(tasks, updateLocal) {
   	if(tasks) {
-  		console.log(tasks);
 	  	if(updateLocal) { localStorage.setItem("tasks", JSON.stringify(tasks)) }
 	  	this.setState(tasks);
   	} else {
   		console.log('no tasks found');
   	}
-  	let localTasks = JSON.parse(localStorage.getItem("tasks"));
-  	console.log(localTasks);
   }
 
   updateSelectedTask(selectedTask) {

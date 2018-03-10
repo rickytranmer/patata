@@ -31,7 +31,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`3.10B ${res.test}`))
+      .then((res)=> console.log(`3.10D ${res.test}`))
       .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timerDefault);
   }
@@ -59,6 +59,37 @@ class App extends Component {
       }
     } else {
       this.setState({ timer })
+    }
+  }
+
+  updateTimerCount(selectedTask) {
+    if(selectedTask && document.getElementById(selectedTask)) {
+      // let timerCount = document.getElementById(selectedTask).dataset.timercount + 1;
+      document.getElementById(selectedTask).dataset.timercount++;
+
+      //TODO - Allow editing of a task and its properties
+      // let updatedTask = {
+      //   username: 'RickySoFine',
+      //   description: event.target.taskDescription.value || null,
+      //   timerDefault: event.target.timerLength.value,
+      //   timerEstimate: event.target.timerEstimate.value || '1',
+      //   timerCount: timerCount,
+      //   date: new Date()
+      // }
+
+      // PUT route to server
+      fetch(`https://patata-api.herokuapp.com/api/task/${selectedTask}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'CORS',
+        // body: JSON.stringify(updatedTask)
+      })
+        //TODO - if err, save updatedTask to localStorage until internet is available
+          //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
+       .catch((err)=> console.error(err))
+       .then((res)=> window.location.replace("/patata/task/list"));
     }
   }
 
@@ -116,6 +147,7 @@ class App extends Component {
       this.onPlay();
       // Incrememnt selectedTask timercount
       if(this.state.selectedTask) {
+        this.updateTimerCount(this.state.selectedTask);
         document.getElementById(this.state.selectedTask).dataset.timercount++;
         console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
       }
@@ -200,6 +232,7 @@ class App extends Component {
                               {...this.state} /> } />
           <Route path='/patata/task' component={Tasks} />
           <Route path='/patata/agenda' component={Agenda} />
+          <Route component={Home} />
         </Switch>
       </div>
     );
