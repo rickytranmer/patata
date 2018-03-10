@@ -63,20 +63,21 @@ class App extends Component {
   }
 
   updateTimerCount(selectedTask) {
+    console.log('updateTimerCount');
     if(!selectedTask && this.state.selectedTask) { selectedTask = this.state.selectedTask }
     if(selectedTask && document.getElementById(selectedTask)) {
       // let timerCount = document.getElementById(selectedTask).dataset.timercount + 1;
       document.getElementById(selectedTask).dataset.timercount++;
 
       //TODO - Allow editing of a task and its properties
-      // let updatedTask = {
-      //   username: 'RickySoFine',
+      let updatedTask = {
+        username: 'RickySoFine',
       //   description: event.target.taskDescription.value || null,
       //   timerDefault: event.target.timerLength.value,
       //   timerEstimate: event.target.timerEstimate.value || '1',
-      //   timerCount: timerCount,
+        timerCount: document.getElementById(selectedTask).dataset.timercount,
       //   date: new Date()
-      // }
+      }
 
       // PUT route to server
       fetch(`https://patata-api.herokuapp.com/api/task/${selectedTask}`, {
@@ -85,12 +86,12 @@ class App extends Component {
           'Content-Type': 'application/json'
         },
         mode: 'CORS',
-        // body: JSON.stringify(updatedTask)
+        body: JSON.stringify(updatedTask)
       })
         //TODO - if err, save updatedTask to localStorage until internet is available
           //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
        .catch((err)=> console.error(err))
-       .then((res)=> window.location.replace("/patata/task/list"));
+       .then((res)=> window.location.replace("/patata/timer"));
     } else {
       console.log('no selectedTask');
     }

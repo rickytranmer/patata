@@ -53,6 +53,7 @@ function getTask(req, res, next) {
 
 function putTask(req, res, next) {
 	//TODO - change to current user, authenticate
+	console.log(req.params.id);
 	let username = 'RickySoFine';
 
 	var params = {
