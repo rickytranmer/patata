@@ -63,6 +63,7 @@ class App extends Component {
   }
 
   updateTimerCount(selectedTask) {
+    if(!selectedTask && this.state.selectedTask) { selectedTask = this.state.selectedTask }
     if(selectedTask && document.getElementById(selectedTask)) {
       // let timerCount = document.getElementById(selectedTask).dataset.timercount + 1;
       document.getElementById(selectedTask).dataset.timercount++;
@@ -90,6 +91,8 @@ class App extends Component {
           //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
        .catch((err)=> console.error(err))
        .then((res)=> window.location.replace("/patata/task/list"));
+    } else {
+      console.log('no selectedTask');
     }
   }
 
@@ -147,9 +150,9 @@ class App extends Component {
       this.onPlay();
       // Incrememnt selectedTask timercount
       if(this.state.selectedTask) {
-        this.updateTimerCount(this.state.selectedTask);
-        document.getElementById(this.state.selectedTask).dataset.timercount++;
-        console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
+        // this.updateTimerCount(this.state.selectedTask);
+        // document.getElementById(this.state.selectedTask).dataset.timercount++;
+        // console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
       }
     } else {
       timer[timer.length-1].stop = new Date().getTime();

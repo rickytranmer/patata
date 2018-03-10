@@ -8,7 +8,7 @@ class BreakMenu extends Component {
 				<h3>(recommended 3-5 minutes)</h3><br/>
 
 				{ this.props.selectedTask &&
-					<button >Add to Timer Count</button>
+					<button onClick={this.props.updateTimerCount}>Add to Timer Count</button>
 				}
 
 				{ !this.props.selectedTask &&
