@@ -36,7 +36,7 @@ function getTask(req, res, next) {
 		TableName: "Tasks",
 		Key:{
 			"username": username,
-			"date": req.params.id || '752Z2018-02-27T18:54:08'
+			"date": req.params.id || '752Z20180227T185408'
 		}
 	};
 
