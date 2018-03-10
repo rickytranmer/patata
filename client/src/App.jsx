@@ -31,7 +31,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`3.10D ${res.test}`))
+      .then((res)=> console.log(`3.10I ${res.test}`))
       .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timerDefault);
   }
@@ -62,9 +62,9 @@ class App extends Component {
     }
   }
 
-  updateTimerCount(selectedTask) {
-    console.log('updateTimerCount');
-    if(!selectedTask && this.state.selectedTask) { selectedTask = this.state.selectedTask }
+  updateTimerCount = ()=> {
+    let selectedTask = this.state.selectedTask;
+    console.log('updateTimerCount', selectedTask);
     if(selectedTask && document.getElementById(selectedTask)) {
       // let timerCount = document.getElementById(selectedTask).dataset.timercount + 1;
       document.getElementById(selectedTask).dataset.timercount++;
@@ -233,6 +233,7 @@ class App extends Component {
                               timeInterval={this.timeInterval} 
                               startTimer={this.startTimer} 
                               updateMode={this.updateMode} 
+                              updateTimerCount={this.updateTimerCount}
                               {...this.state} /> } />
           <Route path='/patata/task' component={Tasks} />
           <Route path='/patata/agenda' component={Agenda} />

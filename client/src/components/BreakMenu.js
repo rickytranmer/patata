@@ -1,6 +1,17 @@
 import React, {Component} from 'react';
 	
 class BreakMenu extends Component {
+	constructor(props) {
+		super(props)
+		this.state = {
+			selectedTask: ''
+		}
+	}
+
+	componentDidMount() {
+		if(this.props.selectedTask) { this.setState({ selectedTask: this.props.selectedTask }) }
+	}
+
 	render() {
 		return (
 			<div className="BreakMenu"><br/>

@@ -106,12 +106,13 @@ function shortenDate(thisDate) {
 	// Move milliseconds to the front of date property, makes var shorter and spreads out traffic on DynamoDB
 	let newDate = thisDate[20];
 	for(let i = 21; i < 24; i++) {
+		if(thisDate[i] ===)
 		newDate += thisDate[i];
 	}
 	for(let i = 0; i < 19; i++) {
 		newDate += thisDate[i];
 	}
-	return newDate;
+	return newDate.replace(/-:/, '');
 }
 
 module.exports = {

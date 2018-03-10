@@ -2,7 +2,7 @@ const router = require('express').Router();
 const tasksController = require('../controllers/tasks');
 
 router.get('/api/test', (req, res)=> {
-  res.send({ test: 'api success' });
+  res.send({ test: '3.10 api success' });
 });
 
 router.route('/api/task')
