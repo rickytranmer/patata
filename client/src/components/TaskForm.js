@@ -6,7 +6,7 @@ class TaskForm extends Component {
 		let newTask = {
 			title: event.target.taskTitle.value,
 			description: event.target.taskDescription.value || null,
-			timerDefault: .05 || event.target.timerLength.value,
+			timerDefault: event.target.timerLength.value,
 			timerEstimate: event.target.timerEstimate.value || '1',
 			timerCount: '0',
 			date: new Date()

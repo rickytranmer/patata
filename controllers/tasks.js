@@ -111,7 +111,7 @@ function shortenDate(thisDate) {
 	for(let i = 0; i < 19; i++) {
 		newDate += thisDate[i];
 	}
-	return newDate.replace(/-:/, '');
+	return newDate.replace(/[^a-zA-Z0-9]/g, '');
 }
 
 module.exports = {
