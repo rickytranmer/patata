@@ -81,8 +81,8 @@ class TasksList extends Component {
 									 </div>
 									}
 									<li>&nbsp;<i>Time:</i></li>
-									<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {task.timerEstimate*task.timerDefault}min</li>
-									<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {task.timerCount*task.timerDefault}min</li>
+									<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
+									<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
 								</ul>
 							 </li>
 							}
@@ -106,8 +106,8 @@ class TasksList extends Component {
 								 	 </div>
 								 	}
 								 	<li>&nbsp;<i>Time:</i></li>
-								 	<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {task.timerEstimate*task.timerDefault}min</li>
-								 	<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {task.timerCount*task.timerDefault}min</li>
+								 	<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
+								 	<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
 								</ul>							 
 							 </li>
 							}
