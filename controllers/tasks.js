@@ -62,10 +62,7 @@ function putTask(req, res, next) {
 	        "username": username,
 	        "date": req.params.id
 	    },
-	    UpdateExpression: "set #timerCount = #timerCount + :val",
-	    ExpressionAttributeNames:{
-        "#timerCount": "timerCount"
-      }
+	    UpdateExpression: "set timerCount = timerCount + :val",
 	    ExpressionAttributeValues:{
 	        ":val":1
 	    },
