@@ -16,4 +16,8 @@ router.route('/api/task/:id')
 router.get('/api/tasks', tasksController.getTasks);
 router.get('/api/tasks/:username', tasksController.getTasks);
 
+router.get('/*', (req, res)=> {
+	res.redirect('https://rickytranmer.github.io/patata');
+});
+
 module.exports = router;
