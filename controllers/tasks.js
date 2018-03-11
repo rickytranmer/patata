@@ -36,7 +36,7 @@ function getTask(req, res, next) {
 		TableName: "Tasks",
 		Key:{
 			"username": username,
-			"date": req.params.id || '752Z20180227T185408'
+			"date": req.params.id || '074Z20180311T001332'
 		}
 	};
 
@@ -57,16 +57,19 @@ function putTask(req, res, next) {
 	let username = 'RickySoFine';
 
 	var params = {
-	    TableName: "Tasks",
-	    Key:{
-	        "username": username,
-	        "date": req.params.id
-	    },
-	    UpdateExpression: "set timerCount = timerCount + :val",
-	    ExpressionAttributeValues:{
-	        ":val":1
-	    },
-	    ReturnValues:"UPDATED_NEW"
+    TableName: "Tasks",
+    Key:{
+      "username": username,
+      "date": req.params.id
+    },
+    UpdateExpression: "set #timerCount = #timerCount + :val",
+    ExpressionAttributeNames:{
+    		"#timerCount": "timerCount"
+    },
+    ExpressionAttributeValues:{
+      ":val":1
+    },
+    ReturnValues:"UPDATED_NEW"
 	};
 
 	console.log("Updating the task...");

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const tasksController = require('../controllers/tasks');
 
 router.get('/api/test', (req, res)=> {
-  res.send({ test: ' server: 3.10a' });
+  res.send({ test: ' server: 3.10b' });
 });
 
 router.route('/api/task')
