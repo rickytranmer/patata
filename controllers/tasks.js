@@ -78,8 +78,10 @@ function putTask(req, res, next) {
 	        console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
 	    } else {
 	        console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+					res.send();
 	    }
 	});
+
 }
 
 function getTasks(req, res, next) {
