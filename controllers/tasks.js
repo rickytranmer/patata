@@ -13,7 +13,7 @@ function postTask(req, res, next) {
 			"description": req.body.description,
 			"timerDefault": req.body.timerDefault,
 			"timerEstimate": req.body.timerEstimate,
-			"timerCount":  req.body.timerCount
+			"timerCount":  0
 		}
 	};
 	params.Item.date = shortenDate(params.Item.date); //see bottom
@@ -62,7 +62,10 @@ function putTask(req, res, next) {
 	        "username": username,
 	        "date": req.params.id
 	    },
-	    UpdateExpression: "set timerCount = timerCount + :val",
+	    UpdateExpression: "set #timerCount = #timerCount + :val",
+	    ExpressionAttributeNames:{
+        "#timerCount": "timerCount"
+      }
 	    ExpressionAttributeValues:{
 	        ":val":1
 	    },

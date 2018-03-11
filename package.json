@@ -9,7 +9,8 @@
     "server": "nodemon server.js",
     "client": "cd client/ && npm start",
     "build": "cd client/ && npm run build",
-    "deploy": "cd client/ && npm run deploy"
+    "deploy": "cd client/ && npm run deploy",
+    "fd": "npm run deploy && pwd && git push heroku master"
   },
   "keywords": [],
   "author": "",
