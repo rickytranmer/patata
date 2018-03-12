@@ -17,7 +17,7 @@ module.exports = function(passport) {
 
 	passport.serializeUser(function(user, next) {
 		console.log('serializeUser');
-		console.log(user);
+		console.log(user.username);
 
 		next(null, user.username); //?
 	});
@@ -62,7 +62,7 @@ module.exports = function(passport) {
 					if (err) {
 						console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
 					}
-					return next(null, paramsPut.Item); //or params.Item?
+					return next(null, paramsPut.Item);
 				});
 			}
 		});
