@@ -16,6 +16,9 @@ module.exports = function(passport) {
 	};
 
 	passport.serializeUser(function(user, next) {
+		console.log('serializeUser');
+		console.log(user);
+
 		next(null, user.username); //?
 	});
 	passport.deserializeUser(function(username, next) {
@@ -51,8 +54,9 @@ module.exports = function(passport) {
 						console.log(err);
 						return next(err);
 					}
-					if(user) {
-						console.log('-user ', user);
+					if(user !== {}) {
+						console.log('-user ');
+						console.log(user);
 						return next(null, false);
 					} else {
 						attempts = 4;
