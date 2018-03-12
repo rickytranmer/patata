@@ -62,29 +62,31 @@ module.exports = function(passport) {
 					} else {
 						attempts = 4;
 						console.log('-else');
-						let encryptedPassword = encryptThis(password);
-						let params = {
-							TableName: table,
-							Item:{
-								"username": username,
-								"password": encryptedPassword
-							}
-						};
-
-						docClient.put(params, function(err, data) {
-							console.log('docClient put user');
-							if (err) {
-									console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
-							} else {
-								console.log("Added user:", JSON.stringify(data, null, 2));
-							}
-							return done(null, data); //or params.Item?
-						});
+						
 					}
 					if(attempts < 4) { attemptUser() }
 				}, 1000);
 			}
 			
+		});
+
+		let encryptedPassword = encryptThis(password);
+		let params2 = {
+			TableName: table,
+			Item:{
+				"username": username,
+				"password": encryptedPassword
+			}
+		};
+
+		docClient.put(params2, function(err, data) {
+			console.log('docClient put user');
+			if (err) {
+					console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
+			} else {
+				console.log("Added user:", JSON.stringify(data, null, 2));
+			}
+			return done(null, data); //or params.Item?
 		});
 		console.log('local-signup end');
 	}));

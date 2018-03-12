@@ -8,10 +8,6 @@ function postSignup(req, res, next) {
 		successRedirect: 	'https://rickytranmer.github.io/patata/',
 		failureRedirect: 	'https://rickytranmer.github.io/patata/signup'
 	});
-	console.log('postSignup');
-	console.log(req);
-	console.log(req.body);
-	console.log(res);
 	return signupStrategy(req, res, next);
 }
 
