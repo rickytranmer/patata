@@ -1,6 +1,7 @@
 const docClient = require('../db/docClient');
 const table = "Users";
 const bcrypt = require('bcrypt-nodejs');
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 // let User = require('../models/user');
 

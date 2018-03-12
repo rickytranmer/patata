@@ -1,4 +1,5 @@
 const docClient = require('../db/docClient');
+const passport = require('passport');
 const table = "Users";
 
 
