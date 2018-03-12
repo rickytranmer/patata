@@ -2,6 +2,10 @@ const router = require('express').Router();
 const tasksController = require('../controllers/tasks');
 const usersController = require('../controllers/users');
 
+router.get('/favicon.ico', (req, res)=> {
+	res.sendFile('./favicon.ico');
+});
+
 router.get('/api/test', (req, res)=> {
   res.send({ test: ' server: 3.12E' });
 });
