@@ -60,11 +60,9 @@ module.exports = function(passport) {
 				docClient.put(paramsPut, function(err, data) {
 					console.log('docClient put user');
 					if (err) {
-							console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
-					} else {
-						console.log("Added user:", JSON.stringify(data, null, 2));
+						console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
 					}
-					return done(null, paramsPut.Item); //or params.Item?
+					return next(null, paramsPut.Item); //or params.Item?
 				});
 			}
 		});

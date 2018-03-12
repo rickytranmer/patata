@@ -7,7 +7,7 @@ router.get('/favicon.ico', (req, res)=> {
 });
 
 router.get('/api/test', (req, res)=> {
-  res.send({ test: ' server: 3.12E' });
+  res.send({ test: ' server: 3.12f' });
 });
 
 router.route('/api/task')
@@ -22,6 +22,7 @@ router.get('/api/tasks', tasksController.getTasks);
 router.get('/api/tasks/:username', tasksController.getTasks);
 
 router.route('/api/user')
+	.get((req, res)=> {	res.redirect('https://rickytranmer.github.io/patata') })
 	.post(usersController.postSignup);
 
 router.get('/*', (req, res)=> {
