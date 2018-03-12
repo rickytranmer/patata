@@ -1,7 +1,7 @@
 const docClient = require('../db/docClient');
+const table = "Tasks";
 
 function postTask(req, res, next) {
-	let table = "Tasks";
 	//TODO - change to logged in user, authenticate
 	let username = "RickySoFine";
 	let params = {
@@ -33,7 +33,7 @@ function postTask(req, res, next) {
 function getTask(req, res, next) {
 	let username = "RickySoFine";
 	let params = {
-		TableName: "Tasks",
+		TableName: table,
 		Key:{
 			"username": username,
 			"date": req.params.id || '074Z20180311T001332'
@@ -57,7 +57,7 @@ function putTask(req, res, next) {
 	let username = 'RickySoFine';
 
 	var params = {
-    TableName: "Tasks",
+    TableName: table,
     Key:{
       "username": username,
       "date": req.params.id
@@ -87,7 +87,7 @@ function putTask(req, res, next) {
 function getTasks(req, res, next) {
 	let username = req.params.username || 'RickySoFine';
 	var params = {
-		TableName : "Tasks",
+		TableName : table,
 		KeyConditionExpression: "#username = :username",
 		ExpressionAttributeNames:{
 				"#username": "username"

@@ -24,7 +24,7 @@ class SignUpForm extends Component {
 	render() {
 		return (
 			<div className="SignUpForm">
-				<form className="task-form" onSubmit={(event)=> this.onFormSubmit(event)}>
+				<form className="login-form" onSubmit={(event)=> this.onFormSubmit(event)}>
 					<label htmlFor="username">-Username-</label>
 					<input disabled placeholder="Coming Soon" type="text" id="username-input" name="username" maxLength="50" required />
 
