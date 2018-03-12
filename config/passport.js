@@ -38,7 +38,7 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	}, function(req, username, password, next) {
 		console.log('local-signup, username: ', username);
-		let userExists = true; //changed if found
+		// let userExists = true; //changed if found
 		let paramsGet = {
 			TableName: table,
 			Key:{ "username": username }
@@ -53,14 +53,15 @@ module.exports = function(passport) {
 			ConditionExpression: 'attribute_not_exists'
 		};
 
-		docClient.get(paramsGet, function(err, user) {
-			console.log('docClient get user');
-			if(!err && user.username !== username) { userExists = false }
-		});
+		// docClient.get(paramsGet, function(err, user) {
+		// 	console.log('docClient get user');
+		// 	if(err) { console.log(err) }
+		// 	if(!err && user.username !== username) { userExists = false }
+		// });
 
-		if(!userExists) {
-			console.log('no user with that name');
-			docClient.put(paramsPut, function(err, data) {
+		// if(!userExists) {
+			// console.log('no user with that name');
+			docClient.putItem(paramsPut, function(err, data) {
 				console.log('docClient put user');
 				if (err) {
 						console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
@@ -69,7 +70,7 @@ module.exports = function(passport) {
 				}
 				return done(null, data); //or params.Item?
 			});
-		}
+		// }
 		
 		console.log('local-signup end');
 	}));
