@@ -27,6 +27,7 @@ module.exports = function(passport) {
 			Key:{ "username": username }
 		};
 		docClient.get(params, function(err, user) {
+			console.log('docClient deserializeUser');
 			next(err, user);
 		});
 	});
