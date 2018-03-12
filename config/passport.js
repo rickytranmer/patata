@@ -32,13 +32,20 @@ module.exports = function(passport) {
 		passwordField: 'password',
 		passReqToCallback: true
 	}, function(req, username, password, next) {
-		console.log('local-signup');
+		console.log('local-signup, username: ', username);
 		let params = {
 			TableName: table,
 			Key:{ "username": username }
 		};
 		docClient.get(params, function(err, user) {
 			console.log('docClient get user');
+			let waitTime = 0;
+			while(!err || !user) {
+				setTimeout(()=> {
+					console.log('-searching');
+					waitTime++;
+				}, 1000);
+			}
 			if(err) { 
 				console.log('-err');
 				console.log(err);
