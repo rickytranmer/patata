@@ -11,7 +11,7 @@ class SignUpForm extends Component {
 			};
 			console.log(newUser);
 
-			POST route to server
+			// POST route to server
 			fetch('https://patata-api.herokuapp.com/api/user', {
 			  method: 'POST',
 			  headers: {
