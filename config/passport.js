@@ -55,7 +55,7 @@ module.exports = function(passport) {
 						console.log(err);
 						return next(err);
 					}
-					if(user !== {}) {
+					if(user && user.username) {
 						console.log('-user ');
 						console.log(user);
 						return next(null, false);

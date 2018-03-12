@@ -10,6 +10,8 @@ function postSignup(req, res, next) {
 	});
 	console.log('postSignup');
 	console.log(req);
+	if(bodyParser) console.log(req.body);
+	console.log(res);
 	return signupStrategy(req, res, next);
 }
 
