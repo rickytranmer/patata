@@ -1,9 +1,10 @@
 const router = require('express').Router();
+const passport = require('passport');
 const tasksController = require('../controllers/tasks');
 const usersController = require('../controllers/users');
 
 router.get('/api/test', (req, res)=> {
-  res.send({ test: ' server: 3.10c' });
+  res.send({ test: ' server: 3.11' });
 });
 
 router.route('/api/task')

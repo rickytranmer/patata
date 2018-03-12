@@ -9,7 +9,6 @@ class SignUpForm extends Component {
 				username: event.target.username.value,
 				password
 			};
-			console.log(newUser);
 
 			// POST route to server
 			fetch('https://patata-api.herokuapp.com/api/user', {
@@ -23,7 +22,7 @@ class SignUpForm extends Component {
 	     .catch((err)=> console.error(err))
 	     .then((res)=> {
 	     	console.log(res);
-	  		window.location.replace("/patata");
+	  		// window.location.replace("/patata");
 	   	 });
 		}  else {
 			event.target.password1.placeholder = 'Passwords must match';
