@@ -54,9 +54,9 @@ module.exports = function(passport) {
 		};
 
 		docClient.get(paramsGet, function(err, user) {
-			console.log('docClient get user');
+			console.log('docClient get user ', user.username);
 			if(err) { console.log(err) }
-			if(!err && user.username !== username) {
+			if(!err && (!user.username || user.username !== username)) {
 				docClient.put(paramsPut, function(err, data) {
 					console.log('docClient put user');
 					if (err) {
