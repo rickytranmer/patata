@@ -3,7 +3,7 @@ const tasksController = require('../controllers/tasks');
 const usersController = require('../controllers/users');
 
 router.get('/api/test', (req, res)=> {
-  res.send({ test: ' server: 3.12' });
+  res.send({ test: ' server: 3.12a' });
 });
 
 router.route('/api/task')
