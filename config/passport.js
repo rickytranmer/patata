@@ -7,7 +7,8 @@ const LocalStrategy = require('passport-local').Strategy;
 
 module.exports = function(passport) {
 	// - Bcrypt functions
-	function encrypt(password) {
+	function encryptThis(password) {
+		console.log('encryptThis');
 		return bcrypt.hashSync(password, bcrypt.genSaltSync(8));
 	};
 	function validPassword(password, thisPassword) {
@@ -56,11 +57,12 @@ module.exports = function(passport) {
 					} else {
 						attempts = 4;
 						console.log('-else');
+						let encryptedPassword = encryptThis(password);
 						let params = {
 							TableName: table,
 							Item:{
 								"username": username,
-								"password": encrypt(password)
+								"password": encryptedPassword
 							}
 						};
 
