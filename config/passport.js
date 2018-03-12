@@ -64,7 +64,7 @@ module.exports = function(passport) {
 					} else {
 						console.log("Added user:", JSON.stringify(data, null, 2));
 					}
-					return done(null, data); //or params.Item?
+					return done(null, paramsPut.Item); //or params.Item?
 				});
 			}
 		});
