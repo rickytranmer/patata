@@ -40,6 +40,7 @@ module.exports = function(passport) {
 		docClient.get(params, function(err, user) {
 			console.log('docClient get user');
 			let attempts = 0;
+			attemptUser();
 			function attemptUser() {
 				attempts++;
 				console.log('attempt ', attempts);
