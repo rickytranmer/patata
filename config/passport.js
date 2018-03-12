@@ -38,48 +38,28 @@ module.exports = function(passport) {
 		passReqToCallback: true
 	}, function(req, username, password, next) {
 		console.log('local-signup, username: ', username);
-		let params = {
+		let paramsGet = {
 			TableName: table,
 			Key:{ "username": username }
 		};
-		docClient.get(params, function(err, user) {
-			console.log('docClient get user');
-			let attempts = 0;
-			attemptUser();
-			function attemptUser() {
-				attempts++;
-				console.log('attempt ', attempts);
-				setTimeout(()=> {
-					if(err) { 
-						console.log('-err');
-						console.log(err);
-						return next(err);
-					}
-					if(user && user.username) {
-						console.log('-user ');
-						console.log(user);
-						return next(null, false);
-					} else {
-						attempts = 4;
-						console.log('-else');
-						
-					}
-					if(attempts < 4) { attemptUser() }
-				}, 1000);
-			}
-			
-		});
-
 		let encryptedPassword = encryptThis(password);
-		let params2 = {
+		let paramsPut = {
 			TableName: table,
 			Item:{
 				"username": username,
 				"password": encryptedPassword
-			}
+			},
+			ConditionExpression: 'attribute_not_exists'
 		};
 
-		docClient.put(params2, function(err, data) {
+		// docClient.get(paramsGet, function(err, user) {
+		// 	console.log('docClient get user');
+			
+		// });
+
+
+
+		docClient.put(paramsPut, function(err, data) {
 			console.log('docClient put user');
 			if (err) {
 					console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
