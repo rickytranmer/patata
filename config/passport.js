@@ -39,13 +39,6 @@ module.exports = function(passport) {
 		};
 		docClient.get(params, function(err, user) {
 			console.log('docClient get user');
-			let waitTime = 0;
-			while(!err || !user) {
-				setTimeout(()=> {
-					console.log('-searching');
-					waitTime++;
-				}, 1000);
-			}
 			if(err) { 
 				console.log('-err');
 				console.log(err);
