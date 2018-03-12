@@ -32,15 +32,23 @@ module.exports = function(passport) {
 		passwordField: 'password',
 		passReqToCallback: true
 	}, function(req, username, password, next) {
+		console.log('local-signup');
 		let params = {
 			TableName: table,
 			Key:{ "username": username }
 		};
 		docClient.get(params, function(err, user) {
-			if(err) { return next(err) }
+			console.log('docClient get user');
+			if(err) { 
+				console.log('-err');
+				console.log(err);
+				return next(err);
+			}
 			if(user) {
+				console.log('-user');
 				return next(null, false);
 			} else {
+				console.log('-else');
 				let params = {
 					TableName: table,
 					Item:{
@@ -48,7 +56,9 @@ module.exports = function(passport) {
 						"password": encrypt(password)
 					}
 				};
+
 				docClient.put(params, function(err, data) {
+					console.log('docClient put user');
 					if (err) {
 							console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
 					} else {
@@ -58,7 +68,7 @@ module.exports = function(passport) {
 				});
 			}
 		});
-
+		console.log('local-signup end');
 	}));
 
 	// passport.use('local-login', new LocalStrategy({
