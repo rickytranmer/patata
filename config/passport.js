@@ -39,34 +39,44 @@ module.exports = function(passport) {
 		};
 		docClient.get(params, function(err, user) {
 			console.log('docClient get user');
-			if(err) { 
-				console.log('-err');
-				console.log(err);
-				return next(err);
-			}
-			if(user) {
-				console.log('-user');
-				return next(null, false);
-			} else {
-				console.log('-else');
-				let params = {
-					TableName: table,
-					Item:{
-						"username": username,
-						"password": encrypt(password)
+			let attempts = 0;
+			function attemptUser() {
+				attempts++;
+				console.log('attempt ', attempts);
+				setTimeout(()=> {
+					if(err) { 
+						console.log('-err');
+						console.log(err);
+						return next(err);
 					}
-				};
-
-				docClient.put(params, function(err, data) {
-					console.log('docClient put user');
-					if (err) {
-							console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
+					if(user) {
+						console.log('-user ', user);
+						return next(null, false);
 					} else {
-						console.log("Added user:", JSON.stringify(data, null, 2));
+						attempts = 4;
+						console.log('-else');
+						let params = {
+							TableName: table,
+							Item:{
+								"username": username,
+								"password": encrypt(password)
+							}
+						};
+
+						docClient.put(params, function(err, data) {
+							console.log('docClient put user');
+							if (err) {
+									console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
+							} else {
+								console.log("Added user:", JSON.stringify(data, null, 2));
+							}
+							return done(null, data); //or params.Item?
+						});
 					}
-					return done(null, data); //or params.Item?
-				});
+					if(attempts < 4) { attemptUser() }
+				}, 1000);
 			}
+			
 		});
 		console.log('local-signup end');
 	}));
