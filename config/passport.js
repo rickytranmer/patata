@@ -49,7 +49,7 @@ module.exports = function(passport) {
 			Item:{
 				"username": username,
 				"password": encryptedPassword
-			}
+			},
 			ConditionExpression: 'attribute_not_exists'
 		};
 
