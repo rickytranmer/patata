@@ -13,7 +13,7 @@ function authenticatedUser(req, res, next) {
 }
 
 router.get('/api/test', (req, res)=> {
-  res.send({ test: ' server: 3.12F' });
+  res.send({ test: ' server: 3.12' });
 });
 
 router.route('/api/task')

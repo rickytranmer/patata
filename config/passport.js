@@ -49,14 +49,14 @@ module.exports = function(passport) {
 			Item:{
 				"username": { S: username },
 				"password": { S: encryptedPassword }
-			},
+			}
 		};
 
 		docClient.get(paramsGet, function(err, user) {
 			console.log('docClient get user ', username);
 			if(err) { console.log(err) }
 			if(!err && !user.username) {
-				docClient.putItem(paramsPut, function(err, data) {
+				docClient.put(paramsPut, function(err, data) {
 					console.log('docClient put user');
 					if (err) {
 						console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
