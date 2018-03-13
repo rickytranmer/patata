@@ -50,21 +50,21 @@ module.exports = function(passport) {
 				"username": username,
 				"password": encryptedPassword
 			}
-			// ConditionExpression: 'attribute_not_exists'
+			ConditionExpression: 'attribute_not_exists'
 		};
 
-		docClient.get(paramsGet, function(err, user) {
-			console.log('docClient get user ', user.username);
-			if(err) { console.log(err) }
-			if(!err && !user.username) {
-				docClient.put(paramsPut, function(err, data) {
+		// docClient.get(paramsGet, function(err, user) {
+			console.log('docClient get user ', username);
+			// if(err) { console.log(err) }
+			// if(!err && !user.username) {
+				docClient.putItem(paramsPut, function(err, data) {
 					console.log('docClient put user');
 					if (err) {
 						console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
 					}
 					return next(null, paramsPut.Item);
 				});
-			}
+			// }
 		});
 
 		// if(!userExists) {
