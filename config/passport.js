@@ -47,8 +47,8 @@ module.exports = function(passport) {
 		let paramsPut = {
 			TableName: table,
 			Item:{
-				"username": username,
-				"password": encryptedPassword
+				"username": { S: username },
+				"password": { S: encryptedPassword }
 			},
 			ConditionExpression: 'attribute_not_exists'
 		};
