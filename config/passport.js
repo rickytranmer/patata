@@ -65,7 +65,7 @@ module.exports = function(passport) {
 					return next(null, paramsPut.Item);
 				});
 			// }
-		});
+		// });
 
 		// if(!userExists) {
 			// console.log('no user with that name');
