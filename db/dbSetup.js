@@ -37,27 +37,27 @@ dynamodb.createTable(params, function(err, data) {
 
 
 // Users - Users Table
-params = {
-    TableName : "Users",
-    KeySchema: [       
-        { AttributeName: "username", KeyType: "HASH"}
-    ],
-    AttributeDefinitions: [       
-        { AttributeName: "username", AttributeType: "S" }
-    ],
-    ProvisionedThroughput: {       
-        ReadCapacityUnits: 5, 
-        WriteCapacityUnits: 5
-    }
-};
-//CREATE
-dynamodb.createTable(params, function(err, data) {
-    if (err) {
-        console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-        console.log("Created table:", JSON.stringify(data, null, 2));
-    }
-});
+// params = {
+//     TableName : "Users",
+//     KeySchema: [       
+//         { AttributeName: "username", KeyType: "HASH"}
+//     ],
+//     AttributeDefinitions: [       
+//         { AttributeName: "username", AttributeType: "S" }
+//     ],
+//     ProvisionedThroughput: {       
+//         ReadCapacityUnits: 5, 
+//         WriteCapacityUnits: 5
+//     }
+// };
+// //CREATE
+// dynamodb.createTable(params, function(err, data) {
+//     if (err) {
+//         console.error("Unable to create table. Error JSON:", JSON.stringify(err, null, 2));
+//     } else {
+//         console.log("Created table:", JSON.stringify(data, null, 2));
+//     }
+// });
 // }});
 
 // Agenda - Day's Tasks Table

@@ -12,7 +12,7 @@ router.route('/api/task')
 
 router.route('/api/task/:id')
 	.get(tasksController.getTask)
-	.put(authenticatedUser, tasksController.putTask);
+	.put(tasksController.putTask);
 
 router.get('/api/tasks', tasksController.getTasks);
 router.get('/api/tasks/:username', tasksController.getTasks);
