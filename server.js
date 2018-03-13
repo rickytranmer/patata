@@ -4,8 +4,6 @@ const bodyParser = require('body-parser');
 const port = process.env.PORT || 5000;
 const router = require('./config/routes');
 const cors = require('cors');
-const passport = require('passport');
-const session = require('express-session');
 
 app.use(express.static(__dirname + '/client'));
 app.use(require('helmet')());
@@ -22,19 +20,6 @@ if(!process.env.DYNO) {
 	  next();
 	});
 }
-app.use(session({
-	secret: process.env.sessionSecret || require('./config/env.js').sessionSecret,
-	resave: false,
-	saveUninitialized: false
-}));
-app.use(passport.initialize());
-app.use(passport.session());
-require('./config/passport')(passport);
-app.use((req, res, next)=> {
-	res.locals.currentUser = req.user;
-	console.log(req.user);
-	next();
-});
 
 // - Routes
 app.use('/', router);

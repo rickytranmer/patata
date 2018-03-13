@@ -1,3 +1,4 @@
+//DEPRECATED
 const docClient = require('../db/docClient');
 const table = "Users";
 const bcrypt = require('bcrypt-nodejs');
@@ -65,40 +66,7 @@ module.exports = function(passport) {
 				});
 			}
 		});
-
-		// if(!userExists) {
-			// console.log('no user with that name');
-			// docClient.putItem(paramsPut, function(err, data) {
-			// 	console.log('docClient put user');
-			// 	if (err) {
-			// 			console.error("Unable to add user. Error JSON:", JSON.stringify(err, null, 2));
-			// 	} else {
-			// 		console.log("Added user:", JSON.stringify(data, null, 2));
-			// 	}
-			// 	return done(null, data); //or params.Item?
-			// });
-		// }
 		
 		console.log('local-signup end');
 	}));
-
-	// passport.use('local-login', new LocalStrategy({
-	// 	usernameField: 'username',
-	// 	passwordField: 'password',
-	// 	passReqToCallback: true
-	// }, function(req, username, password, next) {
-	// 	// Search for user
-	// 	User.findOne({'username': username}, function(err, user) {
-	// 		if (err) return next(err);
-	// 		// No user
-	// 		if (!user) {
-	// 			return next(null, false);
-	// 		}
-	// 		// Wrong password
-	// 		if (!user.validPassword(password)) {
-	// 			return next(null, false)
-	// 		}
-	// 		return next(null, user)
-	// 	});
-	// }));
 };

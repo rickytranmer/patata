@@ -2,18 +2,8 @@ const router = require('express').Router();
 const tasksController = require('../controllers/tasks');
 const usersController = require('../controllers/users');
 
-function authenticatedUser(req, res, next) {
-	if(req.isAuthenticated()) { 
-		console.log('authenticated');
-		return next() 
-	} else {
-		console.log('not authenticated');
-		return next();
-	}
-}
-
 router.get('/api/test', (req, res)=> {
-  res.send({ test: ' server: 3.12' });
+  res.send({ test: ' server: 3.13' });
 });
 
 router.route('/api/task')
