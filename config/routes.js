@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const tasksController = require('../controllers/tasks');
-const usersController = require('../controllers/users');
 
 router.get('/api/test', (req, res)=> {
   res.send({ test: ' server: 3.14a' });
@@ -16,14 +15,6 @@ router.route('/api/task/:id')
 
 router.get('/api/tasks', tasksController.getTasks);
 router.get('/api/tasks/:username', tasksController.getTasks);
-
-router.route('/api/user')
-	// .get(usersController.getUser)
-	// .get((req, res)=> {	res.redirect('https://rickytranmer.github.io/patata') })
-	.post(usersController.postSignup);
-
-router.route('/api/user/:username')
-	.get(usersController.getUser);
 
 router.get('/*', (req, res)=> {
 	res.redirect('https://rickytranmer.github.io/patata');

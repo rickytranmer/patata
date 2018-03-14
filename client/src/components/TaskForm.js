@@ -8,8 +8,8 @@ class TaskForm extends Component {
 			title: event.target.taskTitle.value,
 			description: event.target.taskDescription.value || null,
 			timerDefault: event.target.timerLength.value,
-			timerEstimate: event.target.timerEstimate.value || '1',
-			timerCount: '0',
+			timerEstimate: event.target.timerEstimate.value || 1,
+			timerCount: 0,
 			date: new Date()
 		};
 		console.log(newTask);

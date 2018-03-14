@@ -204,6 +204,15 @@ textarea {
 .estimates label {
   font-size: 1rem;
 }
+.delete-task {
+  float: right;
+  background-color: rgb(255, 65, 54); 
+}
+.edit-button {
+  float: right;
+  font-size: 2.25rem;
+  cursor: pointer;
+}
 
 #start-button {
   background-color: rgb(14, 188, 16);

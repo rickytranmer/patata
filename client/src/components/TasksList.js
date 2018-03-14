@@ -11,18 +11,29 @@ class TasksList extends Component {
 	}
 
 	componentDidMount() {
-		this.updateTasks(JSON.parse(localStorage.getItem("tasks")), false);
-	  this.getAllTasks()
-	    .then((res)=> { this.updateTasks({ tasks: res }, true) })
-	    .catch((err)=> console.error(err));
+		
 	  this.props.mode ? this.setState({ mode: this.props.mode }) : this.setState({ mode: 'List' });
 	  if(this.props.selectedTask) {
 	  	this.setState({ selectedTask: this.props.selectedTask });
 	  	let differentTask = document.getElementById('different-task')||null;
-	  	if(differentTask) { differentTask.style.display = 'inline' }
+	  	if(differentTask) { differentTask.style.display = 'inline'; }
 	  } else {
 	  	this.setState({ selectedTask: '' });
 	  }
+	  
+  	if(this.props.authUser) {
+  		// Grab tasks from Heroku
+  		this.getAllTasks()
+  		  .then((res)=> { this.updateTasks({ tasks: res }, true) })
+  		  .catch((err)=> console.error(err));
+  	} else {
+  		// Grab local tasks
+  		this.updateTasks(JSON.parse(localStorage.getItem("tasks")), false);
+  		setTimeout(()=> {
+  			// Look for authUser one more time
+  			if(this.props.authUser) { this.getAllTasks().then((res)=> { this.updateTasks({ tasks: res }, true) }).catch((err)=> console.error(err))	}
+			}, 333);
+  	}
 	}
 
 	componentDidUpdate() {
@@ -31,8 +42,7 @@ class TasksList extends Component {
 	}
 
 	async getAllTasks() {
-		let username = this.props.authUser || null;
-    const response = await fetch(`https://patata-api.herokuapp.com/api/tasks/${username}`);
+    const response = await fetch(`https://patata-api.herokuapp.com/api/tasks/${this.props.authUser}`);
     const body = await response.json();
     if (response.status !== 200) { throw Error(body.message) }
     return body;
@@ -50,13 +60,28 @@ class TasksList extends Component {
   updateSelectedTask(selectedTask) {
   	let tempTask = this.state.selectedTask;
   	this.setState({ selectedTask });
-  	selectedTask ? this.setState({ mode: 'Selected' }) : this.setState({ mode: 'Select' });
+  	if(selectedTask) {
+  		this.setState({ mode: 'Selected' });
+  	} else {
+  		this.setState({ mode: 'Select' });
+  		if(this.props.timer[0].start) {
+  			this.props.resetTimer();
+  			document.getElementById('start-button').innerHTML = 'Restart';
+  		}
+  	}
   	this.props.updateSelectedTask(selectedTask);
   	// Just the one task still there?  Temporary solution reloads page.
   	// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
-  	if(document.getElementById(tempTask)) { window.location.replace("/patata/timer");
- }
+  	if(document.getElementById(tempTask)) { window.location.replace("/patata/timer") }
   }
+
+	deleteTask(date) {
+		console.log(date);
+	}
+
+	editTask(date) {
+		console.log(date);
+	}
 
 	render() {
 		return(
@@ -64,7 +89,6 @@ class TasksList extends Component {
 			{ this.props.mode &&
 				<h3 id="task-mode">Task {this.props.mode}</h3>
 			}
-			
 			<ul id="task-list">
 				{ this.state.tasks &&
 					this.state.tasks.map((task)=> {
@@ -74,7 +98,7 @@ class TasksList extends Component {
 							{ this.state.mode==="List" &&
 							 <li id={task.date} className="listed-task">
 								<ul>
-								 	<b>{task.title}</b>
+								 	<b>{task.title}</b><button className="delete-task" onClick={()=> this.deleteTask(task.date)}>X</button><span role="img" aria-label="edit button" className="edit-button" onClick={()=> this.editTask(task.date)}>📝</span>
 									{ task.description && // Task Description
 									 <div>
 										<li>&nbsp;<i>Description:</i></li>

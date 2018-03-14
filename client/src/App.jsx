@@ -240,6 +240,10 @@ class App extends Component {
     console.log('alarm ended');
   }
 
+  resetTimer = ()=> {
+    this.setState({ timer: [{ start: 0, stop: 0 }]});
+  }
+
   render() {
     return (
       <div className="App">
@@ -256,6 +260,7 @@ class App extends Component {
                               startTimer={this.startTimer} 
                               updateMode={this.updateMode} 
                               updateTimerCount={this.updateTimerCount}
+                              resetTimer={this.resetTimer}
                               {...this.state} /> } />
           <Route path='/patata/task' render={
             (props)=> <Tasks authUser={this.state.authUser} /> } />
