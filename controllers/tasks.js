@@ -3,11 +3,10 @@ const table = "Tasks";
 
 function postTask(req, res, next) {
 	//TODO - change to logged in user, authenticate
-	let username = "RickySoFine";
 	let params = {
 		TableName: table,
 		Item:{
-			"username": username,
+			"username": req.body.username,
 			"date": req.body.date,
 			"title": req.body.title,
 			"description": req.body.description,

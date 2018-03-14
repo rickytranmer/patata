@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 class TaskForm extends Component {
 	onFormSubmit(event) {
 		event.preventDefault();
+		console.log(this.props.authUser);
 		let newTask = {
 			title: event.target.taskTitle.value,
 			description: event.target.taskDescription.value || null,
@@ -13,19 +14,25 @@ class TaskForm extends Component {
 		};
 		console.log(newTask);
 
-		// POST route to server
-		fetch('https://patata-api.herokuapp.com/api/task', {
-		  method: 'POST',
-		  headers: {
-		  	'Content-Type': 'application/json'
-			},
-			mode: 'CORS',
-		  body: JSON.stringify(newTask)
-		})
-			//TODO - if err, save newTask to localStorage until internet is available
-				//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
-     .catch((err)=> console.error(err))
-     .then((res)=> window.location.replace("/patata/task/list"));
+		if(this.props.authUser) {
+			newTask.username = this.props.authUser;
+
+			// POST route to server
+			fetch('https://patata-api.herokuapp.com/api/task', {
+			  method: 'POST',
+			  headers: {
+			  	'Content-Type': 'application/json'
+				},
+				mode: 'CORS',
+			  body: JSON.stringify(newTask)
+			})
+				//TODO - if err, save newTask to localStorage until internet is available
+					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
+	     .catch((err)=> console.error(err))
+	     .then((res)=> window.location.replace("/patata/task/list"));
+		} else {
+			//TODO - just save locally if no account
+		}
 	}
 
 	render() {
@@ -34,7 +41,6 @@ class TaskForm extends Component {
 				<form className="task-form" onSubmit={(event)=> this.onFormSubmit(event)}>
 					<label htmlFor="task-title">-Title-</label>
 					<input type="text" id="task-title" name="taskTitle" maxLength="144" required />
-
 					<div className="estimates">
 						<label htmlFor="timer-length">&nbsp;-Timer Length (minutes)-
 						<input type="number" id="timer-length" name="timerLength" maxLength="10" defaultValue="25" required /></label>

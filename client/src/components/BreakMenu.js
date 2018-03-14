@@ -8,10 +8,6 @@ class BreakMenu extends Component {
 		}
 	}
 
-	componentDidMount() {
-		if(this.props.selectedTask) { this.setState({ selectedTask: this.props.selectedTask }) }
-	}
-
 	render() {
 		return (
 			<div className="BreakMenu"><br/>

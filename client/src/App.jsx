@@ -8,6 +8,7 @@ import Home from './containers/Home';
 import Header from './components/Header';
 import Agenda from './components/Agenda';
 import alarmFile from './alarm-sound.wav';
+import {firebase} from './firebase';
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +22,9 @@ class App extends Component {
       timerDefault: 1500,
       timerString: '',
       mode: '',
-      selectedTask: ''
+      selectedTask: '',
+      authUser: null,
+      authUserEmail: null
     };
     this.alarmSound = new Audio(alarmFile);
   }
@@ -31,17 +34,22 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`Client: 3.13 ${res.test}`))
+      .then((res)=> console.log(`Client: 3.14a ${res.test}`))
       .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timerDefault);
+    firebase.auth.onAuthStateChanged((authUser)=> {
+      // authUser ? this.updateAuthUser(authUser.email) : this.updateAuthUser(null);
+      if(authUser) {
+        this.updateAuthUser(authUser)
+      } else {
+        this.updateAuthUser(null);
+      } 
+    });
   }
   componentWillUnmount() {
     clearInterval(this.timeInterval);
   }
 
-  updateTimer(timer) {
-    this.setState({ timer });
-  }
   updateTimerString(timerString) {
     this.setState({ timerString });
   }
@@ -50,7 +58,7 @@ class App extends Component {
     let taskMode = document.getElementById('task-mode');
     if(taskMode) { taskMode.innerHTML = `Task ${mode}` }
   }
-  updateTimerTest(timer) {
+  updateTimer(timer) {
     if(typeof timer === 'number') {
       if((this.state.timer[0]) && (this.state.timer[0].start)) {
         this.setState({ timer: [...this.state.timer, {start: timer, stop: 0}] });
@@ -97,6 +105,17 @@ class App extends Component {
     }
   }
 
+  updateAuthUser = (authUser) => {
+    console.log('authUser');
+    if(authUser) {
+      console.log(authUser.email);
+      this.setState({ authUser: authUser.uid, authUserEmail: authUser.email });
+    } else {
+      console.log(null);
+      this.setState({ authUser: null, authUserEmail: null });
+    }
+  }
+
   // Wake up Heroku
   async testApi() {
     const response = await fetch('https://patata-api.herokuapp.com/api/test');
@@ -126,7 +145,7 @@ class App extends Component {
     if(!this.timeInterval) {
       if(differentTask) { differentTask.style.display = 'none' }
       this.updateStartButton('stop');
-      this.updateTimerTest(new Date().getTime());
+      this.updateTimer(new Date().getTime());
       this.timeInterval = setInterval(()=> {
         this.convertTimerString(this.state.timerDefault - this.timerDifference());
         if((document.getElementById('start-button')) && (document.getElementById('start-button').innerHTML !== 'Stop')) { this.updateStartButton('stop') }
@@ -144,8 +163,9 @@ class App extends Component {
     this.timeInterval = null;
     let timer = JSON.parse(JSON.stringify(this.state.timer));
     console.log(timer);
+    console.log(this.timerDifference());
     // Determine if stopped because of end or click
-    if(!this.timerDifference()) { 
+    if(this.timerDifference() >= this.state.timerDefault) { 
       this.updateStartButton('end');
       this.updateTimerString(this.state.timerString);
       this.onPlay();
@@ -157,14 +177,14 @@ class App extends Component {
       }
     } else {
       timer[timer.length-1].stop = new Date().getTime();
-      this.updateTimerTest(timer);
+      this.updateTimer(timer);
       this.updateStartButton('start');
     }
   }
 
   timerDifference() {
     let sumTimer = 0;
-    if(this.timeInterval) {
+    // if(this.timeInterval) {
       for(let i = 0; i < this.state.timer.length; i++) {
         if(!this.state.timer[i].stop) {
           sumTimer += (new Date().getTime() - this.state.timer[i].start)
@@ -173,9 +193,9 @@ class App extends Component {
         }
       }
       return Math.floor(sumTimer/1000);
-    } else {
-      return 0;
-    }
+    // } else {
+      // return 0;
+    // }
   }
 
   // Set selectedTask to appply timer, can be called with empty parameter to clear selectedTask
@@ -195,8 +215,8 @@ class App extends Component {
           taskListItems[i].style.display = 'none';
         } else if(this.state.timerString !== '00m 00s') {
           // Update timer display and default
-          this.convertTimerString((taskListItems[i].dataset.timerdefault * 60) - this.timerDifference());
-          this.setState({timerDefault: taskListItems[i].dataset.timerdefault * 60})
+          this.convertTimerString((taskListItems[i].dataset.timerdefault * 60));
+          this.setState({timerDefault: taskListItems[i].dataset.timerdefault * 60});
         }
       }
       this.updateMode('Selected');
@@ -223,10 +243,12 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
+        <Header {...this.state} />
         <Switch>
           {['/', '/patata', '/patata/index.html', '/patata/login', '/patata/signup'].map((path)=> 
-            <Route key={path} exact path={path} component={Home} />
+            <Route key={path} exact path={path} render={
+              (props)=> <Home authUser={this.state.authUser}
+                              authUserEmail={this.state.authUserEmail}/>} />
           )}
           <Route path='/patata/timer' render={ 
             (props)=> <Timers updateSelectedTask={this.updateSelectedTask} 
@@ -235,9 +257,12 @@ class App extends Component {
                               updateMode={this.updateMode} 
                               updateTimerCount={this.updateTimerCount}
                               {...this.state} /> } />
-          <Route path='/patata/task' component={Tasks} />
+          <Route path='/patata/task' render={
+            (props)=> <Tasks authUser={this.state.authUser} /> } />
           <Route path='/patata/agenda' component={Agenda} />
-          <Route component={Home} />
+          <Route render={
+              (props)=> <Home authUser={this.state.authUser}
+                              authUserEmail={this.state.authUserEmail}/>} />
         </Switch>
       </div>
     );
