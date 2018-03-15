@@ -139,5 +139,6 @@ module.exports = {
 	postTask,
 	getTask,
 	putTask,
-	getTasks
+	getTasks, 
+	deleteTask
 };
