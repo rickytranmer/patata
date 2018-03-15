@@ -20,9 +20,9 @@ function postTask(req, res, next) {
 	console.log("Adding a new item...", params);
 	docClient.put(params, function(err, data) {
 		if (err) {
-			console.error("Unable to add item. Error JSON:", JSON.stringify(err, null, 2));
+			console.error("Unable to add task. Error JSON:", JSON.stringify(err, null, 2));
 		} else {
-			console.log("Added item:", JSON.stringify(data, null, 2));
+			console.log("Added task:", JSON.stringify(data, null, 2));
 		}
 	});
 
@@ -30,35 +30,31 @@ function postTask(req, res, next) {
 }
 
 function getTask(req, res, next) {
-	let username = "RickySoFine";
+	let username = req.body.username;
 	let params = {
 		TableName: table,
 		Key:{
 			"username": username,
-			"date": req.params.id || '074Z20180311T001332'
+			"date": req.params.id
 		}
 	};
 
 	docClient.get(params, function(err, data) {
 		if (err) {
-			console.error("Unable to read item. Error JSON:", JSON.stringify(err, null, 2));
+			console.error("Unable to read task. Error JSON:", JSON.stringify(err, null, 2));
 			res.send();
 		} else {
-			console.log("GetItem succeeded:", JSON.stringify(data, null, 2));
+			console.log("getTask succeeded:", JSON.stringify(data, null, 2));
 			res.send(data);
 		}
 	});
 }
 
 function putTask(req, res, next) {
-	//TODO - change to current user, authenticate
-	console.log(req.params.id);
-	let username = 'RickySoFine';
-
 	var params = {
     TableName: table,
     Key:{
-      "username": username,
+      "username": req.body.username,
       "date": req.params.id
     },
     UpdateExpression: "set #timerCount = #timerCount + :val",
@@ -76,7 +72,28 @@ function putTask(req, res, next) {
 	    if (err) {
 	        console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
 	    } else {
-	        console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+	        console.log("putTask succeeded:", JSON.stringify(data, null, 2));
+					res.send();
+	    }
+	});
+
+}
+
+function deleteTask(req, res, next) {
+	var params = {
+    TableName: table,
+    Key:{
+      "username": req.body.username,
+      "date": req.params.id
+    }
+	};
+
+	console.log("Deleting the task the task...");
+	docClient.delete(params, function(err, data) {
+	    if (err) {
+	        console.error("Unable to delete task. Error JSON:", JSON.stringify(err, null, 2));
+	    } else {
+	        console.log("deleteTask succeeded:", JSON.stringify(data, null, 2));
 					res.send();
 	    }
 	});

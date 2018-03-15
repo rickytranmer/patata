@@ -20,17 +20,24 @@ class TasksList extends Component {
 	  	this.setState({ selectedTask: '' });
 	  }
 	  
+	  // Grab tasks from localStorage (if they exist), until authUser
+	  this.updateTasks(JSON.parse(localStorage.getItem("tasks")||null), false);
+
   	if(this.props.authUser) {
   		// Grab tasks from Heroku
   		this.getAllTasks()
   		  .then((res)=> { this.updateTasks({ tasks: res }, true) })
   		  .catch((err)=> console.error(err));
   	} else {
-  		// Grab local tasks
-  		this.updateTasks(JSON.parse(localStorage.getItem("tasks")), false);
+			// Same thing, look for authUser two more times
   		setTimeout(()=> {
-  			// Look for authUser one more time
-  			if(this.props.authUser) { this.getAllTasks().then((res)=> { this.updateTasks({ tasks: res }, true) }).catch((err)=> console.error(err))	}
+  			if(this.props.authUser) { 
+  				this.getAllTasks()
+  				 .then((res)=> { this.updateTasks({ tasks: res }, true) })
+  				 .catch((err)=> console.error(err));
+  			} else {
+  				setTimeout(()=> { this.props.authUser ? this.getAllTasks().then((res)=> { this.updateTasks({ tasks: res }, true) }).catch((err)=> console.error(err)) : console.log('no user detected') }, 333);
+  			}
 			}, 333);
   	}
 	}
@@ -41,6 +48,8 @@ class TasksList extends Component {
 	}
 
 	async getAllTasks() {
+		//TODO - limit number of (successful?) fetches, would use local instead
+		console.log('-getAllTasks');
     const response = await fetch(`https://patata-api.herokuapp.com/api/tasks/${this.props.authUser}`);
     const body = await response.json();
     if (response.status !== 200) { throw Error(body.message) }
@@ -76,11 +85,30 @@ class TasksList extends Component {
   }
 
 	deleteTask(date) {
-		console.log(date);
+		console.log('delete:', date);
+		if(this.state.authUser) {
+			let deletedTask = { username: this.state.authUser };
+		  // PUT route to server
+		  fetch(`https://patata-api.herokuapp.com/api/task/${date}`, {
+		    method: 'DELETE',
+		    headers: {
+		      'Content-Type': 'application/json'
+		    },
+		    mode: 'CORS',
+		    body: JSON.stringify(deletedTask)
+		  })
+		    //TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
+		           //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
+		   .catch((err)=> console.error(err))
+		   .then((res)=> window.location.replace("/patata/timer"));
+		} else {
+		  //TODO - save task locally
+		  console.log('no user');
+		}
 	}
 
 	editTask(date) {
-		console.log(date);
+		console.log('edit:', date);
 	}
 
 	render() {

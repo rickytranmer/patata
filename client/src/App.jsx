@@ -34,16 +34,11 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`Client: 3.14A ${res.test}`))
+      .then((res)=> console.log(`Client: 3.15 ${res.test}`))
       .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timerDefault);
     firebase.auth.onAuthStateChanged((authUser)=> {
-      // authUser ? this.updateAuthUser(authUser.email) : this.updateAuthUser(null);
-      if(authUser) {
-        this.updateAuthUser(authUser)
-      } else {
-        this.updateAuthUser(null);
-      } 
+      authUser ? this.updateAuthUser(authUser) : this.updateAuthUser(null);
     });
   }
   componentWillUnmount() {
@@ -70,36 +65,35 @@ class App extends Component {
     }
   }
 
+  // After timer finishes, let user add to the task's running tally
   updateTimerCount = ()=> {
     let selectedTask = this.state.selectedTask;
     console.log('updateTimerCount', selectedTask);
     if(selectedTask && document.getElementById(selectedTask)) {
-      // let timerCount = document.getElementById(selectedTask).dataset.timercount + 1;
       document.getElementById(selectedTask).dataset.timercount++;
-
-      //TODO - Allow editing of a task and its properties
       let updatedTask = {
-        username: 'RickySoFine',
-      //   description: event.target.taskDescription.value || null,
-      //   timerDefault: event.target.timerLength.value,
-      //   timerEstimate: event.target.timerEstimate.value || '1',
-        timerCount: document.getElementById(selectedTask).dataset.timercount,
-      //   date: new Date()
+        username: this.state.authUser || null,
+        timerCount: document.getElementById(selectedTask).dataset.timercount
       }
 
-      // PUT route to server
-      fetch(`https://patata-api.herokuapp.com/api/task/${selectedTask}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        mode: 'CORS',
-        body: JSON.stringify(updatedTask)
-      })
-        //TODO - if err, save updatedTask to localStorage until internet is available
-          //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
-       .catch((err)=> console.error(err))
-       .then((res)=> window.location.replace("/patata/timer"));
+      if(this.state.authUser && selectedTask) {
+        // PUT route to server
+        fetch(`https://patata-api.herokuapp.com/api/task/${selectedTask}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          mode: 'CORS',
+          body: JSON.stringify(updatedTask)
+        })
+          //TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
+                 //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
+         .catch((err)=> console.error(err))
+         .then((res)=> window.location.replace("/patata/timer"));
+      } else {
+        //TODO - save task locally
+        console.log('no user');
+      }
     } else {
       console.log('no selectedTask');
     }
