@@ -3,6 +3,7 @@ const table = "Tasks";
 
 function postTask(req, res, next) {
 	//TODO - change to logged in user, authenticate
+	console.log(req.headers.referer);
 	let params = {
 		TableName: table,
 		Item:{
