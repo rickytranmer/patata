@@ -11,7 +11,6 @@ class TasksList extends Component {
 	}
 
 	componentDidMount() {
-		
 	  this.props.mode ? this.setState({ mode: this.props.mode }) : this.setState({ mode: 'List' });
 	  if(this.props.selectedTask) {
 	  	this.setState({ selectedTask: this.props.selectedTask });
@@ -50,6 +49,7 @@ class TasksList extends Component {
 
   updateTasks(tasks, updateLocal) {
   	if(tasks) {
+  		if(document.getElementById('loading-h2')) { document.getElementById('loading-h2').remove() }
 	  	if(updateLocal) { localStorage.setItem("tasks", JSON.stringify(tasks)) }
 	  	this.setState(tasks);
   	} else {
@@ -89,7 +89,9 @@ class TasksList extends Component {
 			{ this.props.mode &&
 				<h3 id="task-mode">Task {this.props.mode}</h3>
 			}
+			<h2 id="loading-h2">Loading...</h2>
 			<ul id="task-list">
+
 				{ this.state.tasks &&
 					this.state.tasks.map((task)=> {
 						return(

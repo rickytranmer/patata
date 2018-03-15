@@ -207,7 +207,6 @@ class App extends Component {
       if(differentTask) { differentTask.style.display = 'none' }
       this.updateMode('Select');
     } else {
-      console.log(taskListItems);
       if(differentTask) { differentTask.style.display = 'inline' }
       // Cycle through displayed list items, determine if matches selectedTask
       for(let i = 0; i < taskListItems.length; i++) {
