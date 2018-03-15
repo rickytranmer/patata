@@ -86,8 +86,8 @@ class TasksList extends Component {
 
 	deleteTask(date) {
 		console.log('delete:', date);
-		if(this.state.authUser) {
-			let deletedTask = { username: this.state.authUser };
+		if(this.props.authUser) {
+			let deletedTask = { username: this.props.authUser };
 		  // PUT route to server
 		  fetch(`https://patata-api.herokuapp.com/api/task/${date}`, {
 		    method: 'DELETE',
@@ -100,7 +100,7 @@ class TasksList extends Component {
 		    //TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
 		           //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 		   .catch((err)=> console.error(err))
-		   .then((res)=> window.location.replace("/patata/timer"));
+		   .then((res)=> window.location.replace("/patata/task/list"));
 		} else {
 		  //TODO - save task locally
 		  console.log('no user');
