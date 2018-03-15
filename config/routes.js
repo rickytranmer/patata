@@ -1,20 +1,26 @@
 const router = require('express').Router();
 const tasksController = require('../controllers/tasks');
 
+function ghPages(req, res, next) {
+	if(!req.headers.referer.includes('https://rickytranmer.github.io/patata/')) { console.log('! outside request: ', req.headers.referer) }
+	// res.redirect('https://rickytranmer.github.io/patata');
+	return next();
+}
+
 router.get('/api/test', (req, res)=> {
   res.send({ test: ' server: 3.14a' });
 });
 
 router.route('/api/task')
-	.get(tasksController.getTask)
-	.post(tasksController.postTask);
+	.get(ghPages, tasksController.getTask)
+	.post(ghPages, tasksController.postTask);
 
 router.route('/api/task/:id')
-	.get(tasksController.getTask)
-	.put(tasksController.putTask);
+	.get(ghPages, tasksController.getTask)
+	.put(ghPages, tasksController.putTask);
 
-router.get('/api/tasks', tasksController.getTasks);
-router.get('/api/tasks/:username', tasksController.getTasks);
+router.get('/api/tasks', ghPages, tasksController.getTasks);
+router.get('/api/tasks/:username', ghPages, tasksController.getTasks);
 
 router.get('/*', (req, res)=> {
 	res.redirect('https://rickytranmer.github.io/patata');
