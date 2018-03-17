@@ -51,6 +51,7 @@ function getTask(req, res, next) {
 }
 
 function putTask(req, res, next) {
+	console.log(req.body.title);
 	if(req.body.title) {
 		// Update entire task
 		if(req.body.username) {console.log(req.body.username)}
