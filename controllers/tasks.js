@@ -51,21 +51,38 @@ function getTask(req, res, next) {
 }
 
 function putTask(req, res, next) {
-	var params = {
-    TableName: table,
-    Key:{
-      "username": req.body.username,
-      "date": req.params.id
-    },
-    UpdateExpression: "set #timerCount = #timerCount + :val",
-    ExpressionAttributeNames:{
-    		"#timerCount": "timerCount"
-    },
-    ExpressionAttributeValues:{
-      ":val":1
-    },
-    ReturnValues:"UPDATED_NEW"
-	};
+	if(req.body.title) {
+		// Update entire task
+		var params = {
+	    TableName: table,
+	    Key:{
+	      "username": req.body.username,
+	      "date": req.params.id,
+	      "title": req.body.title,
+	      "description": req.body.description,
+	      "timerDefault": req.body.timerDefault,
+	      "timerEstimate": req.body.timerEstimate,
+	      "timerCount":  req.body.timerCount || 0
+	    }
+		};
+	} else {
+		// Just update timerCount
+		var params = {
+	    TableName: table,
+	    Key:{
+	      "username": req.body.username,
+	      "date": req.params.id
+	    },
+	    UpdateExpression: "set #timerCount = #timerCount + :val",
+	    ExpressionAttributeNames:{
+	    		"#timerCount": "timerCount"
+	    },
+	    ExpressionAttributeValues:{
+	      ":val":1
+	    },
+	    ReturnValues:"UPDATED_NEW"
+		};
+	}
 
 	console.log("Updating the task...");
 	docClient.update(params, function(err, data) {

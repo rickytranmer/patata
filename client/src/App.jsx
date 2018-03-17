@@ -75,7 +75,6 @@ class App extends Component {
         username: this.state.authUser || null,
         timerCount: document.getElementById(selectedTask).dataset.timercount
       }
-
       if(this.state.authUser && selectedTask) {
         // PUT route to server
         fetch(`https://patata-api.herokuapp.com/api/task/${selectedTask}`, {

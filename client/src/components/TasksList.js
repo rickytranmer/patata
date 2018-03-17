@@ -107,8 +107,65 @@ class TasksList extends Component {
 		}
 	}
 
+	submitEditTask(event) {
+		// event.preventDefault();
+		console.log(event);
+	}
+
 	editTask(date) {
+		//TODO - remove edit and delete buttons, add submit
+		// - replace text with input, default values pulled from dataset
 		console.log('edit:', date);
+		console.log(document.getElementById(date).childNodes[0]);
+		//Title
+		// console.log(document.getElementById(date).childNodes[0].childNodes[0]);
+		// //Delete button
+		// console.log(document.getElementById(date).childNodes[0].childNodes[1]);
+		// //Edit button
+		// console.log(document.getElementById(date).childNodes[0].childNodes[2]);
+		// //Description
+		// console.log(document.getElementById(date).childNodes[0].childNodes[3].childNodes[1]);
+		// //Estimated Timer Count
+		// console.log(document.getElementById(date).childNodes[0].childNodes[5]);
+		// //Default Timer Length
+		// console.log(document.getElementById(date).childNodes[0].childNodes[6]);
+
+		// Submit Edit Task button
+		//'<button className="submit-task" onClick={()=> this.submitEditTask('+date+')}>X</button>'
+
+		// Title
+		document.getElementById(date).childNodes[0].childNodes[0].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[0].dataset.title+'"></input>';
+		// Description
+		document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].innerHTML = '<textarea name="taskDescription" placeholder="Description (optional)">'+document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].dataset.description+'</textarea>';
+		//Estimated Timer Count
+		document.getElementById(date).childNodes[0].childNodes[5].innerHTML = '&nbsp;-Estimated Timer Count: <input name="timerEstimate" value="'+document.getElementById(date).childNodes[0].childNodes[5].dataset.timerEstimate+'">';
+		//Default Timer Length
+		document.getElementById(date).childNodes[0].childNodes[6].innerHTML = '&nbsp;-Default Timer Length (minutes): <input name="timerLength" value="'+document.getElementById(date).childNodes[0].childNodes[6].dataset.timerDefault+'">';
+
+		// Remove edit & delete buttons
+		document.getElementById(date).childNodes[0].childNodes[1].remove();
+		document.getElementById(date).childNodes[0].childNodes[1].remove();
+	
+
+		// timerCount (hidden)
+		let timerCountInput = document.createElement('div');
+		timerCountInput.innerHTML = '<input name="timerCount" style="display:none;" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.timerCount+'">';
+		document.getElementById(date).childNodes[0].appendChild(timerCountInput);
+
+		// authUser (hidden)
+		let authUserInput = document.createElement('div');
+		authUserInput.innerHTML = '<input name="username" style="display:none;" value="'+this.props.authUser+'">';
+		document.getElementById(date).childNodes[0].appendChild(authUserInput);
+
+		// Create submit button
+		let submitEditTaskButton = document.createElement('div');
+		submitEditTaskButton.innerHTML = '<input type="submit" value="Save" class="edit-task-submit">';
+		document.getElementById(date).childNodes[0].appendChild(submitEditTaskButton);
+		// document.getElementById(date).childNodes[0].innerHTML = '<form>'+document.getElementById(date).childNodes[0].innerHTML+'</form>';
+
+		// Attach li to form
+		document.getElementById(date).innerHTML = '<form action="https://patata-api.herokuapp.com/api/task/'+date+'" method="PUT">'+document.getElementById(date).innerHTML+'</form>'
+
 	}
 
 	render() {
@@ -128,16 +185,16 @@ class TasksList extends Component {
 							{ this.state.mode==="List" &&
 							 <li id={task.date} className="listed-task">
 								<ul>
-								 	<b>{task.title}</b><button className="delete-task" onClick={()=> this.deleteTask(task.date)}>X</button><span role="img" aria-label="edit button" className="edit-button" onClick={()=> this.editTask(task.date)}>📝</span>
+								 	<b data-title={task.title}>{task.title}</b><button className="delete-task" onClick={()=> this.deleteTask(task.date)}>X</button><span role="img" aria-label="edit button" className="edit-button" onClick={()=> this.editTask(task.date)}>📝</span>
 									{ task.description && // Task Description
 									 <div>
 										<li>&nbsp;<i>Description:</i></li>
-										<li>&nbsp;-{task.description}</li>
+										<li data-description={task.description}>&nbsp;-{task.description}</li>
 									 </div>
 									}
-									<li>&nbsp;<i>Time:</i></li>
-									<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
-									<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
+									<li data-timer-count={task.timerCount}>&nbsp;<i>Time:</i></li>
+									<li data-timer-estimate={task.timerEstimate}>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
+									<li data-timer-default={task.timerDefault}>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
 								</ul>
 							 </li>
 							}
