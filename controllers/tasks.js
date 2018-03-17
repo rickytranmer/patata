@@ -74,7 +74,8 @@ function putTask(req, res, next) {
 			params.UpdateExpression = "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc";
 			params.ExpressionAttributeValues[":d"] = req.body.description;
 		} else {
-			params.UpdateExpression = "set title = :t, timerDefault=:td, timerEstimate=:te, timerCount=:tc";
+			params.UpdateExpression = "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc";
+			params.ExpressionAttributeValues[":d"] = null;
 		}
 	} else {
 		// Just update timerCount
