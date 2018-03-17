@@ -157,9 +157,9 @@ class TasksList extends Component {
 		document.getElementById(date).childNodes[0].childNodes[3].classList.remove('no-description');
 		document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].innerHTML = '<textarea name="taskDescription" placeholder="Description (optional)">'+(document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].dataset.description || '')+'</textarea>';
 		//Estimated Timer Count
-		document.getElementById(date).childNodes[0].childNodes[5].innerHTML = '&nbsp;-Estimated Timer Count: <input name="timerEstimate" value="'+document.getElementById(date).childNodes[0].childNodes[5].dataset.timerEstimate+'">';
+		document.getElementById(date).childNodes[0].childNodes[5].innerHTML = '&nbsp;-Estimated Timer Count: <input type="number" name="timerEstimate" value="'+document.getElementById(date).childNodes[0].childNodes[5].dataset.timerEstimate+'">';
 		//Default Timer Length
-		document.getElementById(date).childNodes[0].childNodes[6].innerHTML = '&nbsp;-Default Timer Length (minutes): <input name="timerLength" value="'+document.getElementById(date).childNodes[0].childNodes[6].dataset.timerDefault+'">';
+		document.getElementById(date).childNodes[0].childNodes[6].innerHTML = '&nbsp;-Default Timer Length (minutes): <input type="number" name="timerLength" value="'+document.getElementById(date).childNodes[0].childNodes[6].dataset.timerDefault+'">';
 		// Remove edit & delete buttons
 		document.getElementById(date).childNodes[0].childNodes[1].remove();
 		document.getElementById(date).childNodes[0].childNodes[1].remove();

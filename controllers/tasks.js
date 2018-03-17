@@ -12,7 +12,7 @@ function postTask(req, res, next) {
 			"description": req.body.description || "",
 			"timerDefault": req.body.timerDefault,
 			"timerEstimate": req.body.timerEstimate,
-			"timerCount":  {"N": req.body.timerCount || 0}
+			"timerCount":  req.body.timerCount || 0
 		}
 	};
 	params.Item.date = shortenDate(params.Item.date); //see bottom
@@ -65,10 +65,10 @@ function putTask(req, res, next) {
 		  UpdateExpression: "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc",
 		  ExpressionAttributeValues:{
 	      ":t": req.body.title,
-	      ":d": req.body.description || null,
+	      ":d": req.body.description || "",
 	      ":td": req.body.timerDefault || 25,
 	      ":te": req.body.timerEstimate || 1,
-	      ":tc":  req.body.timerCount || 0
+	      ":tc":  parseInt(req.body.timerCount) || 0
 		  },
 		  ReturnValues:"UPDATED_NEW"
 		};
