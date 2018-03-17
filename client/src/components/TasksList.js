@@ -6,7 +6,8 @@ class TasksList extends Component {
 		this.state = {
 			tasks: [],
 			selectedTask: '',
-			mode: ''
+			mode: '',
+			queryTime: 0
 		}
 	}
 
@@ -50,16 +51,32 @@ class TasksList extends Component {
 	async getAllTasks() {
 		//TODO - limit number of (successful?) fetches, would use local instead
 		console.log('-getAllTasks');
-    const response = await fetch(`https://patata-api.herokuapp.com/api/tasks/${this.props.authUser}`);
-    const body = await response.json();
-    if (response.status !== 200) { throw Error(body.message) }
-    return body;
+		if(new Date().getTime() - this.props.queryTime >= 10000) {
+	  	this.props.updateQueryTime(new Date().getTime());
+	  	const response = await fetch(`https://patata-api.herokuapp.com/api/tasks/${this.props.authUser}`);
+	  	const body = await response.json();
+	  	if(response.status !== 200) { throw Error(body.message) }
+			return body;
+		} else {
+			console.log('local');
+			let localTasks = JSON.parse(localStorage.getItem("tasks")||null);
+			if(localTasks) {
+				return localTasks.tasks;
+			} else {
+				console.log('no local tasks');
+				this.props.updateQueryTime(null);
+				localStorage.setItem("tasks", {"tasks":[{}]});
+				return null;
+			}
+		}
   };
 
   updateTasks(tasks, updateLocal) {
   	if(tasks) {
   		if(document.getElementById('loading-h2')) { document.getElementById('loading-h2').remove() }
-	  	if(updateLocal) { localStorage.setItem("tasks", JSON.stringify(tasks)) }
+	  	if(updateLocal) { 
+	  		localStorage.setItem("tasks", JSON.stringify(tasks));
+	  	}
 	  	this.setState(tasks);
   	} else {
   		console.log('no tasks found');

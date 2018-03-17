@@ -12,7 +12,7 @@ class Tasks extends Component {
 				<NavLink to='/patata/task/new' activeClassName='selected-tasks-nav'><button>New Task</button></NavLink>
 			</div>
 			<Route path='/patata/task/list' render={
-				(props)=> <TasksList authUser={this.props.authUser} /> } />
+				(props)=> <TasksList {...this.props} /> } />
 			<Route path='/patata/task/new' render={
 				(props)=> <TaskForm authUser={this.props.authUser} /> } />
 		 </div>

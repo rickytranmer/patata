@@ -25,7 +25,8 @@ class App extends Component {
       selectedTask: '',
       authUser: null,
       authUserEmail: null,
-      alarm: false
+      alarm: false,
+      queryTime: null
     };
     this.alarmSound = new Audio(alarmFile);
   }
@@ -103,7 +104,7 @@ class App extends Component {
     }
   }
 
-  updateAuthUser = (authUser) => {
+  updateAuthUser = (authUser)=> {
     console.log('authUser');
     if(authUser) {
       console.log(authUser.email);
@@ -112,6 +113,11 @@ class App extends Component {
       console.log(null);
       this.setState({ authUser: null, authUserEmail: null });
     }
+  }
+
+  updateQueryTime = (queryTime)=> {
+    console.log(queryTime);
+    this.setState({ queryTime });
   }
 
   // Wake up Heroku
@@ -266,9 +272,13 @@ class App extends Component {
                               updateTimerCount={this.updateTimerCount}
                               resetTimer={this.resetTimer}
                               updateAlarm={this.updateAlarm}
+                              queryTime={this.state.queryTime}
+                              updateQueryTime={this.updateQueryTime}
                               {...this.state} /> } />
           <Route path='/patata/task' render={
-            (props)=> <Tasks authUser={this.state.authUser} /> } />
+            (props)=> <Tasks authUser={this.state.authUser}
+                             queryTime={this.state.queryTime}
+                             updateQueryTime={this.updateQueryTime} /> } />
           <Route path='/patata/agenda' component={Agenda} />
           <Route render={
               (props)=> <Home authUser={this.state.authUser}
