@@ -9,13 +9,13 @@ function postTask(req, res, next) {
 			"username": req.body.username,
 			"date": req.body.date,
 			"title": req.body.title,
-			"description": req.body.description || "",
 			"timerDefault": parseInt(req.body.timerDefault) || 25,
 			"timerEstimate": parseInt(req.body.timerEstimate) || 1,
 			"timerCount":  parseInt(req.body.timerCount) || 0
 		}
 	};
 	params.Item.date = shortenDate(params.Item.date); //see bottom
+	if(req.body.description) { params.Item.description = req.body.description }
 
 	console.log("Adding a new item...", params);
 	docClient.put(params, function(err, data) {
