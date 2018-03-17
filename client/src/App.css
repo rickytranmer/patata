@@ -252,7 +252,7 @@ textarea {
 #start-button:hover {
   background-color: rgba(14, 188, 16, .8);
 }
-#start-button.stop {
+#start-button.stop, .stop {
   background-color: rgb(255, 65, 54);
 }
 #start-button.stop:hover {

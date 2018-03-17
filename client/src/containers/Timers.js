@@ -13,7 +13,7 @@ class Timers extends Component {
 		return(
 		 <div className="Timers">
 		 	<Timer {...this.props} />
-			<TasksList resetTimer={this.props.resetTimer} {...this.props} {...this.state} />
+			<TasksList {...this.props} {...this.state} />
 		 </div>
 		)
 	}

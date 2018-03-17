@@ -24,7 +24,8 @@ class App extends Component {
       mode: '',
       selectedTask: '',
       authUser: null,
-      authUserEmail: null
+      authUserEmail: null,
+      alarm: false
     };
     this.alarmSound = new Audio(alarmFile);
   }
@@ -63,6 +64,11 @@ class App extends Component {
     } else {
       this.setState({ timer })
     }
+  }
+
+  updateAlarm = ()=> {
+    this.state.alarm ? this.setState({ alarm: false }) : this.setState({ alarm: true });
+    if(document.querySelector('.stop')) { document.querySelector('.stop').classList.add('hidden-edit') }
   }
 
   // After timer finishes, let user add to the task's running tally
@@ -161,6 +167,7 @@ class App extends Component {
     if(this.timerDifference() >= this.state.timerDefault) { 
       this.updateStartButton('end');
       this.updateTimerString(this.state.timerString);
+      this.updateAlarm();
       this.onPlay();
       // Incrememnt selectedTask timercount
       if(this.state.selectedTask) {
@@ -193,6 +200,7 @@ class App extends Component {
 
   // Set selectedTask to appply timer, can be called with empty parameter to clear selectedTask
   updateSelectedTask = (selectedTask)=> {
+    this.resetTimer();
     this.setState({ selectedTask });
     let differentTask = document.getElementById('different-task')||null;
     let taskListItems = document.querySelectorAll('li');
@@ -230,6 +238,11 @@ class App extends Component {
   onPlay = ()=> {
     this.alarmSound.play();
     console.log('alarm ended');
+    setTimeout(()=> {
+      if(this.state.alarm) {
+        this.onPlay();
+      }
+    }, 3000);
   }
 
   resetTimer = ()=> {
@@ -253,6 +266,7 @@ class App extends Component {
                               updateMode={this.updateMode} 
                               updateTimerCount={this.updateTimerCount}
                               resetTimer={this.resetTimer}
+                              updateAlarm={this.updateAlarm}
                               {...this.state} /> } />
           <Route path='/patata/task' render={
             (props)=> <Tasks authUser={this.state.authUser} /> } />
