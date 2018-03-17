@@ -62,16 +62,20 @@ function putTask(req, res, next) {
 	      "username": username,
 	      "date": req.params.id
 	    },
-		  UpdateExpression: "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc",
 		  ExpressionAttributeValues:{
 	      ":t": req.body.title,
-	      ":d": req.body.description || "",
+	      ":d": req.body.description,
 	      ":td": parseInt(req.body.timerDefault) || 25,
 	      ":te": parseInt(req.body.timerEstimate) || 1,
 	      ":tc":  parseInt(req.body.timerCount) || 0
 		  },
 		  ReturnValues:"UPDATED_NEW"
 		};
+		if(req.body.description) {
+			params.UpdateExpression = "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc";
+		} else {
+			params.UpdateExpression = "set title = :t, timerDefault=:td, timerEstimate=:te, timerCount=:tc";
+		}
 	} else {
 		// Just update timerCount
 		console.log('timerCount');

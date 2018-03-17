@@ -6,13 +6,13 @@ class TaskForm extends Component {
 		console.log(this.props.authUser);
 		let newTask = {
 			title: event.target.taskTitle.value,
-			description: event.target.taskDescription.value || null,
-			timerDefault: event.target.timerLength.value,
+			timerDefault: event.target.timerLength.value || 25,
 			timerEstimate: event.target.timerEstimate.value || 1,
 			timerCount: 0,
 			date: new Date()
 		};
 		console.log(newTask);
+		if(event.target.taskDescription.value) { newTask.description = event.target.taskDescription.value }
 
 		if(this.props.authUser) {
 			newTask.username = this.props.authUser;
