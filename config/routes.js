@@ -8,7 +8,7 @@ function ghPages(req, res, next) {
 }
 
 router.get('/api/test', (req, res)=> {
-  res.send({ test: ' server: 3.15' });
+  res.send({ test: ' server: 3.16' });
 });
 
 router.route('/api/task')
