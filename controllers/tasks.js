@@ -53,15 +53,13 @@ function getTask(req, res, next) {
 function putTask(req, res, next) {
 	console.log(req.body.username);
 	console.log(req.params.id);
+	let username = req.body.username;
 	if(req.body.title) {
 		// Update entire task
-		if(req.body.username) {console.log(req.body.username)}
-		if(req.params.username) {console.log(req.params.username)}
-		if(req.params.id) {console.log(req.params.id)}
 		var params = {
 	    TableName: table,
 	    Key:{
-	      "username": req.body.username,
+	      "username": username,
 	      "date": req.params.id
 	    },
 		  UpdateExpression: "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc",
@@ -80,7 +78,7 @@ function putTask(req, res, next) {
 		var params = {
 	    TableName: table,
 	    Key:{
-	      "username": req.body.username,
+	      "username": username,
 	      "date": req.params.id
 	    },
 	    UpdateExpression: "set #timerCount = #timerCount + :val",
@@ -92,46 +90,18 @@ function putTask(req, res, next) {
 	    },
 	    ReturnValues:"UPDATED_NEW"
 		};
-
-
-var params = {
-TableName: "Tasks",
-Key:{
-  "username": username,
-  "date": req.params.id
-},
-UpdateExpression: "set #timerCount = #timerCount + :val",
-ExpressionAttributeNames:{
-		"#timerCount": "timerCount"
-},
-ExpressionAttributeValues:{
-  ":val":1
-},
-ReturnValues:"UPDATED_NEW"
-};
-
-console.log("Updating the task...");
-docClient.update(params, function(err, data) {
-  if (err) {
-      console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
-  } else {
-      console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
-			res.send();
-  }
-});
 	}
-
 	console.log(params.Key.username);
 	console.log(params.Key.date);
 
 	console.log("Updating the task...");
 	docClient.update(params, function(err, data) {
-	    if (err) {
-	        console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
-	    } else {
-	        console.log("putTask succeeded:", JSON.stringify(data, null, 2));
-					res.send();
-	    }
+    if (err) {
+        console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
+    } else {
+        console.log("putTask succeeded:", JSON.stringify(data, null, 2));
+				res.send();
+    }
 	});
 
 }
