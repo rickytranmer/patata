@@ -29,14 +29,14 @@ class TasksList extends Component {
   		  .then((res)=> { this.updateTasks({ tasks: res }, true) })
   		  .catch((err)=> console.error(err));
   	} else {
-			// Same thing, look for authUser two more times
+			// ^ Same thing ^ look for authUser two more times
   		setTimeout(()=> {
   			if(this.props.authUser) { 
   				this.getAllTasks()
   				 .then((res)=> { this.updateTasks({ tasks: res }, true) })
   				 .catch((err)=> console.error(err));
   			} else {
-  				setTimeout(()=> { this.props.authUser ? this.getAllTasks().then((res)=> { this.updateTasks({ tasks: res }, true) }).catch((err)=> console.error(err)) : console.log('no user detected') }, 333);
+  				setTimeout(()=> { this.props.authUser ? this.getAllTasks().then((res)=> { this.updateTasks({ tasks: res }, true) }).catch((err)=> console.error(err)) : document.getElementById('loading-h2').innerHTML = 'No user found. &nbsp;Please log in or sign up by clicking "Patata" above.' }, 333);
   			}
 			}, 333);
   	}
