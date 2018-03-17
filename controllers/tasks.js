@@ -10,9 +10,9 @@ function postTask(req, res, next) {
 			"date": req.body.date,
 			"title": req.body.title,
 			"description": req.body.description || "",
-			"timerDefault": req.body.timerDefault,
-			"timerEstimate": req.body.timerEstimate,
-			"timerCount":  req.body.timerCount || 0
+			"timerDefault": parseInt(req.body.timerDefault) || 25,
+			"timerEstimate": parseInt(req.body.timerEstimate) || 1,
+			"timerCount":  parseInt(req.body.timerCount) || 0
 		}
 	};
 	params.Item.date = shortenDate(params.Item.date); //see bottom
@@ -66,8 +66,8 @@ function putTask(req, res, next) {
 		  ExpressionAttributeValues:{
 	      ":t": req.body.title,
 	      ":d": req.body.description || "",
-	      ":td": req.body.timerDefault || 25,
-	      ":te": req.body.timerEstimate || 1,
+	      ":td": parseInt(req.body.timerDefault) || 25,
+	      ":te": parseInt(req.body.timerEstimate) || 1,
 	      ":tc":  parseInt(req.body.timerCount) || 0
 		  },
 		  ReturnValues:"UPDATED_NEW"
