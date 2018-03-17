@@ -93,6 +93,9 @@ function putTask(req, res, next) {
 		};
 	}
 
+	console.log(params.Key.username);
+	console.log(params.Key.date);
+
 	console.log("Updating the task...");
 	docClient.update(params, function(err, data) {
 	    if (err) {
