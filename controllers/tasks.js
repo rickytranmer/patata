@@ -74,6 +74,7 @@ function putTask(req, res, next) {
 			};
 	} else {
 		// Just update timerCount
+		console.log('timerCount');
 		var params = {
 	    TableName: table,
 	    Key:{
