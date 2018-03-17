@@ -9,7 +9,7 @@ function postTask(req, res, next) {
 			"username": req.body.username,
 			"date": req.body.date,
 			"title": req.body.title,
-			"timerDefault": parseInt(req.body.timerDefault) || 25,
+			"timerDefault": req.body.timerDefault || 25,
 			"timerEstimate": parseInt(req.body.timerEstimate) || 1,
 			"timerCount":  parseInt(req.body.timerCount) || 0
 		}
@@ -66,7 +66,7 @@ function putTask(req, res, next) {
 		  ExpressionAttributeValues:{
 	      ":t": req.body.title,
 	      ":d": req.body.description || null,
-	      ":td": parseInt(req.body.timerDefault) || 25,
+	      ":td": req.body.timerDefault || 25,
 	      ":te": parseInt(req.body.timerEstimate) || 1,
 	      ":tc":  parseInt(req.body.timerCount) || 0
 		  },

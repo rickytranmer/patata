@@ -211,8 +211,8 @@ class TasksList extends Component {
 									 </div>
 									}
 									<li data-timer-count={task.timerCount}>&nbsp;<i>Time:</i></li>
-									<li data-timer-estimate={task.timerEstimate}>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
-									<li data-timer-default={task.timerDefault}>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
+									<li data-timer-estimate={task.timerEstimate}>&nbsp;&nbsp;-Estimate: &nbsp;{task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
+									<li data-timer-default={task.timerDefault}>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
 								</ul>
 								<form className="hidden-edit" onSubmit={(event)=> this.submitEditTask(event, task.date)}></form>
 							 </li>
