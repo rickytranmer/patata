@@ -152,7 +152,7 @@ class TasksList extends Component {
 		document.getElementById(date).childNodes[0].appendChild(authUserInput);
 
 		// Title
-		document.getElementById(date).childNodes[0].childNodes[0].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[0].dataset.title+'"></input>';
+		document.getElementById(date).childNodes[0].childNodes[0].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[0].dataset.title+'" required />';
 		// Description
 		document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].innerHTML = '<textarea name="taskDescription" placeholder="Description (optional)">'+document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].dataset.description+'</textarea>';
 		//Estimated Timer Count

@@ -59,14 +59,18 @@ function putTask(req, res, next) {
 	    TableName: table,
 	    Key:{
 	      "username": req.body.username,
-	      "date": req.params.id,
-	      "title": req.body.title,
-	      "description": req.body.description,
-	      "timerDefault": req.body.timerDefault,
-	      "timerEstimate": req.body.timerEstimate,
-	      "timerCount":  req.body.timerCount || 0
-	    }
-		};
+	      "date": req.params.id
+	    },
+		  UpdateExpression: "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc",
+		  ExpressionAttributeValues:{
+	      ":t": req.body.title,
+	      ":d": req.body.description || null,
+	      ":td": req.body.timerDefault || 25,
+	      ":te": req.body.timerEstimate || 1,
+	      ":tc":  req.body.timerCount || 0
+		  },
+		  ReturnValues:"UPDATED_NEW"
+			};
 	} else {
 		// Just update timerCount
 		var params = {
