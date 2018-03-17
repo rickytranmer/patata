@@ -64,7 +64,6 @@ function putTask(req, res, next) {
 	    },
 		  ExpressionAttributeValues:{
 	      ":t": req.body.title,
-	      ":d": req.body.description,
 	      ":td": parseInt(req.body.timerDefault) || 25,
 	      ":te": parseInt(req.body.timerEstimate) || 1,
 	      ":tc":  parseInt(req.body.timerCount) || 0
@@ -73,6 +72,7 @@ function putTask(req, res, next) {
 		};
 		if(req.body.description) {
 			params.UpdateExpression = "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc";
+			params.ExpressionAttributeValues[":d"] = req.body.description;
 		} else {
 			params.UpdateExpression = "set title = :t, timerDefault=:td, timerEstimate=:te, timerCount=:tc";
 		}
