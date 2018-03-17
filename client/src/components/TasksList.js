@@ -153,13 +153,13 @@ class TasksList extends Component {
 
 		// Title
 		document.getElementById(date).childNodes[0].childNodes[0].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[0].dataset.title+'" required />';
-		// Description
-		document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].innerHTML = '<textarea name="taskDescription" placeholder="Description (optional)">'+document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].dataset.description+'</textarea>';
+		// Description (display if hidden)
+		document.getElementById(date).childNodes[0].childNodes[3].classList.remove('no-description');
+		document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].innerHTML = '<textarea name="taskDescription" placeholder="Description (optional)">'+(document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].dataset.description || '')+'</textarea>';
 		//Estimated Timer Count
 		document.getElementById(date).childNodes[0].childNodes[5].innerHTML = '&nbsp;-Estimated Timer Count: <input name="timerEstimate" value="'+document.getElementById(date).childNodes[0].childNodes[5].dataset.timerEstimate+'">';
 		//Default Timer Length
 		document.getElementById(date).childNodes[0].childNodes[6].innerHTML = '&nbsp;-Default Timer Length (minutes): <input name="timerLength" value="'+document.getElementById(date).childNodes[0].childNodes[6].dataset.timerDefault+'">';
-
 		// Remove edit & delete buttons
 		document.getElementById(date).childNodes[0].childNodes[1].remove();
 		document.getElementById(date).childNodes[0].childNodes[1].remove();
@@ -167,7 +167,7 @@ class TasksList extends Component {
 
 		// timerCount (hidden)
 		let timerCountInput = document.createElement('div');
-		timerCountInput.innerHTML = '<input name="timerCount" style="display:none;" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.timerCount+'">';
+		timerCountInput.innerHTML = '<input type="number" name="timerCount" style="display:none;" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.timerCount+'">';
 		document.getElementById(date).childNodes[0].appendChild(timerCountInput);
 
 		// Submit button
@@ -202,6 +202,12 @@ class TasksList extends Component {
 									 <div>
 										<li>&nbsp;<i>Description:</i></li>
 										<li data-description={task.description}>&nbsp;-{task.description}</li>
+									 </div>
+									}
+									{ !task.description && // Task Description
+									 <div className="no-description">
+										<li>&nbsp;<i>Description:</i></li>
+										<li data-description="">&nbsp;-no description</li>
 									 </div>
 									}
 									<li data-timer-count={task.timerCount}>&nbsp;<i>Time:</i></li>

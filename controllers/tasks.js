@@ -9,10 +9,10 @@ function postTask(req, res, next) {
 			"username": req.body.username,
 			"date": req.body.date,
 			"title": req.body.title,
-			"description": req.body.description,
+			"description": req.body.description || "",
 			"timerDefault": req.body.timerDefault,
 			"timerEstimate": req.body.timerEstimate,
-			"timerCount":  req.body.timerCount || 0
+			"timerCount":  {"N": req.body.timerCount || 0}
 		}
 	};
 	params.Item.date = shortenDate(params.Item.date); //see bottom
@@ -91,8 +91,6 @@ function putTask(req, res, next) {
 	    ReturnValues:"UPDATED_NEW"
 		};
 	}
-	console.log(params.Key.username);
-	console.log(params.Key.date);
 
 	console.log("Updating the task...");
 	docClient.update(params, function(err, data) {

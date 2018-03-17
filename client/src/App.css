@@ -236,7 +236,7 @@ textarea {
 .edit-task-submit:hover, .edit-task-submit:active {
   background-color: rgb(100, 75, 65);
 }
-.hidden-edit {
+.hidden-edit, .no-description {
   display: none;
 }
 
