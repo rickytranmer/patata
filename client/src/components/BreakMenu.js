@@ -14,8 +14,10 @@ class BreakMenu extends Component {
 				<h3>Time to take a break, you've earned it!</h3><br/>
 				<h3>(recommended 3-5 minutes)</h3><br/>
 
-				<button className="stop" onClick={this.props.updateAlarm}>STOP ALARM</button>
-
+				{ this.props.alarm &&
+					<button className="stop" onClick={this.props.updateAlarm}>STOP ALARM</button>
+				}
+				{/**/}
 				{ this.props.selectedTask &&
 					<button onClick={this.props.updateTimerCount}>Add to Timer Count</button>
 				}

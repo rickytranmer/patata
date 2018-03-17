@@ -146,20 +146,15 @@ class TasksList extends Component {
 		console.log('edit:', date);
 		console.log(document.getElementById(date).childNodes[0]);
 
-		// authUser (hidden)
-		let authUserInput = document.createElement('div');
-		authUserInput.innerHTML = '<input name="username" style="display:none;" value="'+this.props.authUser+'">';
-		document.getElementById(date).childNodes[0].appendChild(authUserInput);
-
 		// Title
 		document.getElementById(date).childNodes[0].childNodes[0].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[0].dataset.title+'" required />';
 		// Description (display if hidden)
 		document.getElementById(date).childNodes[0].childNodes[3].classList.remove('no-description');
 		document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].innerHTML = '<textarea name="taskDescription" placeholder="Description (optional)">'+(document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].dataset.description || '')+'</textarea>';
 		//Estimated Timer Count
-		document.getElementById(date).childNodes[0].childNodes[5].innerHTML = '&nbsp;-Estimated Timer Count: <input type="number" name="timerEstimate" value="'+document.getElementById(date).childNodes[0].childNodes[5].dataset.timerEstimate+'">';
+		document.getElementById(date).childNodes[0].childNodes[5].innerHTML = '&nbsp;&nbsp;Estimated Timer Count: <input type="number" name="timerEstimate" value="'+document.getElementById(date).childNodes[0].childNodes[5].dataset.timerEstimate+'">';
 		//Default Timer Length
-		document.getElementById(date).childNodes[0].childNodes[6].innerHTML = '&nbsp;-Default Timer Length (minutes): <input type="number" name="timerLength" value="'+document.getElementById(date).childNodes[0].childNodes[6].dataset.timerDefault+'">';
+		document.getElementById(date).childNodes[0].childNodes[6].innerHTML = '&nbsp;&nbsp;Default Timer Length (minutes): <input type="number" name="timerLength" value="'+document.getElementById(date).childNodes[0].childNodes[6].dataset.timerDefault+'">';
 		// Remove edit & delete buttons
 		document.getElementById(date).childNodes[0].childNodes[1].remove();
 		document.getElementById(date).childNodes[0].childNodes[1].remove();
@@ -175,7 +170,7 @@ class TasksList extends Component {
 		submitEditTaskButton.innerHTML = '<input type="submit" value="Save" class="edit-task-submit">';
 		document.getElementById(date).childNodes[0].appendChild(submitEditTaskButton);
 
-		// Attach li to form
+		// Attach li to hidden form
 		document.getElementById(date).childNodes[1].classList.remove('hidden-edit');
 		document.getElementById(date).childNodes[1].appendChild(document.getElementById(date).childNodes[0]);
 	}

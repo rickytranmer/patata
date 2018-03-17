@@ -35,7 +35,7 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`Client: 3.16b ${res.test}`))
+      .then((res)=> console.log(`Client: 3.17 ${res.test}`))
       .catch((err)=> console.error(err));
     this.convertTimerString(this.state.timerDefault);
     firebase.auth.onAuthStateChanged((authUser)=> {
@@ -68,7 +68,6 @@ class App extends Component {
 
   updateAlarm = ()=> {
     this.state.alarm ? this.setState({ alarm: false }) : this.setState({ alarm: true });
-    if(document.querySelector('.stop')) { document.querySelector('.stop').classList.add('hidden-edit') }
   }
 
   // After timer finishes, let user add to the task's running tally
