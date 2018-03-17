@@ -79,8 +79,8 @@ function putTask(req, res, next) {
 		var params = {
 	    TableName: table,
 	    Key:{
-	      "username": req.body.username,
-	      "date": req.params.id
+	      "username": {"S": req.body.username},
+	      "date": {"S": req.params.id}
 	    },
 	    UpdateExpression: "set #timerCount = #timerCount + :val",
 	    ExpressionAttributeNames:{
