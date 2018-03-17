@@ -51,7 +51,8 @@ function getTask(req, res, next) {
 }
 
 function putTask(req, res, next) {
-	console.log(req.body.title);
+	console.log(req.body.username);
+	console.log(req.params.id);
 	if(req.body.title) {
 		// Update entire task
 		if(req.body.username) {console.log(req.body.username)}
@@ -71,7 +72,7 @@ function putTask(req, res, next) {
 	      ":tc":  req.body.timerCount || 0
 		  },
 		  ReturnValues:"UPDATED_NEW"
-			};
+		};
 	} else {
 		// Just update timerCount
 		console.log('timerCount');
