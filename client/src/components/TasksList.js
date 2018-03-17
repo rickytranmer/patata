@@ -107,31 +107,49 @@ class TasksList extends Component {
 		}
 	}
 
-	submitEditTask(event) {
-		// event.preventDefault();
-		console.log(event);
+	submitEditTask(event, date) {
+		event.preventDefault();
+		console.log(date);
+		console.log(this.props.authUser);
+		let updateTask = {
+			title: event.target.taskTitle.value,
+			description: event.target.taskDescription.value || null,
+			timerDefault: event.target.timerLength.value || 25,
+			timerEstimate: event.target.timerEstimate.value || 1,
+			timerCount: event.target.timerCount.value || 0
+		};
+		console.log(updateTask);
+
+		if(this.props.authUser) {
+			updateTask.username = this.props.authUser;
+
+			// POST route to server
+			fetch(`https://patata-api.herokuapp.com/api/task/${date}`, {
+			  method: 'PUT',
+			  headers: {
+			  	'Content-Type': 'application/json'
+				},
+				mode: 'CORS',
+			  body: JSON.stringify(updateTask)
+			})
+				//TODO - if err, save updateTask to localStorage until internet is available
+					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
+	     .catch((err)=> console.error(err))
+	     .then((res)=> window.location.replace("/patata/task/list"));
+		} else {
+			//TODO - just save locally if no account
+		}
 	}
 
 	editTask(date) {
-		//TODO - remove edit and delete buttons, add submit
-		// - replace text with input, default values pulled from dataset
+		//TODO - call EditTaskForm
 		console.log('edit:', date);
 		console.log(document.getElementById(date).childNodes[0]);
-		//Title
-		// console.log(document.getElementById(date).childNodes[0].childNodes[0]);
-		// //Delete button
-		// console.log(document.getElementById(date).childNodes[0].childNodes[1]);
-		// //Edit button
-		// console.log(document.getElementById(date).childNodes[0].childNodes[2]);
-		// //Description
-		// console.log(document.getElementById(date).childNodes[0].childNodes[3].childNodes[1]);
-		// //Estimated Timer Count
-		// console.log(document.getElementById(date).childNodes[0].childNodes[5]);
-		// //Default Timer Length
-		// console.log(document.getElementById(date).childNodes[0].childNodes[6]);
 
-		// Submit Edit Task button
-		//'<button className="submit-task" onClick={()=> this.submitEditTask('+date+')}>X</button>'
+		// authUser (hidden)
+		let authUserInput = document.createElement('div');
+		authUserInput.innerHTML = '<input name="username" style="display:none;" value="'+this.props.authUser+'">';
+		document.getElementById(date).childNodes[0].appendChild(authUserInput);
 
 		// Title
 		document.getElementById(date).childNodes[0].childNodes[0].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[0].dataset.title+'"></input>';
@@ -152,20 +170,14 @@ class TasksList extends Component {
 		timerCountInput.innerHTML = '<input name="timerCount" style="display:none;" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.timerCount+'">';
 		document.getElementById(date).childNodes[0].appendChild(timerCountInput);
 
-		// authUser (hidden)
-		let authUserInput = document.createElement('div');
-		authUserInput.innerHTML = '<input name="username" style="display:none;" value="'+this.props.authUser+'">';
-		document.getElementById(date).childNodes[0].appendChild(authUserInput);
-
-		// Create submit button
+		// Submit button
 		let submitEditTaskButton = document.createElement('div');
 		submitEditTaskButton.innerHTML = '<input type="submit" value="Save" class="edit-task-submit">';
 		document.getElementById(date).childNodes[0].appendChild(submitEditTaskButton);
-		// document.getElementById(date).childNodes[0].innerHTML = '<form>'+document.getElementById(date).childNodes[0].innerHTML+'</form>';
 
 		// Attach li to form
-		document.getElementById(date).innerHTML = '<form action="https://patata-api.herokuapp.com/api/task/'+date+'" method="PUT">'+document.getElementById(date).innerHTML+'</form>'
-
+		document.getElementById(date).childNodes[1].classList.remove('hidden-edit');
+		document.getElementById(date).childNodes[1].appendChild(document.getElementById(date).childNodes[0]);
 	}
 
 	render() {
@@ -196,6 +208,7 @@ class TasksList extends Component {
 									<li data-timer-estimate={task.timerEstimate}>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
 									<li data-timer-default={task.timerDefault}>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
 								</ul>
+								<form className="hidden-edit" onSubmit={(event)=> this.submitEditTask(event, task.date)}></form>
 							 </li>
 							}
 
