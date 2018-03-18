@@ -272,7 +272,6 @@ class App extends Component {
                               updateTimerCount={this.updateTimerCount}
                               resetTimer={this.resetTimer}
                               updateAlarm={this.updateAlarm}
-                              queryTime={this.state.queryTime}
                               updateQueryTime={this.updateQueryTime}
                               {...this.state} /> } />
           <Route path='/patata/task' render={

@@ -28,6 +28,11 @@
 }
 .Timers li {
   border: none;
+  padding: 10px;
+  background-color: black;
+}
+.Timers li li {
+  padding: 2px;
 }
 .Timers li button {
   padding: 5px;
@@ -135,6 +140,8 @@ li {
   padding: 0 2px;
   font-size: 1.25rem;
   border: 1px dotted white;
+  background-color: rgb(20, 20, 20);
+
 }
 li ul li {
   font-size: 1.1rem;
