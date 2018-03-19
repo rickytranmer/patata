@@ -28,11 +28,10 @@
 }
 .Timers li {
   border: none;
-  padding: 10px;
   background-color: black;
 }
 .Timers li li {
-  padding: 2px;
+  padding: 5px;
 }
 .Timers li button {
   padding: 5px;
@@ -211,8 +210,13 @@ textarea {
 .estimates label {
   font-size: 1rem;
 }
+.description {
+  font-size: 1.2rem;
+}
 .delete-task {
   float: right;
+  margin: 3px;
+  /*margin-right: 3px;*/
   background-color: rgb(255, 65, 54); 
 }
 .delete-task:hover {
@@ -221,6 +225,7 @@ textarea {
 .edit-button {
   float: right;
   font-size: 2.25rem;
+  margin-left: 1px;
   cursor: pointer;
 }
 .edit-task-submit {

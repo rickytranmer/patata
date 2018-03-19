@@ -209,11 +209,12 @@ class TasksList extends Component {
 							{ this.state.mode==="List" &&
 							 <li id={task.date} className="listed-task">
 								<ul>
-								 	<b data-title={task.title}>{task.title}</b><button className="delete-task" onClick={()=> this.deleteTask(task.date)}>X</button><span role="img" aria-label="edit button" className="edit-button" onClick={()=> this.editTask(task.date)}>📝</span>
+								 	<button className="delete-task" onClick={()=> this.deleteTask(task.date)}>X</button><span role="img" aria-label="edit button" className="edit-button" onClick={()=> this.editTask(task.date)}>📝</span>
+									<b data-title={task.title}>{task.title}</b>
 									{ task.description && // Task Description
 									 <div>
 										<li>&nbsp;<i>Description:</i></li>
-										<li data-description={task.description}>&nbsp;-{task.description}</li>
+										<li className="description" data-description={task.description}>&nbsp;-{task.description}</li>
 									 </div>
 									}
 									{ !task.description && // Task Description
