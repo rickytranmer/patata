@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TaskForm from '../components/TaskForm';
 import TasksList from '../components/TasksList';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Switch } from 'react-router-dom';
 
 class Tasks extends Component {
 	render() {
@@ -11,10 +11,14 @@ class Tasks extends Component {
 		 		<NavLink to='/patata/task/list' activeClassName='selected-tasks-nav'><button>Task List</button></NavLink>
 				<NavLink to='/patata/task/new' activeClassName='selected-tasks-nav'><button>New Task</button></NavLink>
 			</div>
-			<Route path='/patata/task/list' render={
-				(props)=> <TasksList {...this.props} /> } />
-			<Route path='/patata/task/new' render={
-				(props)=> <TaskForm authUser={this.props.authUser} /> } />
+			<Switch>
+				<Route path='/patata/task/new' render={
+					(props)=> <TaskForm authUser={this.props.authUser} /> } />
+				<Route path='/patata/task/list' render={
+					(props)=> <TasksList {...this.props} /> } />
+				<Route path='/patata/task' render={
+					(props)=> <TasksList {...this.props} /> } />
+			</Switch>
 		 </div>
 		)
 	}

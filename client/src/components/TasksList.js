@@ -164,7 +164,7 @@ class TasksList extends Component {
 		console.log(document.getElementById(date).childNodes[0]);
 
 		// Title
-		document.getElementById(date).childNodes[0].childNodes[0].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[0].dataset.title+'" required />';
+		document.getElementById(date).childNodes[0].childNodes[2].innerHTML = 'Edit Task: <input name="taskTitle" placeholder="Task Title" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.title+'" required />';
 		// Description (display if hidden)
 		document.getElementById(date).childNodes[0].childNodes[3].classList.remove('no-description');
 		document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].innerHTML = '<textarea name="taskDescription" placeholder="Description (optional)">'+(document.getElementById(date).childNodes[0].childNodes[3].childNodes[1].dataset.description || '')+'</textarea>';
@@ -173,8 +173,8 @@ class TasksList extends Component {
 		//Default Timer Length
 		document.getElementById(date).childNodes[0].childNodes[6].innerHTML = '&nbsp;&nbsp;Default Timer Length (minutes): <input type="number" name="timerLength" value="'+document.getElementById(date).childNodes[0].childNodes[6].dataset.timerDefault+'">';
 		// Remove edit & delete buttons
-		document.getElementById(date).childNodes[0].childNodes[1].remove();
-		document.getElementById(date).childNodes[0].childNodes[1].remove();
+		document.getElementById(date).childNodes[0].childNodes[0].remove();
+		document.getElementById(date).childNodes[0].childNodes[0].remove();
 	
 
 		// timerCount (hidden)
@@ -246,7 +246,7 @@ class TasksList extends Component {
 								 	{ task.description && // Task Description
 								 	 <div>
 								 		<li>&nbsp;<i>Description:</i></li>
-								 		<li>&nbsp;-{task.description}</li>
+								 		<li className="description">&nbsp;-{task.description}</li>
 								 	 </div>
 								 	}
 								 	<li>&nbsp;<i>Time:</i></li>

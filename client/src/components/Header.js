@@ -25,7 +25,7 @@ class Header extends Component {
 			    View Task (edit & delete)
 			  */}
 			<nav>	
-			  <NavLink to='/patata/task' activeClassName='selected-nav'><Link to='/patata/task/list'>Tasks</Link></NavLink>
+			  <NavLink to='/patata/task' activeClassName='selected-nav'>Tasks</NavLink>
 			  <NavLink to='/patata/agenda' activeClassName='selected-nav'>Agenda</NavLink>
 			  <NavLink to='/patata/timer' activeClassName='selected-nav' id='timer-nav'>Timer</NavLink>
 			</nav>
