@@ -329,7 +329,12 @@ textarea {
     max-width: 50vw;
   }
 
+  .listed-task ul {
+    width: 99%;
+  }
+
   #task-list li.listed-task {
-    width: 100%;
+    min-width: 40vw;
+    max-width: 600px;
   }
 }
