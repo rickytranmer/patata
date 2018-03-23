@@ -179,7 +179,7 @@ class TasksList extends Component {
 
 		// timerCount (hidden)
 		let timerCountInput = document.createElement('div');
-		timerCountInput.innerHTML = '<input type="number" name="timerCount" style="display:none;" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.timerCount+'">';
+		timerCountInput.innerHTML = '<input type="number" name="timerCount" aria-hidden="true" style="display:none;" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.timerCount+'">';
 		document.getElementById(date).childNodes[0].appendChild(timerCountInput);
 
 		// Submit button

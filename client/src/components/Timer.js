@@ -6,7 +6,7 @@ class Timer extends Component {
 		return (
 		 <div>
 			<div className="Timer">
-				<h1 id="timer-string">{ this.props.timerString }</h1>
+				<h1 role="timer" id="timer-string">{ this.props.timerString }</h1>
 				{ this.props.timerString !== '00m 00s' &&
 					<button id="start-button" onClick={this.props.startTimer}>
 				  	Start
