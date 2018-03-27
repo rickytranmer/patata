@@ -12,7 +12,12 @@ class TaskForm extends Component {
 			date: new Date()
 		};
 		console.log(newTask);
-		if(event.target.taskDescription.value) { newTask.description = event.target.taskDescription.value }
+		if(event.target.taskDescription.value) { 
+			newTask.description = event.target.taskDescription.value;
+
+			// If task starts with '-', remove first '-'
+			if(newTask.description[0] === '-') { newTask.description = newTask.description.replace('-', '') }
+		}
 
 		if(this.props.authUser) {
 			newTask.username = this.props.authUser;

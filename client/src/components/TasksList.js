@@ -46,6 +46,7 @@ class TasksList extends Component {
 	componentDidUpdate() {
 		let differentTask = document.getElementById('different-task')||null;
 		if(this.state.selectedTask && differentTask) { differentTask.style.display = 'inline' }
+	
 
 		// If a task description contains \n, replace innerHTML with <br/>
 		let taskDescriptions = document.querySelectorAll('.insertLineBreak')||null;
@@ -53,8 +54,8 @@ class TasksList extends Component {
 			console.log('insertLineBreak');
 			for(let i = 0; i < taskDescriptions.length; i++) {
 				console.log(' x', i);
-				if(taskDescriptions[i].textContent.includes('\n')) { taskDescriptions[i].innerHTML = taskDescriptions[i].textContent.replace('\n', '<br/>') }
-			taskDescriptions[i].classList.remove('insertLineBreak');
+				if(taskDescriptions[i].textContent.includes('\\n')) { taskDescriptions[i].innerHTML = taskDescriptions[i].innerHTML.replace(/\\n/g, '<br/>&nbsp;') }
+				taskDescriptions[i].classList.remove('insertLineBreak');
 			}
 		}
 	}
@@ -92,6 +93,8 @@ class TasksList extends Component {
   	} else {
   		console.log('no tasks found');
   	}
+
+
   }
 
   updateSelectedTask(selectedTask) {
@@ -225,11 +228,11 @@ class TasksList extends Component {
 									{ task.description && // Task Description
 									 <div>
 										<li>&nbsp;<i>Description:</i></li>
-										{ task.description.includes('\n') &&
+										{ task.description.includes('\\n') &&
 											<li className="description insertLineBreak" data-description={task.description}>&nbsp;-{task.description}</li>
 
 										}
-										{ !task.description.includes('\n') &&
+										{ !task.description.includes('\\n') &&
 											<li className="description" data-description={task.description}>&nbsp;-{task.description}</li>
 										}
 									 </div>
