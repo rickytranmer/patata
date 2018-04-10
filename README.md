@@ -16,6 +16,9 @@
 - [Goodtime Productivity Timer](https://play.google.com/store/apps/details?id=com.apps.adrcotfas.goodtime)
 - [Pomodoro Timer Lite](https://play.google.com/store/apps/details?id=com.tatkovlab.pomodorolite)
 
+## Lighthouse Score
+![Lighthouse Review Scores](https://github.com/rickytranmer/patata/blob/master/lighthouse040118.png "Lighthouse Review Scores")
+
 ## Goals
 - Develop Chrome Extension as alternative to website
 - Active and completed tasks on Agenda page
