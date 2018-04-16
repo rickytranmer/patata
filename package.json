@@ -9,7 +9,7 @@
     "server": "nodemon server.js",
     "client": "cd client/ && npm start",
     "build": "cd client/ && npm run build",
-    "deploy": "cd client/ && npm run deploy",
+    "deploy": "cd client/ && npm run deploy && date",
     "fd": "npm run deploy && pwd && echo Push to Github && git add . && git commit -m \"Latest front-end build\" && echo Push to Heroku && git push heroku master && date"
   },
   "keywords": [],
