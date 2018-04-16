@@ -19,12 +19,12 @@ class Home extends Component {
 			{ !this.props.authUser &&
 			 <div>
 			 	<div className="account-nav">
-			 		<NavLink to='/patata/login' activeClassName='selected-account-nav'><button>Log In</button></NavLink>
-					<NavLink to='/patata/signup' activeClassName='selected-account-nav'><button>Sign Up</button></NavLink>
+			 		<NavLink to='/login' activeClassName='selected-account-nav'><button>Log In</button></NavLink>
+					<NavLink to='/signup' activeClassName='selected-account-nav'><button>Sign Up</button></NavLink>
 				</div>
 
-				<Route exact path='/patata/login' component={LogInForm} />
-				<Route exact path='/patata/signup' component={SignUpForm} />
+				<Route exact path='/login' component={LogInForm} />
+				<Route exact path='/signup' component={SignUpForm} />
 			 </div>
 			}
 			 	

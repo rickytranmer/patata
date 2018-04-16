@@ -36,8 +36,8 @@ class App extends Component {
   }
   componentDidMount() {
     this.testApi()
-      .then((res)=> console.log(`Client: 3.26 ${res.test}`))
-      .catch((err)=> console.error(err));
+      .catch((err) => console.error(err))
+      .then((res)=> console.log(`Client: 4.16 ${res.test}`));
     this.convertTimerString(this.state.timerDefault);
     firebase.auth.onAuthStateChanged((authUser)=> {
       authUser ? this.updateAuthUser(authUser) : this.updateAuthUser(null);
@@ -94,7 +94,7 @@ class App extends Component {
           //TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
                  //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
          .catch((err)=> console.error(err))
-         .then((res)=> window.location.replace("/patata/timer"));
+         .then((res)=> window.location.replace("/timer"));
       } else {
         //TODO - save task locally
         console.log('no user');
@@ -160,7 +160,6 @@ class App extends Component {
     }
   }
 
-
   endTimer = ()=> {
     document.querySelector('title').innerHTML = 'Patata';
     clearInterval(this.timeInterval);
@@ -174,12 +173,6 @@ class App extends Component {
       this.updateTimerString(this.state.timerString);
       this.updateAlarm();
       this.onPlay();
-      // Incrememnt selectedTask timercount
-      if(this.state.selectedTask) {
-        // this.updateTimerCount(this.state.selectedTask);
-        // document.getElementById(this.state.selectedTask).dataset.timercount++;
-        // console.log(document.getElementById(this.state.selectedTask).dataset.timercount);
-      }
     } else {
       timer[timer.length-1].stop = new Date().getTime();
       this.updateTimer(timer);
@@ -189,7 +182,6 @@ class App extends Component {
 
   timerDifference() {
     let sumTimer = 0;
-    // if(this.timeInterval) {
       for(let i = 0; i < this.state.timer.length; i++) {
         if(!this.state.timer[i].stop) {
           sumTimer += (new Date().getTime() - this.state.timer[i].start)
@@ -198,9 +190,6 @@ class App extends Component {
         }
       }
       return Math.floor(sumTimer/1000);
-    // } else {
-      // return 0;
-    // }
   }
 
   // Set selectedTask to appply timer, can be called with empty parameter to clear selectedTask
@@ -246,6 +235,7 @@ class App extends Component {
     setTimeout(()=> {
       if(this.state.alarm) {
         this.onPlay();
+        
       }
     }, 3000);
   }
@@ -259,12 +249,12 @@ class App extends Component {
       <div className="App">
         <Header {...this.state} />
         <Switch>
-          {['/', '/patata', '/patata/index.html', '/patata/login', '/patata/signup'].map((path)=> 
+          {['/', '/index.html', '/login', '/signup'].map((path)=> 
             <Route key={path} exact path={path} render={
               (props)=> <Home authUser={this.state.authUser}
-                              authUserEmail={this.state.authUserEmail}/>} />
+                              authUserEmail={this.state.authUserEmail} /> } />
           )}
-          <Route path='/patata/timer' render={ 
+          <Route path='/timer' render={ 
             (props)=> <Timers updateSelectedTask={this.updateSelectedTask} 
                               timeInterval={this.timeInterval} 
                               startTimer={this.startTimer} 
@@ -274,14 +264,14 @@ class App extends Component {
                               updateAlarm={this.updateAlarm}
                               updateQueryTime={this.updateQueryTime}
                               {...this.state} /> } />
-          <Route path='/patata/task' render={
+          <Route path='/task' render={
             (props)=> <Tasks authUser={this.state.authUser}
                              queryTime={this.state.queryTime}
                              updateQueryTime={this.updateQueryTime} /> } />
-          <Route path='/patata/agenda' component={Agenda} />
+          <Route path='/agenda' component={Agenda} />
           <Route render={
               (props)=> <Home authUser={this.state.authUser}
-                              authUserEmail={this.state.authUserEmail}/>} />
+                              authUserEmail={this.state.authUserEmail} /> } />
         </Switch>
       </div>
     );

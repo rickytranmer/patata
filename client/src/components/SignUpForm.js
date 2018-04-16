@@ -49,7 +49,7 @@ class SignUpForm extends Component {
 //     			console.log('no res');
 //     		}
 //     	}, 1000);
-//  		// window.location.replace("/patata");
+//  		// window.location.replace("/");
 //   	 });
 // }  else {
 // 	event.target.password1.placeholder = 'Passwords must match';

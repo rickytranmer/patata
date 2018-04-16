@@ -27,17 +27,17 @@ class TasksList extends Component {
   	if(this.props.authUser) {
   		// Grab tasks from Heroku
   		this.getAllTasks()
-  		  .then((res)=> { this.updateTasks({ tasks: res }, true) })
-  		  .catch((err)=> console.error(err));
-  	} else {
+  		  .catch((err)=> console.error(err))
+  		  .then((res) => this.updateTasks({ tasks: res }, true));
+			} else {
 			// ^ Same thing ^ look for authUser two more times
   		setTimeout(()=> {
   			if(this.props.authUser) { 
   				this.getAllTasks()
-  				 .then((res)=> { this.updateTasks({ tasks: res }, true) })
-  				 .catch((err)=> console.error(err));
+  				 .catch((err)=> console.error(err))
+  				 .then((res) => this.updateTasks({ tasks: res }, true));
   			} else {
-  				setTimeout(()=> { this.props.authUser ? this.getAllTasks().then((res)=> { this.updateTasks({ tasks: res }, true) }).catch((err)=> console.error(err)) : document.getElementById('loading-h2').innerHTML = 'No user found. &nbsp;Please log in or sign up by clicking "Patata" above.' }, 333);
+					setTimeout(() => { this.props.authUser ? this.getAllTasks().catch((err) => console.error(err)).then((res)=> { this.updateTasks({ tasks: res }, true) }) : document.getElementById('loading-h2').innerHTML = 'No user found. &nbsp;Please log in or sign up by clicking "Patata" above.' }, 333);
   			}
 			}, 333);
   	}
@@ -47,21 +47,23 @@ class TasksList extends Component {
 		let differentTask = document.getElementById('different-task')||null;
 		if(this.state.selectedTask && differentTask) { differentTask.style.display = 'inline' }
 	
-
 		// If a task description contains \n, replace innerHTML with <br/>
 		let taskDescriptions = document.querySelectorAll('.insertLineBreak')||null;
 		if(taskDescriptions[0]) {
 			console.log('insertLineBreak');
 			for(let i = 0; i < taskDescriptions.length; i++) {
 				console.log(' x', i);
+				// Insert <br/> for each '\n' in task description
 				if(taskDescriptions[i].textContent.includes('\\n')) { taskDescriptions[i].innerHTML = taskDescriptions[i].innerHTML.replace(/\\n/g, '<br/>&nbsp;') }
 				taskDescriptions[i].classList.remove('insertLineBreak');
+				// Prevent duplicate '-' if it's the first character in task description
+				if(taskDescriptions[i].textContent[2] === '-') { taskDescriptions[i].innerHTML = '&nbsp;-' + taskDescriptions[i].innerHTML.substring(8) }
 			}
 		}
 	}
 
 	async getAllTasks() {
-		//TODO - limit number of (successful?) fetches, would use local instead
+		//TODO - limit number of (successful?) fetches within 10sec, will use local instead
 		console.log('-getAllTasks');
 		if(new Date().getTime() - this.props.queryTime >= 10000) {
 	  	this.props.updateQueryTime(new Date().getTime());
@@ -71,30 +73,24 @@ class TasksList extends Component {
 			return body;
 		} else {
 			console.log('local');
+			// Get tasks from localStorage, if they exist
 			let localTasks = JSON.parse(localStorage.getItem("tasks")||null);
-			if(localTasks) {
-				return localTasks.tasks;
-			} else {
+			if(!localTasks) {
 				console.log('no local tasks');
 				this.props.updateQueryTime(null);
+				// Make a place for tasks in local storage if it doesn't already exist
 				localStorage.setItem("tasks", {"tasks":[{}]});
 				return null;
-			}
+			} else { return localTasks.tasks }
 		}
   };
 
   updateTasks(tasks, updateLocal) {
   	if(tasks) {
   		if(document.getElementById('loading-h2')) { document.getElementById('loading-h2').remove() }
-	  	if(updateLocal) { 
-	  		localStorage.setItem("tasks", JSON.stringify(tasks));
-	  	}
+	  	if(updateLocal) { localStorage.setItem("tasks", JSON.stringify(tasks)) }
 	  	this.setState(tasks);
-  	} else {
-  		console.log('no tasks found');
-  	}
-
-
+  	} else { console.log('no tasks found') }
   }
 
   updateSelectedTask(selectedTask) {
@@ -112,7 +108,8 @@ class TasksList extends Component {
   	this.props.updateSelectedTask(selectedTask);
   	// Just the one task still there?  Temporary solution reloads page.
   	// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
-  	if(document.getElementById(tempTask)) { window.location.replace("/patata/timer") }
+  	// Possible solution is to create all tasks in the render(), but hide those not selected
+  	if(document.getElementById(tempTask)) { window.location.replace("/timer") }
   }
 
 	deleteTask(date) {
@@ -131,7 +128,7 @@ class TasksList extends Component {
 		    //TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
 		           //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 		   .catch((err)=> console.error(err))
-		   .then((res)=> window.location.replace("/patata/task/list"));
+		   .then((res)=> window.location.replace("/task/list"));
 		} else {
 		  //TODO - save task locally
 		  console.log('no user');
@@ -166,7 +163,7 @@ class TasksList extends Component {
 				//TODO - if err, save updateTask to localStorage until internet is available
 					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 	     .catch((err)=> console.error(err))
-	     .then((res)=> window.location.replace("/patata/task/list"));
+	     .then((res)=> window.location.replace("/task/list"));
 		} else {
 			//TODO - just save locally if no account
 		}
@@ -190,7 +187,6 @@ class TasksList extends Component {
 		document.getElementById(date).childNodes[0].childNodes[0].remove();
 		document.getElementById(date).childNodes[0].childNodes[0].remove();
 	
-
 		// timerCount (hidden)
 		let timerCountInput = document.createElement('div');
 		timerCountInput.innerHTML = '<input type="number" name="timerCount" aria-hidden="true" style="display:none;" value="'+document.getElementById(date).childNodes[0].childNodes[2].dataset.timerCount+'">';
@@ -266,8 +262,14 @@ class TasksList extends Component {
 								 	{ task.description && // Task Description
 								 	 <div>
 								 		<li>&nbsp;<i>Description:</i></li>
-								 		<li className="description">&nbsp;-{task.description}</li>
-								 	 </div>
+								 		{ task.description.includes('\\n') &&
+								 			<li className="description insertLineBreak" data-description={task.description}>&nbsp;-{task.description}</li>
+
+								 		}
+								 		{ !task.description.includes('\\n') &&
+								 			<li className="description" data-description={task.description}>&nbsp;-{task.description}</li>
+								 		}
+									 </div>
 								 	}
 								 	<li>&nbsp;<i>Time:</i></li>
 								 	<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>

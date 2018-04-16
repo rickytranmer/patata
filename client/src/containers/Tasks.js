@@ -8,15 +8,15 @@ class Tasks extends Component {
 		return(
 		 <div className="Tasks">
 		 	<div className="tasks-nav">
-		 		<NavLink to='/patata/task/list' activeClassName='selected-tasks-nav'><button>Task List</button></NavLink>
-				<NavLink to='/patata/task/new' activeClassName='selected-tasks-nav'><button>New Task</button></NavLink>
+		 		<NavLink to='/task/list' activeClassName='selected-tasks-nav'><button>Task List</button></NavLink>
+				<NavLink to='/task/new' activeClassName='selected-tasks-nav'><button>New Task</button></NavLink>
 			</div>
 			<Switch>
-				<Route path='/patata/task/new' render={
+				<Route path='/task/new' render={
 					(props)=> <TaskForm authUser={this.props.authUser} /> } />
-				<Route path='/patata/task/list' render={
+				<Route path='/task/list' render={
 					(props)=> <TasksList {...this.props} /> } />
-				<Route path='/patata/task' render={
+				<Route path='/task' render={
 					(props)=> <TasksList {...this.props} /> } />
 			</Switch>
 		 </div>
