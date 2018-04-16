@@ -16,7 +16,7 @@
 - [Goodtime Productivity Timer](https://play.google.com/store/apps/details?id=com.apps.adrcotfas.goodtime)
 - [Pomodoro Timer Lite](https://play.google.com/store/apps/details?id=com.tatkovlab.pomodorolite)
 
-## Lighthouse Score
+## Lighthouse Score (4/1/18)
 ![Lighthouse Review Scores](https://github.com/rickytranmer/patata/blob/master/lighthouse040118.png "Lighthouse Review Scores")
 
 ## Goals
