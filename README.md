@@ -23,4 +23,4 @@
 - Develop Chrome Extension as alternative to website
 - Active and completed tasks on Agenda page
 - Display statistics on Agenda page
-- Implement testing (Mocha / Chai / JSDOM)
+- Implement testing (Mocha / Chai / Jest)
