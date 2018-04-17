@@ -94,7 +94,7 @@ class App extends Component {
 					//TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
 								 //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 				 .catch((err)=> console.error(err))
-				 .then(()=> window.location.replace("/timer"));
+				 .then(()=> window.location.replace("/patata/#/timer"));
 			} else {
 				//TODO - save task locally
 				console.log('no user');

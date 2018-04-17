@@ -34,7 +34,7 @@ class TaskForm extends Component {
 				//TODO - if err, save newTask to localStorage until internet is available
 					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 			 .catch((err)=> console.error(err))
-			 .then((res)=> window.location.replace("/task/list"));
+			 .then((res)=> window.location.replace("/patata/#/task/list"));
 		} else {
 			//TODO - just save locally if no account
 		}

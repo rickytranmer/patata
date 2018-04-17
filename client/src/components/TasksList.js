@@ -109,7 +109,7 @@ class TasksList extends Component {
 		// Just the one task still there?	Temporary solution reloads page.
 		// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
 		// Possible solution is to create all tasks in the render(), but hide those not selected
-		if(document.getElementById(tempTask)) { window.location.replace("/timer") }
+		if(document.getElementById(tempTask)) { window.location.replace("/patata/#/timer") }
 	}
 
 	deleteTask(date) {
@@ -126,9 +126,9 @@ class TasksList extends Component {
 				body: JSON.stringify(deletedTask)
 			})
 				//TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
-							 //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
-			 .catch((err)=> console.error(err))
-			 .then((res)=> window.location.replace("/task/list"));
+				//		 ? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
+			.catch((err)=> console.error(err))
+			.then((res)=> window.location.replace("/patata/#/task/list"));
 		} else {
 			//TODO - save task locally
 			console.log('no user');
@@ -162,8 +162,8 @@ class TasksList extends Component {
 			})
 				//TODO - if err, save updateTask to localStorage until internet is available
 					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
-			 .catch((err)=> console.error(err))
-			 .then((res)=> window.location.replace("/task/list"));
+			.catch((err)=> console.error(err))
+			.then((res)=> window.location.replace("/patata/#/task/list"));
 		} else {
 			//TODO - just save locally if no account
 		}
@@ -256,26 +256,26 @@ class TasksList extends Component {
 
 							{/* SELECTED TASK */}
 							{ this.props.selectedTask && this.props.selectedTask===task.date &&
-							 <li id={task.date} data-timerestimate={task.timerEstimate} data-timerdefault={task.timerDefault} data-timercount={task.timerCount} >
-								<ul>
-									<b>{task.title}</b>
-								 	{ task.description && // Task Description
-								 	 <div>
-								 		<li>&nbsp;<i>Description:</i></li>
-								 		{ task.description.includes('\\n') &&
-								 			<li className="description insertLineBreak" data-description={task.description}>&nbsp;-{task.description}</li>
+								<li id={task.date} data-timerestimate={task.timerEstimate} data-timerdefault={task.timerDefault} data-timercount={task.timerCount} >
+									<ul>
+										<b>{task.title}</b>
+										{ task.description && // Task Description
+											<div>
+												<li>&nbsp;<i>Description:</i></li>
+												{ task.description.includes('\\n') &&
+													<li className="description insertLineBreak" data-description={task.description}>&nbsp;-{task.description}</li>
 
-								 		}
-								 		{ !task.description.includes('\\n') &&
-								 			<li className="description" data-description={task.description}>&nbsp;-{task.description}</li>
-								 		}
-									 </div>
-								 	}
-								 	<li>&nbsp;<i>Time:</i></li>
-								 	<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
-								 	<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
-								</ul>							 
-							 </li>
+												}
+												{ !task.description.includes('\\n') &&
+													<li className="description" data-description={task.description}>&nbsp;-{task.description}</li>
+												}
+											</div>
+										}
+										<li>&nbsp;<i>Time:</i></li>
+										<li>&nbsp;&nbsp;-Estimate: {task.timerEstimate} x {task.timerDefault} = {Math.round(task.timerEstimate*task.timerDefault*100)/100}min</li>
+										<li>&nbsp;&nbsp;-Actual: &nbsp;&nbsp;&nbsp;&nbsp;{task.timerCount} x {task.timerDefault} = {Math.round(task.timerCount*task.timerDefault*100)/100}min</li>
+									</ul>							 
+								</li>
 							}
 							
 						 </div>
