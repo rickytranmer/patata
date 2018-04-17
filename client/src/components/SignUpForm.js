@@ -12,8 +12,8 @@ class SignUpForm extends Component {
 
 			auth.createUserWithEmail(email, password)
 			 .catch((error)=> {
-			  console.log(error);
-			  document.getElementById('message-p').innerHTML = error.message;
+				console.log(error);
+				document.getElementById('message-p').innerHTML = error.message;
 			 })
 			 .then((user)=> {
 			 	if(user) { console.log(user.email) }
@@ -28,30 +28,30 @@ class SignUpForm extends Component {
 
 // 	//DEPRECATED POST route to heroku using fetch
 // 	fetch('https://patata-api.herokuapp.com/api/user', {
-// 	  method: 'POST',
-// 	  headers: {
-// 	  	'Content-Type': 'application/json'
+// 		method: 'POST',
+// 		headers: {
+// 			'Content-Type': 'application/json'
 // 		},
 // 		mode: 'CORS',
-// 	  body: JSON.stringify(newUser)
+// 		body: JSON.stringify(newUser)
 // 	})
-//     .catch((err)=> console.error(err))
-//     .then((res)=> {
-//     	console.log(res);
-//     	let attempts = 0;
-//     	let thisInterval = setInterval(()=> {
-//     		if(res || attempts > 5) {
-//     			clearInterval(thisInterval);
-//     			console.log('end');
-//     			console.log(res);
-//     		} else {
-//     			attempts++;
-//     			console.log('no res');
-//     		}
-//     	}, 1000);
-//  		// window.location.replace("/");
-//   	 });
-// }  else {
+//		 .catch((err)=> console.error(err))
+//		 .then((res)=> {
+//		 	console.log(res);
+//		 	let attempts = 0;
+//		 	let thisInterval = setInterval(()=> {
+//		 		if(res || attempts > 5) {
+//		 			clearInterval(thisInterval);
+//		 			console.log('end');
+//		 			console.log(res);
+//		 		} else {
+//		 			attempts++;
+//		 			console.log('no res');
+//		 		}
+//		 	}, 1000);
+//			// window.location.replace("/");
+//	 	 });
+// }	else {
 // 	event.target.password1.placeholder = 'Passwords must match';
 // } // tell user if username is taken
 // action="https://patata-api.herokuapp.com/api/user" method="POST" 

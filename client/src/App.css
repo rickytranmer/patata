@@ -1,340 +1,340 @@
 .App {
-  text-align: center;
-  background-color: black;
-  color: rgb(250, 250, 250);
-  height: 100%;
-  min-height: 100vh;
+	text-align: center;
+	background-color: black;
+	color: rgb(250, 250, 250);
+	height: 100%;
+	min-height: 100vh;
 }
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40px;
-  margin: 5px 25px;
-  position: relative;
-  z-index: -1;
+	animation: App-logo-spin infinite 20s linear;
+	height: 40px;
+	margin: 5px 25px;
+	position: relative;
+	z-index: -1;
 }
 .App-title {
-  font-size: 1.25em;
-  margin: 0 25px;
-  letter-spacing: .75rem;
-  font-style: italic;
-  color: #DDDDDD;
-  font-weight: bold;
+	font-size: 1.25em;
+	margin: 0 25px;
+	letter-spacing: .75rem;
+	font-style: italic;
+	color: #DDDDDD;
+	font-weight: bold;
 }
 .App-title:hover {
-  text-shadow: 1px 0 #CCCCCC;
+	text-shadow: 1px 0 #CCCCCC;
 }
 .Home, .Timers, .Tasks, .Agenda {
-  padding-top: 55px;
+	padding-top: 55px;
 }
 .Timers li {
-  border: none;
-  background-color: black;
+	border: none;
+	background-color: black;
 }
 .Timers li li {
-  padding: 5px;
+	padding: 5px;
 }
 .Timers li button {
-  padding: 5px;
+	padding: 5px;
 }
 
 button:hover {
-  cursor: pointer;
+	cursor: pointer;
 }
 button {
-  font-size: 1.5rem;
-  margin: 5px;
-  color: white;
-  background-color: rgb(75, 50, 40);
-  transition: .333s ease background-color;
-  border: 2px solid white;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
+	font-size: 1.5rem;
+	margin: 5px;
+	color: white;
+	background-color: rgb(75, 50, 40);
+	transition: .333s ease background-color;
+	border: 2px solid white;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 button:hover, button:active {
-  background-color: rgb(100, 75, 65);
+	background-color: rgb(100, 75, 65);
 }
 button:disabled {
-  background-color: #AAAAAA;
-  opacity: .5;
+	background-color: #AAAAAA;
+	opacity: .5;
 }
 form {
-  display: flex;
-  flex-direction: column;
-  min-width: 300px;
-  margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	min-width: 300px;
+	margin: 0 auto;
 }
 form button {
-  margin-top: 25px;
+	margin-top: 25px;
 }
 h1#timer-string {
-  margin: 5px auto;
-  font-size: 5rem;
+	margin: 5px auto;
+	font-size: 5rem;
 }
 h3 {
-  margin: 5px;
-  letter-spacing: .1rem;
+	margin: 5px;
+	letter-spacing: .1rem;
 }
 h4 {
-  margin: 20px;
-  font-size: 1.1rem;
+	margin: 20px;
+	font-size: 1.1rem;
 }
 header, nav {
-  background-color: #222;
-  width: 100vw;
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 100px;
-  position: fixed;
+	background-color: #222;
+	width: 100vw;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 100px;
+	position: fixed;
 }
 header a, nav a {
-  color: rgba(250, 250, 250, .75);
-  text-decoration: none;
-  transition: .333s ease all;
+	color: rgba(250, 250, 250, .75);
+	text-decoration: none;
+	transition: .333s ease all;
 }
 header a:focus {
-  outline: none;
+	outline: none;
 }
 header {
-  top: 0;
-  left: 0;
-  height: 25px;
-  justify-content: space-between;
+	top: 0;
+	left: 0;
+	height: 25px;
+	justify-content: space-between;
 }
 input, textarea {
-  font-size: 1.2rem;
-  border: 1px solid black;
-  border-radius: 5px;
-  display: block;
-  margin: 0 auto;
-  width: 95%;
-  height: 2.5rem;
-  padding: 0 5px;
-  text-align: center;
-  background-color: rgb(245, 245, 245);
+	font-size: 1.2rem;
+	border: 1px solid black;
+	border-radius: 5px;
+	display: block;
+	margin: 0 auto;
+	width: 95%;
+	height: 2.5rem;
+	padding: 0 5px;
+	text-align: center;
+	background-color: rgb(245, 245, 245);
 }
 label {
-  font-size: 1.2rem;
-  text-align: left;
-  margin-top: 5px;
-  padding: 2px 5px;
+	font-size: 1.2rem;
+	text-align: left;
+	margin-top: 5px;
+	padding: 2px 5px;
 }
 nav {
-  justify-content: space-evenly;
-  top: 25px;
-  font-size: 1.5rem;
-  padding-bottom: 5px;
+	justify-content: space-evenly;
+	top: 25px;
+	font-size: 1.5rem;
+	padding-bottom: 5px;
 }
 nav:hover {
-  color: white;
+	color: white;
 }
 ul {
-  text-align: left;
-  list-style: none;
-  padding-left: 0;
-  margin: 10px auto 20px auto;
-  width: 400px;
+	text-align: left;
+	list-style: none;
+	padding-left: 0;
+	margin: 10px auto 20px auto;
+	width: 400px;
 }
 li {
-  padding: 0 2px;
-  font-size: 1.25rem;
-  border: 1px dotted white;
-  background-color: rgb(20, 20, 20);
+	padding: 0 2px;
+	font-size: 1.25rem;
+	border: 1px dotted white;
+	background-color: rgb(20, 20, 20);
 
 }
 li ul li {
-  font-size: 1.1rem;
-  border: none;
+	font-size: 1.1rem;
+	border: none;
 }
 li:hover {
-  text-shadow: 5px solid black;
+	text-shadow: 5px solid black;
 }
 textarea {
-  height: 8rem;
+	height: 8rem;
 }
 
 .selected-nav {
-  color: white;
-  text-decoration: underline;
+	color: white;
+	text-decoration: underline;
 }
 .tasks-nav {
-  justify-content: space-evenly;
-  margin:  0;
-  display: flex;
-  text-decoration: none;
+	justify-content: space-evenly;
+	margin:	0;
+	display: flex;
+	text-decoration: none;
 }
 .tasks-nav button {
-  border-radius: 20px;
-  padding: 5px 15px;
-  font-size: 1rem;
-  margin: 10px 10px;
+	border-radius: 20px;
+	padding: 5px 15px;
+	font-size: 1rem;
+	margin: 10px 10px;
 }
 .selected-tasks-nav button {
-  background-color: black;
-  border: none;
-  font-size: 1.25rem;
-  letter-spacing: .1rem;
-  margin: 25px 50px 5px 50px;
-  text-decoration: underline;
+	background-color: black;
+	border: none;
+	font-size: 1.25rem;
+	letter-spacing: .1rem;
+	margin: 25px 50px 5px 50px;
+	text-decoration: underline;
 }
 .account-nav {
-  justify-content: center;
-  margin: 0;
-  display: flex;
-  text-decoration: none;
+	justify-content: center;
+	margin: 0;
+	display: flex;
+	text-decoration: none;
 }
 .account-nav button {
-  border-radius: 20px;
-  padding: 5px 15px;
-  font-size: 1.25rem;
-  margin: 10px 20px;
+	border-radius: 20px;
+	padding: 5px 15px;
+	font-size: 1.25rem;
+	margin: 10px 20px;
 }
 .selected-account-nav button {
-  background-color: black;
-  border: none;
-  font-size: 1.5rem;
-  letter-spacing: .1rem;
-  margin: 25px 50px 10px 50px;
-  text-decoration: underline;
+	background-color: black;
+	border: none;
+	font-size: 1.5rem;
+	letter-spacing: .1rem;
+	margin: 25px 50px 10px 50px;
+	text-decoration: underline;
 }
 .estimates {
-  display: flex;
-  justify-content: space-around;
-  margin-top: 5px;
+	display: flex;
+	justify-content: space-around;
+	margin-top: 5px;
 }
 .estimates input {
-  min-width: 20vw;
-  margin: 5px 0;
-  font-size: 1.2rem;
+	min-width: 20vw;
+	margin: 5px 0;
+	font-size: 1.2rem;
 }
 .estimates label {
-  font-size: 1rem;
+	font-size: 1rem;
 }
 .description {
-  font-size: 1.2rem;
+	font-size: 1.2rem;
 }
 .delete-task {
-  float: right;
-  margin: 3px;
-  /*margin-right: 3px;*/
-  background-color: rgb(255, 65, 54); 
+	float: right;
+	margin: 3px;
+	/*margin-right: 3px;*/
+	background-color: rgb(255, 65, 54); 
 }
 .delete-task:hover {
-  background-color: rgba(255, 65, 54, .8);
+	background-color: rgba(255, 65, 54, .8);
 }
 .edit-button {
-  float: right;
-  font-size: 2.25rem;
-  margin-left: 1px;
-  cursor: pointer;
+	float: right;
+	font-size: 2.25rem;
+	margin-left: 1px;
+	cursor: pointer;
 }
 .edit-task-submit {
-  width: 50%;
-  border-radius: 20px;
-  padding: 0 15px;
-  font-size: 1.25rem;
-  margin: 20px auto 0 auto;
-  cursor: pointer;
-  font-size: 1.5rem;
-  color: white;
-  background-color: rgb(75, 50, 40);
-  transition: .333s ease background-color;
-  border: 2px solid white;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
+	width: 50%;
+	border-radius: 20px;
+	padding: 0 15px;
+	font-size: 1.25rem;
+	margin: 20px auto 0 auto;
+	cursor: pointer;
+	font-size: 1.5rem;
+	color: white;
+	background-color: rgb(75, 50, 40);
+	transition: .333s ease background-color;
+	border: 2px solid white;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 
 }
 .edit-task-submit:hover, .edit-task-submit:active {
-  background-color: rgb(100, 75, 65);
+	background-color: rgb(100, 75, 65);
 }
 .hidden-edit, .no-description {
-  display: none;
+	display: none;
 }
 
 #start-button {
-  background-color: rgb(14, 188, 16);
-  font-weight: bold;
-  letter-spacing: .2rem;
-  width: 150px;
-  transition: none;
-  margin-bottom: 15px;
-  transition: .333s ease background-color;
+	background-color: rgb(14, 188, 16);
+	font-weight: bold;
+	letter-spacing: .2rem;
+	width: 150px;
+	transition: none;
+	margin-bottom: 15px;
+	transition: .333s ease background-color;
 }
 #start-button:hover {
-  background-color: rgba(14, 188, 16, .8);
+	background-color: rgba(14, 188, 16, .8);
 }
 #start-button.stop, .stop {
-  background-color: rgb(255, 65, 54);
+	background-color: rgb(255, 65, 54);
 }
 #start-button.stop:hover, .stop:hover {
-  background-color: rgba(255, 65, 54, .8);
+	background-color: rgba(255, 65, 54, .8);
 }
 #select-task {
-  font-size: 1.2rem;
+	font-size: 1.2rem;
 }
 #different-task {
-  margin-top: 25px;
-  height: 3rem;
-  width: 300px;
-  background-color: #777777;
+	margin-top: 25px;
+	height: 3rem;
+	width: 300px;
+	background-color: #777777;
 }
 #different-task:hover {
-  background-color: #878787;
+	background-color: #878787;
 }
 #task-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
 }
 #task-list li {
-  margin: 10px 0;
+	margin: 10px 0;
 }
 #task-list li.listed-task {
-  width: 95vw;
+	width: 95vw;
 }
 #message-p {
-  color: #FF4136;
+	color: #FF4136;
 }
 
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
 }
 
 @media only screen and (max-width : 850px) {
-  .App-logo {
-    margin: 5px 10px;
-  }
-  .Timers li {
-    margin: 10px;
-  }
+	.App-logo {
+		margin: 5px 10px;
+	}
+	.Timers li {
+		margin: 10px;
+	}
 
-  h1#timer-string {
-    font-size: 4rem;
-  }
-  html {
-    font-size: .95rem;
-  }
-  ul {
-    margin: 10px 5px 25px 5px;
-    width: 98%;
-  }
+	h1#timer-string {
+		font-size: 4rem;
+	}
+	html {
+		font-size: .95rem;
+	}
+	ul {
+		margin: 10px 5px 25px 5px;
+		width: 98%;
+	}
 }
 
 @media only screen and (min-device-width: 1080px) {
-  form {
-    max-width: 50vw;
-  }
+	form {
+		max-width: 50vw;
+	}
 
-  .listed-task ul {
-    width: 99%;
-  }
+	.listed-task ul {
+		width: 99%;
+	}
 
-  #task-list li.listed-task {
-    min-width: 40vw;
-    max-width: 600px;
-  }
+	#task-list li.listed-task {
+		min-width: 40vw;
+		max-width: 600px;
+	}
 }

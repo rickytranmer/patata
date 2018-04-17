@@ -12,35 +12,35 @@ class TasksList extends Component {
 	}
 
 	componentDidMount() {
-	  this.props.mode ? this.setState({ mode: this.props.mode }) : this.setState({ mode: 'List' });
-	  if(this.props.selectedTask) {
-	  	this.setState({ selectedTask: this.props.selectedTask });
-	  	let differentTask = document.getElementById('different-task')||null;
-	  	if(differentTask) { differentTask.style.display = 'inline'; }
-	  } else {
-	  	this.setState({ selectedTask: '' });
-	  }
-	  
-	  // Grab tasks from localStorage (if they exist), until authUser
-	  this.updateTasks(JSON.parse(localStorage.getItem("tasks")||null), false);
+		this.props.mode ? this.setState({ mode: this.props.mode }) : this.setState({ mode: 'List' });
+		if(this.props.selectedTask) {
+			this.setState({ selectedTask: this.props.selectedTask });
+			let differentTask = document.getElementById('different-task')||null;
+			if(differentTask) { differentTask.style.display = 'inline'; }
+		} else {
+			this.setState({ selectedTask: '' });
+		}
+		
+		// Grab tasks from localStorage (if they exist), until authUser
+		this.updateTasks(JSON.parse(localStorage.getItem("tasks")||null), false);
 
-  	if(this.props.authUser) {
-  		// Grab tasks from Heroku
-  		this.getAllTasks()
-  		  .catch((err)=> console.error(err))
-  		  .then((res) => this.updateTasks({ tasks: res }, true));
+		if(this.props.authUser) {
+			// Grab tasks from Heroku
+			this.getAllTasks()
+				.catch((err)=> console.error(err))
+				.then((res) => this.updateTasks({ tasks: res }, true));
 			} else {
 			// ^ Same thing ^ look for authUser two more times
-  		setTimeout(()=> {
-  			if(this.props.authUser) { 
-  				this.getAllTasks()
-  				 .catch((err)=> console.error(err))
-  				 .then((res) => this.updateTasks({ tasks: res }, true));
-  			} else {
+			setTimeout(()=> {
+				if(this.props.authUser) { 
+					this.getAllTasks()
+					 .catch((err)=> console.error(err))
+					 .then((res) => this.updateTasks({ tasks: res }, true));
+				} else {
 					setTimeout(() => { this.props.authUser ? this.getAllTasks().catch((err) => console.error(err)).then((res)=> { this.updateTasks({ tasks: res }, true) }) : document.getElementById('loading-h2').innerHTML = 'No user found. &nbsp;Please log in or sign up by clicking "Patata" above.' }, 333);
-  			}
+				}
 			}, 333);
-  	}
+		}
 	}
 
 	componentDidUpdate() {
@@ -66,10 +66,10 @@ class TasksList extends Component {
 		//TODO - limit number of (successful?) fetches within 10sec, will use local instead
 		console.log('-getAllTasks');
 		if(new Date().getTime() - this.props.queryTime >= 10000) {
-	  	this.props.updateQueryTime(new Date().getTime());
-	  	const response = await fetch(`https://patata-api.herokuapp.com/api/tasks/${this.props.authUser}`);
-	  	const body = await response.json();
-	  	if(response.status !== 200) { throw Error(body.message) }
+			this.props.updateQueryTime(new Date().getTime());
+			const response = await fetch(`https://patata-api.herokuapp.com/api/tasks/${this.props.authUser}`);
+			const body = await response.json();
+			if(response.status !== 200) { throw Error(body.message) }
 			return body;
 		} else {
 			console.log('local');
@@ -83,55 +83,55 @@ class TasksList extends Component {
 				return null;
 			} else { return localTasks.tasks }
 		}
-  };
+	};
 
-  updateTasks(tasks, updateLocal) {
-  	if(tasks) {
-  		if(document.getElementById('loading-h2')) { document.getElementById('loading-h2').remove() }
-	  	if(updateLocal) { localStorage.setItem("tasks", JSON.stringify(tasks)) }
-	  	this.setState(tasks);
-  	} else { console.log('no tasks found') }
-  }
+	updateTasks(tasks, updateLocal) {
+		if(tasks) {
+			if(document.getElementById('loading-h2')) { document.getElementById('loading-h2').remove() }
+			if(updateLocal) { localStorage.setItem("tasks", JSON.stringify(tasks)) }
+			this.setState(tasks);
+		} else { console.log('no tasks found') }
+	}
 
-  updateSelectedTask(selectedTask) {
-  	let tempTask = this.state.selectedTask;
-  	this.setState({ selectedTask });
-  	if(selectedTask) {
-  		this.setState({ mode: 'Selected' });
-  	} else {
-  		this.setState({ mode: 'Select' });
-  		if(this.props.timer[0].start) {
-  			this.props.resetTimer();
-  			document.getElementById('start-button').innerHTML = 'Restart';
-  		}
-  	}
-  	this.props.updateSelectedTask(selectedTask);
-  	// Just the one task still there?  Temporary solution reloads page.
-  	// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
-  	// Possible solution is to create all tasks in the render(), but hide those not selected
-  	if(document.getElementById(tempTask)) { window.location.replace("/timer") }
-  }
+	updateSelectedTask(selectedTask) {
+		let tempTask = this.state.selectedTask;
+		this.setState({ selectedTask });
+		if(selectedTask) {
+			this.setState({ mode: 'Selected' });
+		} else {
+			this.setState({ mode: 'Select' });
+			if(this.props.timer[0].start) {
+				this.props.resetTimer();
+				document.getElementById('start-button').innerHTML = 'Restart';
+			}
+		}
+		this.props.updateSelectedTask(selectedTask);
+		// Just the one task still there?	Temporary solution reloads page.
+		// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
+		// Possible solution is to create all tasks in the render(), but hide those not selected
+		if(document.getElementById(tempTask)) { window.location.replace("/timer") }
+	}
 
 	deleteTask(date) {
 		console.log('delete:', date);
 		if(this.props.authUser) {
 			let deletedTask = { username: this.props.authUser };
-		  // PUT route to server
-		  fetch(`https://patata-api.herokuapp.com/api/task/${date}`, {
-		    method: 'DELETE',
-		    headers: {
-		      'Content-Type': 'application/json'
-		    },
-		    mode: 'CORS',
-		    body: JSON.stringify(deletedTask)
-		  })
-		    //TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
-		           //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
-		   .catch((err)=> console.error(err))
-		   .then((res)=> window.location.replace("/task/list"));
+			// PUT route to server
+			fetch(`https://patata-api.herokuapp.com/api/task/${date}`, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				mode: 'CORS',
+				body: JSON.stringify(deletedTask)
+			})
+				//TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
+							 //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
+			 .catch((err)=> console.error(err))
+			 .then((res)=> window.location.replace("/task/list"));
 		} else {
-		  //TODO - save task locally
-		  console.log('no user');
+			//TODO - save task locally
+			console.log('no user');
 		}
 	}
 
@@ -153,17 +153,17 @@ class TasksList extends Component {
 
 			// POST route to server
 			fetch(`https://patata-api.herokuapp.com/api/task/${date}`, {
-			  method: 'PUT',
-			  headers: {
-			  	'Content-Type': 'application/json'
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
 				},
 				mode: 'CORS',
-			  body: JSON.stringify(updateTask)
+				body: JSON.stringify(updateTask)
 			})
 				//TODO - if err, save updateTask to localStorage until internet is available
 					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
-	     .catch((err)=> console.error(err))
-	     .then((res)=> window.location.replace("/task/list"));
+			 .catch((err)=> console.error(err))
+			 .then((res)=> window.location.replace("/task/list"));
 		} else {
 			//TODO - just save locally if no account
 		}
@@ -258,7 +258,7 @@ class TasksList extends Component {
 							{ this.props.selectedTask && this.props.selectedTask===task.date &&
 							 <li id={task.date} data-timerestimate={task.timerEstimate} data-timerdefault={task.timerDefault} data-timercount={task.timerCount} >
 								<ul>
-								  <b>{task.title}</b>
+									<b>{task.title}</b>
 								 	{ task.description && // Task Description
 								 	 <div>
 								 		<li>&nbsp;<i>Description:</i></li>

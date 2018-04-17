@@ -11,8 +11,8 @@ class SignUpForm extends Component {
 
 		auth.signInWithEmail(email, password)
 		 .catch((error)=> {
-		  console.log(error);
-		  document.getElementById('message-p').innerHTML = error.message;
+			console.log(error);
+			document.getElementById('message-p').innerHTML = error.message;
 		 })
 		 .then((user)=> {
 		 	if(user) { console.log(user.email) }

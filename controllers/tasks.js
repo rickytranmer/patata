@@ -1,9 +1,10 @@
 const docClient = require('../db/docClient');
 const table = "Tasks";
+let params = {};
 
-function postTask(req, res, next) {
+function postTask(req, res) {
 	//TODO - change to logged in user, authenticate
-	let params = {
+	params = {
 		TableName: table,
 		Item:{
 			"username": req.body.username,
@@ -11,7 +12,7 @@ function postTask(req, res, next) {
 			"title": req.body.title,
 			"timerDefault": req.body.timerDefault || 25,
 			"timerEstimate": parseInt(req.body.timerEstimate) || 1,
-			"timerCount":  parseInt(req.body.timerCount) || 0
+			"timerCount":	parseInt(req.body.timerCount) || 0
 		}
 	};
 	params.Item.date = shortenDate(params.Item.date); //see bottom
@@ -29,9 +30,9 @@ function postTask(req, res, next) {
 	res.send();
 }
 
-function getTask(req, res, next) {
+function getTask(req, res) {
 	let username = req.body.username;
-	let params = {
+	params = {
 		TableName: table,
 		Key:{
 			"username": username,
@@ -50,85 +51,85 @@ function getTask(req, res, next) {
 	});
 }
 
-function putTask(req, res, next) {
+function putTask(req, res) {
 	console.log(req.body.username);
 	console.log(req.params.id);
 	let username = req.body.username;
 	if(req.body.title) {
 		// Update entire task
 		var params = {
-	    TableName: table,
-	    Key:{
-	      "username": username,
-	      "date": req.params.id
-	    },
-	    UpdateExpression: "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc",
-		  ExpressionAttributeValues:{
-	      ":t": req.body.title,
-	      ":d": req.body.description || null,
-	      ":td": req.body.timerDefault || 25,
-	      ":te": parseInt(req.body.timerEstimate) || 1,
-	      ":tc":  parseInt(req.body.timerCount) || 0
-		  },
-		  ReturnValues:"UPDATED_NEW"
+			TableName: table,
+			Key:{
+				"username": username,
+				"date": req.params.id
+			},
+			UpdateExpression: "set title = :t, description=:d, timerDefault=:td, timerEstimate=:te, timerCount=:tc",
+			ExpressionAttributeValues:{
+				":t": req.body.title,
+				":d": req.body.description || null,
+				":td": req.body.timerDefault || 25,
+				":te": parseInt(req.body.timerEstimate) || 1,
+				":tc":	parseInt(req.body.timerCount) || 0
+			},
+			ReturnValues:"UPDATED_NEW"
 		};
 		
 	} else {
 		// Just update timerCount
 		console.log('timerCount');
-		var params = {
-	    TableName: table,
-	    Key:{
-	      "username": username,
-	      "date": req.params.id
-	    },
-	    UpdateExpression: "set #timerCount = #timerCount + :val",
-	    ExpressionAttributeNames:{
-	    		"#timerCount": "timerCount"
-	    },
-	    ExpressionAttributeValues:{
-	      ":val":1
-	    },
-	    ReturnValues:"UPDATED_NEW"
+		params = {
+			TableName: table,
+			Key:{
+				"username": username,
+				"date": req.params.id
+			},
+			UpdateExpression: "set #timerCount = #timerCount + :val",
+			ExpressionAttributeNames:{
+					"#timerCount": "timerCount"
+			},
+			ExpressionAttributeValues:{
+				":val":1
+			},
+			ReturnValues:"UPDATED_NEW"
 		};
 	}
 
 	console.log("Updating the task...");
 	docClient.update(params, function(err, data) {
-    if (err) {
-        console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
-    } else {
-        console.log("putTask succeeded:", JSON.stringify(data, null, 2));
+		if (err) {
+				console.error("Unable to update task. Error JSON:", JSON.stringify(err, null, 2));
+		} else {
+				console.log("putTask succeeded:", JSON.stringify(data, null, 2));
 				res.send();
-    }
+		}
 	});
 
 }
 
-function deleteTask(req, res, next) {
-	var params = {
-    TableName: table,
-    Key:{
-      "username": req.body.username,
-      "date": req.params.id
-    }
+function deleteTask(req, res) {
+	params = {
+		TableName: table,
+		Key:{
+			"username": req.body.username,
+			"date": req.params.id
+		}
 	};
 
 	console.log("Deleting the task the task...");
 	docClient.delete(params, function(err, data) {
-	    if (err) {
-	        console.error("Unable to delete task. Error JSON:", JSON.stringify(err, null, 2));
-	    } else {
-	        console.log("deleteTask succeeded:", JSON.stringify(data, null, 2));
+			if (err) {
+					console.error("Unable to delete task. Error JSON:", JSON.stringify(err, null, 2));
+			} else {
+					console.log("deleteTask succeeded:", JSON.stringify(data, null, 2));
 					res.send();
-	    }
+			}
 	});
 
 }
 
-function getTasks(req, res, next) {
+function getTasks(req, res) {
 	let username = req.params.username || 'RickySoFine';
-	var params = {
+	params = {
 		TableName : table,
 		KeyConditionExpression: "#username = :username",
 		ExpressionAttributeNames:{

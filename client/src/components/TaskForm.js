@@ -24,17 +24,17 @@ class TaskForm extends Component {
 
 			// POST route to server
 			fetch('https://patata-api.herokuapp.com/api/task', {
-			  method: 'POST',
-			  headers: {
-			  	'Content-Type': 'application/json'
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
 				},
 				mode: 'CORS',
-			  body: JSON.stringify(newTask)
+				body: JSON.stringify(newTask)
 			})
 				//TODO - if err, save newTask to localStorage until internet is available
 					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
-	     .catch((err)=> console.error(err))
-	     .then((res)=> window.location.replace("/task/list"));
+			 .catch((err)=> console.error(err))
+			 .then((res)=> window.location.replace("/task/list"));
 		} else {
 			//TODO - just save locally if no account
 		}
