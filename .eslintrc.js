@@ -17,6 +17,8 @@ module.exports = {
     ],
     "rules": {
         "no-unused-vars": 1,
-        "no-console": "off"
+        "no-console": "off",
+        "no-mixed-spaces-and-tabs": "off",
+        "react/prop-types": "off"
     }
 };

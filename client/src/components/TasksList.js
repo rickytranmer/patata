@@ -34,10 +34,10 @@ class TasksList extends Component {
 			setTimeout(()=> {
 				if(this.props.authUser) { 
 					this.getAllTasks()
-					 .catch((err)=> console.error(err))
-					 .then((res) => this.updateTasks({ tasks: res }, true));
+					.catch((err)=> console.error(err))
+					.then((res) => this.updateTasks({ tasks: res }, true));
 				} else {
-					setTimeout(() => { this.props.authUser ? this.getAllTasks().catch((err) => console.error(err)).then((res)=> { this.updateTasks({ tasks: res }, true) }) : document.getElementById('loading-h2').innerHTML = 'No user found. &nbsp;Please log in or sign up by clicking "Patata" above.' }, 333);
+					setTimeout(()=> { this.props.authUser ? this.getAllTasks().catch((err)=> console.error(err)).then((res)=> { this.updateTasks({ tasks: res }, true) }) : document.getElementById('loading-h2').innerHTML = 'No user found. &nbsp;Please log in or sign up by clicking "Patata" above.' }, 333);
 				}
 			}, 333);
 		}
@@ -83,7 +83,7 @@ class TasksList extends Component {
 				return null;
 			} else { return localTasks.tasks }
 		}
-	};
+	}
 
 	updateTasks(tasks, updateLocal) {
 		if(tasks) {
@@ -109,7 +109,7 @@ class TasksList extends Component {
 		// Just the one task still there?	Temporary solution reloads page.
 		// (added to fix issue of not loading all tasks after selecting, changing screens, then deselecting)
 		// Possible solution is to create all tasks in the render(), but hide those not selected
-		if(document.getElementById(tempTask)) { window.location.replace("/patata/#/timer") }
+		if(document.getElementById(tempTask)) { window.location.reload() }
 	}
 
 	deleteTask(date) {
@@ -128,7 +128,11 @@ class TasksList extends Component {
 				//TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
 				//		 ? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 			.catch((err)=> console.error(err))
-			.then((res)=> window.location.replace("/patata/#/task/list"));
+				.then(() => window.location.reload());
+			//TODO - update data values and text content in li>form>ul list items
+			//		 - remove inputs/textareas
+			//		 - move ul to outside of form, hide form ('hidden-edit' class)
+			//		 - remove SAVE, insert Edit and Delete buttons
 		} else {
 			//TODO - save task locally
 			console.log('no user');
@@ -163,14 +167,13 @@ class TasksList extends Component {
 				//TODO - if err, save updateTask to localStorage until internet is available
 					//? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 			.catch((err)=> console.error(err))
-			.then((res)=> window.location.replace("/patata/#/task/list"));
+				.then(() => window.location.reload());
 		} else {
 			//TODO - just save locally if no account
 		}
 	}
 
 	editTask(date) {
-		//TODO - call EditTaskForm
 		console.log('edit:', date);
 		console.log(document.getElementById(date).childNodes[0]);
 

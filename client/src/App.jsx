@@ -37,7 +37,7 @@ class App extends Component {
 	componentDidMount() {
 		this.testApi()
 			.catch((err) => console.error(err))
-			.then((res)=> console.log(`Client: 4.16 ${res.test}`));
+			.then((res)=> console.log(`Client: 4.18b ${res.test}`));
 		this.convertTimerString(this.state.timerDefault);
 		firebase.auth.onAuthStateChanged((authUser)=> {
 			authUser ? this.updateAuthUser(authUser) : this.updateAuthUser(null);
@@ -94,7 +94,7 @@ class App extends Component {
 					//TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
 								 //? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 				 .catch((err)=> console.error(err))
-				 .then(()=> window.location.replace("/patata/#/timer"));
+				 .then(()=> window.location.reload());
 			} else {
 				//TODO - save task locally
 				console.log('no user');
