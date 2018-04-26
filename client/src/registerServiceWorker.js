@@ -65,8 +65,12 @@ function registerValidSW(swUrl) {
 							// the fresh content will have been added to the cache.
 							// It's the perfect time to display a "New content is
 							// available; please refresh." message in your web app.
-							console.log('New content is available; refreshing the page.');
-							window.location.reload();
+							if (window.location.hash !== '#/timer' && window.location.hash !== '#/task/new') {
+								console.log('New content is available; refreshing the page.');
+								window.location.reload();
+							} else {
+								console.log('New content is available; refresh the page.');
+							}
 						} else {
 							// At this point, everything has been precached.
 							// It's the perfect time to display a
