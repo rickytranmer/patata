@@ -112,9 +112,13 @@ class TasksList extends Component {
 		if(document.getElementById(tempTask)) { window.location.reload() }
 	}
 
-	deleteTask(date) {
+	deleteTask(event, date) {
 		console.log('delete:', date);
 		if(this.props.authUser) {
+			// Gray out delete button to let user know click was registered
+			event.target.style.transition = "all 0s ease 0s";
+			event.target.style.backgroundColor = "gray";
+
 			let deletedTask = { username: this.props.authUser };
 			// PUT route to server
 			fetch(`https://patata-api.herokuapp.com/api/task/${date}`, {
@@ -128,7 +132,7 @@ class TasksList extends Component {
 				//TODO - if err, save updatedTask to localStorage (? attempt to save later or keep local ?)
 				//		 ? status of 200 on TasksList, heroku's /api/test, successful updateTasks ?//
 			.catch((err)=> console.error(err))
-				.then(() => window.location.reload());
+				.then(()=> window.location.reload());
 			//TODO - update data values and text content in li>form>ul list items
 			//		 - remove inputs/textareas
 			//		 - move ul to outside of form, hide form ('hidden-edit' class)
@@ -222,7 +226,7 @@ class TasksList extends Component {
 							{ this.state.mode==="List" &&
 							 <li id={task.date} className="listed-task">
 								<ul>
-								 	<button className="delete-task" onClick={()=> this.deleteTask(task.date)}>X</button><span role="img" aria-label="edit button" className="edit-button" onClick={()=> this.editTask(task.date)}>📝</span>
+								 	<button className="delete-task" onClick={(event)=> this.deleteTask(event, task.date)}>X</button><span role="img" aria-label="edit button" className="edit-button" onClick={()=> this.editTask(task.date)}>📝</span>
 									<b data-title={task.title}>{task.title}</b>
 									{ task.description && // Task Description
 									 <div>
