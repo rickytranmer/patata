@@ -36,7 +36,7 @@ class App extends Component {
 	}
 	componentDidMount() {
 		this.testApi()
-			.catch((err) => console.error(err))
+			.catch((err)=> console.error(err))
 			.then((res)=> console.log(`Client: 4.18b ${res.test}`));
 		this.convertTimerString(this.state.timerDefault);
 		firebase.auth.onAuthStateChanged((authUser)=> {
@@ -124,7 +124,7 @@ class App extends Component {
 	async testApi() {
 		const response = await fetch('https://patata-api.herokuapp.com/api/test');
 		const body = await response.json();
-		if (response.status !== 200) { throw Error(body.message) }
+		if(response.status !== 200) { throw Error(body.message) }
 		return body;
 	}
 
@@ -252,26 +252,26 @@ class App extends Component {
 					{['/', '/index.html', '/login', '/signup'].map((path)=> 
 						<Route key={path} exact path={path} render={
 							()=> <Home authUser={this.state.authUser}
-															authUserEmail={this.state.authUserEmail} /> } />
+												 authUserEmail={this.state.authUserEmail} /> } />
 					)}
 					<Route path='/timer' render={ 
 						()=> <Timers updateSelectedTask={this.updateSelectedTask} 
-															timeInterval={this.timeInterval} 
-															startTimer={this.startTimer} 
-															updateMode={this.updateMode} 
-															updateTimerCount={this.updateTimerCount}
-															resetTimer={this.resetTimer}
-															updateAlarm={this.updateAlarm}
-															updateQueryTime={this.updateQueryTime}
-															{...this.state} /> } />
+												 timeInterval={this.timeInterval} 
+												 startTimer={this.startTimer} 
+												 updateMode={this.updateMode} 
+												 updateTimerCount={this.updateTimerCount}
+												 resetTimer={this.resetTimer}
+												 updateAlarm={this.updateAlarm}
+												 updateQueryTime={this.updateQueryTime}
+												 {...this.state} /> } />
 					<Route path='/task' render={
 						()=> <Tasks authUser={this.state.authUser}
-														 queryTime={this.state.queryTime}
-														 updateQueryTime={this.updateQueryTime} /> } />
+												queryTime={this.state.queryTime}
+												updateQueryTime={this.updateQueryTime} /> } />
 					<Route path='/agenda' component={Agenda} />
 					<Route render={
 							()=> <Home authUser={this.state.authUser}
-															authUserEmail={this.state.authUserEmail} /> } />
+												 authUserEmail={this.state.authUserEmail} /> } />
 				</Switch>
 			</div>
 		);
