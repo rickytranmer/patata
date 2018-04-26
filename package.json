@@ -1,0 +1,36 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "cd client/ && npm start",
+    "build": "cd client/ && npm run build",
+    "deploy": "cd client/ && npm run deploy && date",
+    "fd": "npm run deploy && pwd && echo Push to Github && git add . && git commit -m \"Latest front-end build\" && echo Push to Heroku && git push heroku master && date"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.208.0",
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "helmet": "^3.12.0",
+    "router": "^1.3.2"
+  },
+  "engines:": {
+    "npm": "6.0.0",
+    "node": "10.0.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.3",
+    "eslint": "^4.19.1",
+    "eslint-plugin-react": "^7.7.0"
+  }
+}
