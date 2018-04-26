@@ -37,7 +37,7 @@ class App extends Component {
 	componentDidMount() {
 		this.testApi()
 			.catch((err)=> console.error(err))
-			.then((res)=> console.log(`Client: 4.18b ${res.test}`));
+			.then((res)=> console.log(`Client: 4.26 ${res.test}`));
 		this.convertTimerString(this.state.timerDefault);
 		firebase.auth.onAuthStateChanged((authUser)=> {
 			authUser ? this.updateAuthUser(authUser) : this.updateAuthUser(null);
